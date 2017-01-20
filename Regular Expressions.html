@@ -5,13 +5,11 @@
     <title>Regular Expressions</title>
     <link rel="shortcut icon" href="icon_RegExp.png">
     <style>
-        p {
-            margin: 0;
-        }
-
         .regularExpressionsPluginP {
                 margin: 0;
-                font-weight: bold;
+                color: #777;
+                padding-left: 10px;
+                margin-top: 4px;
         }
     </style>
     <script src='scripts.library.js'></script>
@@ -27,15 +25,17 @@
     <p class='regularExpressionsPluginP'>Flags:</p>
     <input type=text id='flags' style='width: 75%; height: 22px;' value='g'></textarea>
 
-    <p class='regularExpressionsPluginP'>Show results like this (use match[index]):</p>
-    <textarea id='resultsPattern' style='width: 75%; height: 22px;'>match[1] + match[2] + '\t' + match[3] + '\t' + match[4] + '\n***'</textarea>
+    <p class='regularExpressionsPluginP'>Show results like this / Replace:</p>
+    <textarea id='resultsPattern' style='width: 75%; height: 22px;' placeholder="match[1] + match[2] + '\t' + match[3] + '\t' + match[4] + '\n***'">
+match[1] + match[2] + '\t' + match[3] + '\t' + match[4] + '\n***'</textarea>
 
-    <div id='regularExpressionsPluginSets'>
-        <button onclick='process()' style='font-weight: bold;'>Process</button>
-        <button onclick='saveSet(false)' style='color: red;'>Save set</button>
+    <div id='regularExpressionsPluginSets' style="margin-bottom: 2px;">
+        <button onclick='saveSet(false)' style='color: red; margin-left: 10px;'>Save set</button>
     </div>
+    <button onclick='process()' style='font-weight: bold;'>All matches</button>
+    <button onclick='processReplace()' style='font-weight: bold;'>Replace</button>
 
-    <p class='regularExpressionsPluginP'>Matches:</p>
+    <p class='regularExpressionsPluginP'>Results:</p>
     <textarea id='results' style='width: 75%; height: 100px;'></textarea>
 
     <script>
@@ -130,6 +130,40 @@
             else {
                 resultsCtrl.value = resultsStr;
             }
+        }
+        
+        function processReplace() {
+            var rePattern = document.getElementById('regexp').value;
+            var reFlags = document.getElementById('flags').value;
+            var resultsPattern = document.getElementById('resultsPattern').value;
+
+            var RE = new RegExp(rePattern, reFlags);
+
+            var input = document.getElementById('input').value;
+
+            var resultsCtrl = document.getElementById('results');
+
+            resultsCtrl.value = '';
+
+            var count = 0;
+            var resultsStr = '';
+
+            // var match;
+            // while ((match = RE.exec(input)) != null) {
+            //     resultsStr += eval(resultsPattern) + '\n';
+            //     count++;
+            // }
+            
+            resultsStr = input.replace(RE, resultsPattern);
+
+            // if (count == 0) {
+            //     resultsCtrl.value = 'No matches...';
+            // }
+            // else {
+            //     resultsCtrl.value = resultsStr;
+            // }
+            
+            resultsCtrl.value = resultsStr;
         }
 
         function saveSet(readFromCookies, ID) {

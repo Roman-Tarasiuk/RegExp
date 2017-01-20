@@ -14,6 +14,7 @@
                 font-weight: bold;
         }
     </style>
+    <script src='scripts.library.js'></script>
 </head>
 
 <body>
@@ -21,7 +22,7 @@
     <textarea id='input' style='width: 75%; height: 100px;'></textarea>
 
     <p class='regularExpressionsPluginP'>Regular expression:</p>
-    <textarea id='regexp' style='width: 75%; height: 22px;'><td><b>(.*?)<\/b>( .*?)<br>(?:<a href="mailto:(.*?@.*?)">)?.*\n\s*<td>(.*?)<\/td></textarea>
+    <textarea id='regexp' style='width: 75%; height: 22px;'><td><b>(.*?)</b>( .*?)<br>(?:<a href="mailto:(.*?@.*?)">)?.*\n\s*<td>(.*?)</td></textarea>
 
     <p class='regularExpressionsPluginP'>Flags:</p>
     <input type=text id='flags' style='width: 75%; height: 22px;' value='g'></textarea>
@@ -31,7 +32,7 @@
 
     <div id='regularExpressionsPluginSets'>
         <button onclick='process()' style='font-weight: bold;'>Process</button>
-        <button onclick='saveSet()' style='color: red;'>Save set</button>
+        <button onclick='saveSet(false)' style='color: red;'>Save set</button>
     </div>
 
     <p class='regularExpressionsPluginP'>Matches:</p>
@@ -39,16 +40,23 @@
 
     <script>
         // To embed this page into other page (e.g. over Greasemonkey in Mozilla Firefox)
-        // 1. Define process() as window.process = function () {...};
-        //    define saveSet() in the same way.
         //
-        // 2. For correct using double quotes, make next replacements in body (html + 2 comments below or desired) content:
+        // 1. Define variables:
+        // var replaceCookiesOrigin = ';';
+        // var replaceCookiesRE = new RegExp(replaceCookiesOrigin, 'g');
+        // var replaceCookiesStr = '###';
+        // var replaceCookiesBackRE = new RegExp(replaceCookiesStr, 'g');
+        //
+        // 2. Define process() as window.process = function () {...};
+        //    define saveSet() and getSetsFromCookies() in the same way.
+        //
+        // 3. For correct using double quotes, make next replacements in body html (+ 2 comments below or desired instead of them) content:
         // " -> \"         (normal)
         // \ -> \\         (normal)
         // \\" -> \"       (normal)
         // \r\n -> \\\r\n  (extended)
         //
-        // 3. Append result into code (divRegularExpressions.innerHTML):
+        // 4. Append result into code (divRegularExpressions.innerHTML):
         // window.getSource = function () {
         //   document.getElementById('input').value = document.body.innerHTML;
         // }
@@ -78,18 +86,21 @@
         //
         // document.head.appendChild(style);
         //
-        // 4. Move result regular expression and results pattern into html for auto loading.
+        // getSetsFromCookies();
+        //
+        // 5. Move result regular expression and results pattern into html for auto loading.
         //
 
         // branch RE: <a href="http:\/\/www.kv.aval\/ua\/phone_list.html\?rootId=\d*" (style="cursor:pointer;">)(.*?)</a>(?:.*?\1(.*?)</a>(?:.*?\1(.*?)</a>(?:.*?\1(.*?)</a>(?:.*?\1(.*?)</a>)?)?)?)?
         // results  : match[2] + ' -> ' + match[3] + ' -> ' + match[4] + ' -> ' + match[5] + ' -> ' + match[6]
 
-        // phones RE: <td><b>(.*?)<\/b>( .*?)<br>(?:<a href="mailto:(.*?@.*?)">)?.*\n\s*<td>(.*?)<\/td>
+        // phones RE: <td><b>(.*?)</b>( .*?)<br>(?:<a href="mailto:(.*?@.*?)">)?.*\n\s*<td>(.*?)</td>
         // results  : match[1] + match[2] + '\t' + match[3] + '\t' + match[4]
 
-        (function getSavedSets() {
-            console.log(' ** Trying to load saved cookies...');
-        })();
+        var replaceCookiesOrigin = ';';
+        var replaceCookiesRE = new RegExp(replaceCookiesOrigin, 'g');
+        var replaceCookiesStr = '###';
+        var replaceCookiesBackRE = new RegExp(replaceCookiesStr, 'g');
 
         function process() {
             var rePattern = document.getElementById('regexp').value;
@@ -120,14 +131,19 @@
                 resultsCtrl.value = resultsStr;
             }
         }
-        
-        function saveSet() {
+
+        function saveSet(readFromCookies, ID) {
             if (window.regularExpressionsPluginSetsArray == undefined) {
                 window.regularExpressionsPluginSetsArray = [];
             }
-            
-            var id = 'regularExpressionsPluginSets' + window.regularExpressionsPluginSetsArray.length;
-            
+
+            if (!readFromCookies) {
+                var id = 'regularExpressionsPluginSets' + window.regularExpressionsPluginSetsArray.length;
+            }
+            else {
+                var id = 'regularExpressionsPluginSets' + ID;
+            }
+
             var radio = document.createElement('input');
             radio.setAttribute('type', 'radio');
             radio.setAttribute('id', id);
@@ -135,22 +151,50 @@
             radio.addEventListener('click', window.selectSet = function (event) {
                 var index = parseInt(event.target.id.substring('regularExpressionsPluginSets'.length));
                 console.log(index + ' set selected');
-                
+
                 document.getElementById('regexp').value = window.regularExpressionsPluginSetsArray[index].re;
                 document.getElementById('resultsPattern').value = window.regularExpressionsPluginSetsArray[index].resPatt;
             });
-            
+
             var label = document.createElement('label');
             label.setAttribute('for', 'regularExpressionsPluginSets' + window.regularExpressionsPluginSetsArray.length);
-            label.innerText = window.regularExpressionsPluginSetsArray.length;
-            
+            label.innerText = (!readFromCookies) ? regularExpressionsPluginSetsArray.length : ID;
+
             document.getElementById('regularExpressionsPluginSets').appendChild(radio);
             document.getElementById('regularExpressionsPluginSets').appendChild(label);
-            
-            var re = document.getElementById('regexp').value;
-            var resPatt = document.getElementById('resultsPattern').value;
-            window.regularExpressionsPluginSetsArray.push({re: re, resPatt: resPatt});
+
+            if (!readFromCookies) {
+                var re = document.getElementById('regexp').value;
+                var resPatt = document.getElementById('resultsPattern').value;
+
+                regularExpressionsPluginSetsArray.push({re: re, resPatt: resPatt});
+
+                var cookieStr = JSON.stringify(regularExpressionsPluginSetsArray);
+                cookieStr = cookieStr.replace(replaceCookiesRE, replaceCookiesStr);
+
+                setCookie('regularExpressionsPlugin', cookieStr, 1000);
+            }
         }
+
+        function getSetsFromCookies() {
+            console.log(' ');
+
+            var cookie = getCookie('regularExpressionsPlugin');
+
+            if (cookie == '') {
+                return;
+            }
+
+            window.regularExpressionsPluginSetsArray = JSON.parse(cookie.replace(replaceCookiesBackRE, replaceCookiesOrigin));
+
+            for (var i = 0; i < regularExpressionsPluginSetsArray.length; i++) {
+                document.getElementById('regexp').value = regularExpressionsPluginSetsArray[i].re;
+                document.getElementById('resultsPattern').value = regularExpressionsPluginSetsArray[i].resPatt;
+                saveSet(true, i);
+            }
+        }
+
+        getSetsFromCookies();
     </script>
 </body>
 </html>

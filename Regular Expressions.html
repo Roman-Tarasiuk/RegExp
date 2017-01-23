@@ -11,32 +11,36 @@
                 padding-left: 10px;
                 margin-top: 4px;
         }
+        
+        .w {
+            width: 85%;
+        }
     </style>
     <script src='scripts.library.js'></script>
 </head>
 
 <body>
     <p class='regularExpressionsPluginP'>Input:</p>
-    <textarea id='input' style='width: 75%; height: 100px;'></textarea>
+    <textarea id='input' class="w" style='height: 100px;'></textarea>
 
     <p class='regularExpressionsPluginP'>Regular expression:</p>
-    <textarea id='regexp' style='width: 75%; height: 22px;'><td><b>(.*?)</b>( .*?)<br>(?:<a href="mailto:(.*?@.*?)">)?.*\n\s*<td>(.*?)</td></textarea>
+    <textarea id='regexp' class="w" style='height: 22px;'><td><b>(.*?)</b>( .*?)<br>(?:<a href="mailto:(.*?@.*?)">)?.*\n\s*<td>(.*?)</td></textarea>
 
     <p class='regularExpressionsPluginP'>Flags:</p>
-    <input type=text id='flags' style='width: 75%; height: 22px;' value='g'></textarea>
+    <input type=text id='flags' style='height: 22px;' value='g' placeholder="gmi"></textarea>
 
     <p class='regularExpressionsPluginP'>Show results like this / Replace:</p>
-    <textarea id='resultsPattern' style='width: 75%; height: 22px;' placeholder="match[1] + match[2] + '\t' + match[3] + '\t' + match[4] + '\n***'">
+    <textarea id='resultsPattern' class="w" style='height: 22px;' placeholder="match[1] + match[2] + '\t' + match[3] + '\t' + match[4] + '\n***'">
 match[1] + match[2] + '\t' + match[3] + '\t' + match[4] + '\n***'</textarea>
 
-    <div id='regularExpressionsPluginSets' style="margin-bottom: 2px;">
+    <div id='regularExpressionsPluginSets' style="margin-bottom: 6px; margin-top: -3px;">
         <button onclick='saveSet(false)' style='color: red; margin-left: 10px;'>Save set</button>
     </div>
     <button onclick='process()' style='font-weight: bold;'>All matches</button>
     <button onclick='processReplace()' style='font-weight: bold;'>Replace</button>
 
     <p class='regularExpressionsPluginP'>Results:</p>
-    <textarea id='results' style='width: 75%; height: 100px;'></textarea>
+    <textarea id='results' class="w" style='height: 100px;'></textarea>
 
     <script>
         // To embed this page into other page (e.g. over Greasemonkey in Mozilla Firefox)
@@ -145,24 +149,8 @@ match[1] + match[2] + '\t' + match[3] + '\t' + match[4] + '\n***'</textarea>
 
             resultsCtrl.value = '';
 
-            var count = 0;
-            var resultsStr = '';
+            var resultsStr = input.replace(RE, resultsPattern);
 
-            // var match;
-            // while ((match = RE.exec(input)) != null) {
-            //     resultsStr += eval(resultsPattern) + '\n';
-            //     count++;
-            // }
-            
-            resultsStr = input.replace(RE, resultsPattern);
-
-            // if (count == 0) {
-            //     resultsCtrl.value = 'No matches...';
-            // }
-            // else {
-            //     resultsCtrl.value = resultsStr;
-            // }
-            
             resultsCtrl.value = resultsStr;
         }
 

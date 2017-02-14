@@ -4,11 +4,6 @@
     <meta charset="UTF-8">
     <title>Compare strings</title>
 
-    <!-- <script src="js/jquery.min.js"></script> -->
-    <!-- <script src="js/jquery-ui.min.js"></script> -->
-
-    <!-- <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css" media="all"> -->
-
     <style>
         input[type=text] {
             width: 700px;
@@ -101,11 +96,6 @@
             document.getElementById("result").value = '';
         }
 
-        // $("#result").resizable({
-        //     alsoResize: "#str1, #str2",
-        //     resize: setWidth
-        // });
-
         function setWidth() {
             document.getElementById('width').value = parseInt(document.getElementById('result').style.width);
         }
@@ -123,14 +113,9 @@
             document.getElementById("result").style.width = numberElem.value + 'px';
             document.getElementById("str1").style.width = numberElem.value + 'px';
             document.getElementById("str2").style.width = numberElem.value + 'px';
-
-            //var q = document.getElementsByClassName('ui-wrapper')[0];
-            //q.style.width = (parseInt(numberElem.value) + 6) + 'px';
         }
 
         function compare() {
-            //console.log('comparing...');
-
             var text1 = document.getElementById('str1');
             var text2 = document.getElementById('str2');
             var compareResult = null;
@@ -144,23 +129,6 @@
 
             document.getElementById('result').value = compareResult.compareStr;
             document.getElementById('count').innerHTML = 'Differences found: ' + compareResult.placesCount;
-
-            /* Working version
-            function cmp(txt1, txt2) { // txt1.length >= txt2.length
-                var resultStr = '';
-
-                for (var i = 0; i < txt1.length; i++) {
-                    if (i < txt2.length && txt2[i] == txt1[i]) {
-                        resultStr += ' ';
-                    }
-                    else {
-                        resultStr += '¦';
-                    }
-                }
-
-                return resultStr;
-            }
-            //*/
 
             function cmp(txt1, txt2) { // txt1.length >= txt2.length
                 var resultStr = new Array(txt1.length).fill(' ');

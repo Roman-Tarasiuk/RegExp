@@ -55,18 +55,18 @@
 
 <body>
     <div class="container">
-        <div class="input-holder clear-btn" onclick="q(this)">
-            <input type=text id='str1' onclick="w()" oninput='reset()' onchange='reset()' />
+        <div class="input-holder clear-btn" onclick="clearInput(this)">
+            <input type="text" id="str1" oninput="reset()" onchange="reset()" />
         </div>
     </div>
     <div class="container">
-        <div class="input-holder clear-btn" onclick="q(this)">
-            <input type=text id='str2' onclick="w()" oninput='reset()' onchange='reset()' />
+        <div class="input-holder clear-btn" onclick="clearInput(this)">
+            <input type="text" id="str2" oninput="reset()" onchange="reset()" />
         </div>
     </div>
     <div class="container">
         <div class="input-holder cmpr-btn" onclick="compare()">
-            <input type=text id="result" onclick="w()"/>
+            <input type="text" id="result"/>
         </div>
         <p id="count">...</p>
     </div>
@@ -84,11 +84,15 @@
     </div>
 
     <script>
-        function q(e) {
-            e.children[0].value = '';
+        document.getElementById('str1').addEventListener('click', stopPropag, false);
+        document.getElementById('str2').addEventListener('click', stopPropag, false);
+    
+        function clearInput(el) {
+            el.children[0].value = '';
+            reset();
         }
 
-        function w() {
+        function stopPropag(event) {
             event.stopPropagation();
         }
 

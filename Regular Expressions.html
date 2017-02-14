@@ -11,51 +11,54 @@
                 padding-left: 10px;
                 margin-top: 4px;
         }
-        
+
         .w {
             width: 85%;
         }
-        
+
         a, a:visited {
             color: #66f;
         }
     </style>
-    <script src='scripts.library.js'></script>
+    <script src="scripts.library.js"></script>
 </head>
 
 <body>
-    <p class='regularExpressionsPluginP'>Input:</p>
-    <textarea id='input' class="w" style='height: 100px;'></textarea>
+    <p class="regularExpressionsPluginP">Input:</p>
+    <textarea id="input" class="w" style="height: 100px;"></textarea>
 
-    <p class='regularExpressionsPluginP'>Regular expression:</p>
-    <textarea id='regexp' class="w" style='height: 22px;'><td><b>(.*?)</b>( .*?)<br>(?:<a href="mailto:(.*?@.*?)">)?.*\n\s*<td>(.*?)</td></textarea>
+    <p class="regularExpressionsPluginP">Regular expression:</p>
+    <textarea id="regexp" class="w" style="height: 22px;"><td><b>(.*?)</b>( .*?)<br>(?:<a href="mailto:(.*?@.*?)">)?.*\n\s*<td>(.*?)</td></textarea>
 
-    <p class='regularExpressionsPluginP'>Flags:</p>
-    <input type=text id='flags' style='height: 22px;' value='g' placeholder="gmi"></textarea>
+    <p class="regularExpressionsPluginP">Flags:</p>
+    <input type=text id="flags" style="height: 22px;" value="g" placeholder="gmi"></textarea>
 
-    <p class='regularExpressionsPluginP'>Show results like this / Replace:</p>
-    <textarea id='resultsPattern' class="w" style='height: 22px;' placeholder="match[1] + match[2] + '\t' + match[3] + '\t' + match[4] + '\n***'">
+    <p class="regularExpressionsPluginP">Show results like this / Replace:</p>
+    <textarea id="resultsPattern" class="w" style="height: 22px;" placeholder="match[1] + match[2] + '\t' + match[3] + '\t' + match[4] + '\n***'">
 match[1] + match[2] + '\t' + match[3] + '\t' + match[4] + '\n***'</textarea>
 
-    <div id='regularExpressionsPluginSets' style="margin-bottom: 6px; margin-top: -3px;">
-        <button onclick='saveSet(false)' style='color: red; margin-left: 10px;'>Save set</button>
+    <div id="regularExpressionsPluginSets" style="margin-bottom: 6px; margin-top: -3px;">
+        <button onclick="saveSet(false)" style="color: red; margin-left: 10px;">Save set</button>
     </div>
-    <button onclick='process()' style='font-weight: bold;'>All matches</button>
-    <button onclick='processReplace()' style='font-weight: bold;'>Replace</button>
+    <button onclick="process()" style="font-weight: bold;">All matches</button>
+    <button onclick="processReplace()" style="font-weight: bold;">Replace</button>
 
-    <p class='regularExpressionsPluginP'>Results:</p>
-    <textarea id='results' class="w" style='height: 100px;'></textarea>
-    
-    <p class='regularExpressionsPluginP'>Read more about
+    <p class="regularExpressionsPluginP">Results:</p>
+    <textarea id="results" class="w" style="height: 100px;"></textarea>
+
+    <p class="regularExpressionsPluginP">Read more about
         <a href="Regular Expressions - JavaScript _ MDN.html"  target="_blank">Regular Expressions</a>
         and
         <a href="RegExp - JavaScript _ MDN.html"  target="_blank">RegExp</a>
     </p>
-    <p class='regularExpressionsPluginP'>
+    <p class="regularExpressionsPluginP">
         <a href="compare_strings.html">Compare strings</a>
     </p>
 
     <script>
+        //
+        // !! Maybe next info is not actual !!
+        //
         // To embed this page into other page (e.g. over Greasemonkey in Mozilla Firefox)
         //
         // 1. Define variables:
@@ -107,10 +110,10 @@ match[1] + match[2] + '\t' + match[3] + '\t' + match[4] + '\n***'</textarea>
         //
         // 5. Move result regular expression and results pattern into html for auto loading.
         //
-
+        //
         // branch RE: <a href="http:\/\/www.kv.aval\/ua\/phone_list.html\?rootId=\d*" (style="cursor:pointer;">)(.*?)</a>(?:.*?\1(.*?)</a>(?:.*?\1(.*?)</a>(?:.*?\1(.*?)</a>(?:.*?\1(.*?)</a>)?)?)?)?
         // results  : match[2] + ' -> ' + match[3] + ' -> ' + match[4] + ' -> ' + match[5] + ' -> ' + match[6]
-
+        //
         // phones RE: <td><b>(.*?)</b>( .*?)<br>(?:<a href="mailto:(.*?@.*?)">)?.*\n\s*<td>(.*?)</td>
         // results  : match[1] + match[2] + '\t' + match[3] + '\t' + match[4]
 
@@ -148,7 +151,7 @@ match[1] + match[2] + '\t' + match[3] + '\t' + match[4] + '\n***'</textarea>
                 resultsCtrl.value = resultsStr;
             }
         }
-        
+
         function processReplace() {
             var rePattern = document.getElementById('regexp').value;
             var reFlags = document.getElementById('flags').value;

@@ -70,10 +70,10 @@
     <div style="margin-top: 10px; color: #aaa;">
         <span>Texts' width:</span>
         <input type=number
-                id='width'
+                id="width"
                 onkeyup="return onInputKeyUp(event)"
                 onchange="setLength(document.getElementById('width'))"
-                value='700'
+                value="700"
                 style="width: 50px;"/>
         <span>px</span>
     </div>
@@ -92,8 +92,8 @@
         }
 
         function reset() {
-            document.getElementById("count").innerHTML = '...';
-            document.getElementById("result").value = '';
+            document.getElementById('count').innerHTML = '...';
+            document.getElementById('result').value = '';
         }
 
         function setWidth() {
@@ -101,7 +101,7 @@
         }
 
         function onInputKeyUp(e) {
-            var numberElem = document.getElementById("width");
+            var numberElem = document.getElementById('width');
             if(document.activeElement == numberElem) {
                 if(e.keyCode == 38 || e.keyCode == 40) {
                     setLength(numberElem);
@@ -110,9 +110,9 @@
         }
 
         function setLength(numberElem) {
-            document.getElementById("result").style.width = numberElem.value + 'px';
-            document.getElementById("str1").style.width = numberElem.value + 'px';
-            document.getElementById("str2").style.width = numberElem.value + 'px';
+            document.getElementById('result').style.width = numberElem.value + 'px';
+            document.getElementById('str1').style.width = numberElem.value + 'px';
+            document.getElementById('str2').style.width = numberElem.value + 'px';
         }
 
         function compare() {

@@ -46,12 +46,22 @@
             background-image: url("img/compare.png");
         }
         
-        .settings {
+        .settings,
+        .settings *
+        {
             color: #aaa;
         }
         
-        .settings:hover {
+        .settings:hover,
+        .settings:hover *
+        {
             color: #444;
+        }
+        
+        #txt {
+            margin-top: 2px;
+            width: 700px;
+            height: 100px;
         }
     </style>
 </head>
@@ -75,21 +85,28 @@
 
     <p id="count">...</p>
 
-    <div style="margin-top: 2px; color: #aaa;">
+    <div class="settings" style="margin-top: 2px; color: #aaa;">
         <span>Texts' width:</span>
         <input type=number
                 id="width"
-                class="settings"
                 onkeyup="return onInputKeyUp(event)"
                 onchange="setLength(document.getElementById('width'))"
                 value="700"
                 style="width: 50px;"/>
         <span>px</span>
     </div>
+    
+    <div class="settings">
+        <p style="margin-bottom: 2px;">Remove line breaks:</p>
+        <textarea id="txt"></textarea>
+        <br>
+        <button onclick="removeLineBreaks()">Remove</button>
+    </div>
 
     <script>
         document.getElementById('str1').addEventListener('click', stopPropag, false);
         document.getElementById('str2').addEventListener('click', stopPropag, false);
+        document.getElementById('result').addEventListener('click', stopPropag, false);
     
         function clearInput(el) {
             el.children[0].value = '';
@@ -157,6 +174,15 @@
                     placesCount: placesCount
                 };
             }
+        }
+        
+        function removeLineBreaks() {
+            var txt = document.getElementById('txt');
+            
+            var re = /\n/g;
+            var replaceTo = ' ';
+            
+            txt.value = txt.value.replace(re, replaceTo);
         }
     </script>
 </body>

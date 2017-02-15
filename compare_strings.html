@@ -21,7 +21,7 @@
         }
 
         #count {
-            margin: 5px;
+            margin: 8px;
             color: #444;
         }
 
@@ -45,6 +45,14 @@
         .cmpr-btn {
             background-image: url("img/compare.png");
         }
+        
+        .settings {
+            color: #aaa;
+        }
+        
+        .settings:hover {
+            color: #444;
+        }
     </style>
 </head>
 
@@ -63,14 +71,15 @@
         <div class="input-holder cmpr-btn" onclick="compare()">
             <input type="text" id="result"/>
         </div>
-        <p id="count">...</p>
     </div>
 
-    <br>
-    <div style="margin-top: 10px; color: #aaa;">
+    <p id="count">...</p>
+
+    <div style="margin-top: 2px; color: #aaa;">
         <span>Texts' width:</span>
         <input type=number
                 id="width"
+                class="settings"
                 onkeyup="return onInputKeyUp(event)"
                 onchange="setLength(document.getElementById('width'))"
                 value="700"

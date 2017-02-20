@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Compare strings</title>
+    <title>String operations</title>
 
     <style>
         input[type=text] {
@@ -46,14 +46,14 @@
             background-image: url("img/compare.png");
         }
         
-        .settings,
-        .settings *
+        .hover,
+        .hover *
         {
             color: #aaa;
         }
         
-        .settings:hover,
-        .settings:hover *
+        .hover:hover,
+        .hover:hover *
         {
             color: #444;
         }
@@ -85,7 +85,7 @@
 
     <p id="count">...</p>
 
-    <div class="settings" style="margin-top: 2px; color: #aaa;">
+    <div class="hover" style="margin-top: 2px; color: #aaa;">
         <span>Texts' width:</span>
         <input type=number
                 id="width"
@@ -96,7 +96,7 @@
         <span>px</span>
     </div>
     
-    <div class="settings">
+    <div class="hover">
         <p style="margin-bottom: 2px;">Remove line breaks:</p>
         <textarea id="txt"></textarea>
         <br>

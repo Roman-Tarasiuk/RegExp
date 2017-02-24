@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css"/>
+
+    <style>
+        @font-face {
+            font-family: clockFont;
+            src: url('Fonts/LCDAT&TPhoneTimeDate.ttf');
+        }
+
+        p {
+            margin: 0;
+            font-weight: bold;
+        }
+    </style>
+
+    <title>Utils</title>
+    <link rel="shortcut icon" href="img/utilities.png">
+</head>
+
+<body style='background-color: #66f;'>
+    <div>
+        <div id="request" style="width:1200px">
+            <p id="comment" style="display:inline; font-weight: normal;">%-like address (e.g. Google search link):</p>
+            <input type="text" id="googleAddress"></input>
+            <input type="button" value="Decode" onclick="document.getElementById('txt').value = decode()" id="btnClean"></input>
+        </div>
+        <div style="margin-left: 264px;">
+            <button onclick="simpleEncode()">Simple encode</button>
+            <button onclick="simpleDecode()">Simple decode</button>
+        </div>
+        <div id="result">
+            <textarea id="txt" style="width:100%"></textarea>
+        </div>
+    </div>
+
+    <div>
+        <p>Now is:
+            <span id="dateTimeNow" style='font-weight: normal' onclick='nowIs()' title='Click to refresh'></span>
+        </p>
+        <p id='clock' style='width: 155px; font-family: "clockFont", sans-serif; font-size: 32pt; background-color: black; color: lime; padding-left: 4px; padding-right: 4px; margin: 0px;'>00:00:00</p>
+    </div>
+
+    <br/>
+
+    <div>
+        <p>Check Uncommented SQL:</p>
+        <textarea id='sqlCode' style='width:1200px; height:150px'></textarea>
+        <br/>
+        <input type='button' value='Check SQL' onclick='checkUncommentedSQL()'>
+    </div>
+
+    <br/>
+
+    <div>
+        <p>Swap quotes &#39; &harr; &#34; :</p>
+        <textarea id='code' style='width:1200px; height:120px'></textarea>
+        <br/>
+        <input type='button' value='Swap' onclick='changeQuotes()'>
+        <br/>
+        <textarea id='changed' style='width:1200px; height:120px'></textarea>
+    </div>
+
+
+    <!-- <script src="js/script.js"></script> -->
+
+    <script>
+        (function() {
+            var width = $("#request").width();
+            // To Do: Hardcoded '33' and '8' - need to be computed automatically
+            $("#googleAddress").width(width - $("#comment").width() - $("#btnClean").width() - 33);
+            $("#result").width(width - 8);
+        })();
+
+        //if (isInternetExplorer()) {
+            $("#txt").resizable();
+        //}
+
+        function decode() {
+            var address = document.getElementById("googleAddress").value;
+            var addressPattern = /url=http.*&usg=/;
+            var tmp = addressPattern.exec(address);
+
+            var isFullAddress;
+            if(tmp == null) {
+                tmp = address;
+                isFullAddress = true;
+            }
+            else {
+                tmp = tmp.toString();
+                isFullAddress = false;
+            }
+
+            /*
+            var percentSymbols = ["%21", "%23", "%24", "%26", "%27", "%28", "%29", "%2A", "%2B", "%2C", "%2F", "%3A", "%3B", "%3D", "%3F", "%40", "%5B", "%5D",
+                                  "%20", "%22", "%25", "%2D", "%2E", "%3C", "%3E", "%5C", "%5E", "%5F", "%60", "%7B", "%7C", "%7D", "%7E", "%C2%AE"];
+            var normalSymbols  = [  "!",   "#",   "$",   "&",   "'",   "(",   ")",   "*",   "+",   ",",   "/",   ":",   ";",   "=",   "?",   "@",   "[",   "]",
+                                    " ",   '"',   "%",   "-",   ".",   "<",   ">",  "\\",   "^",   "_",   "`",   "{",   "|",   "}",   "~",      "®"];
+
+            for(var i = 0; i < percentSymbols.length; i++) {
+                if(tmp.indexOf(percentSymbols[i]) > 0) {
+                    var re = new RegExp(percentSymbols[i], 'g');
+                    tmp = tmp.replace(re, normalSymbols[i]);
+                }
+            }
+            //*/
+
+            //
+            // http://meyerweb.com/eric/tools/dencoder/
+            //
+            //tmp = decodeURIComponent(tmp.replace(/\+/g,  " "));
+            tmp = decodeURIComponent(tmp);
+
+            if(!isFullAddress) {
+                tmp = tmp.slice(4, tmp.length - 5);
+            }
+
+            if(tmp.indexOf("%") > 0) {
+                tmp = "%%%" + tmp;
+            }
+
+            return tmp;
+        }
+        
+        function simpleEncode() {
+            var origin = document.getElementById('googleAddress');
+            var result = document.getElementById('txt');
+            
+            result.value = encodeURIComponent(origin.value);
+        }
+        
+        function simpleDecode() {
+            var origin = document.getElementById('googleAddress');
+            var result = document.getElementById('txt');
+            
+            result.value = decodeURIComponent(origin.value);
+        }
+
+        function nowIs() {
+            var d = new Date(Date.now());
+
+            var month = d.getMonth() + 1;
+            if (month.toString().length == 1) {
+                month = "0" + month;
+            }
+
+            var date = d.getDate();
+            if (date.toString().length == 1) {
+                date = "0" + date;
+            }
+
+            var hours = d.getHours();
+            if (hours.toString().length == 1) {
+                hours = "0" + hours;
+            }
+
+            var minutes = d.getMinutes();
+            if (minutes.toString().length == 1) {
+                minutes = "0" + minutes;
+            }
+
+            var seconds = d.getSeconds();
+            if (seconds.toString().length == 1) {
+                seconds = "0" + seconds;
+            }
+
+            var s = "";
+            s += d.getFullYear() + "-" + month + "-" + date + "--" + hours + "-" + minutes + "-" + seconds;
+
+            document.getElementById("dateTimeNow").innerHTML = s;
+        };
+
+        nowIs();
+
+        (function() {
+            var showTime = function() {
+                var d = new Date(Date.now());
+
+                var hours = d.getHours();
+                if (hours < 10) {
+                    hours = "0" + hours;
+                }
+
+                var minutes = d.getMinutes();
+                if (minutes < 10) {
+                    minutes = "0" + minutes;
+                }
+
+                var seconds = d.getSeconds();
+                if (seconds < 10) {
+                    seconds = "0" + seconds;
+                }
+
+                document.getElementById('clock').innerHTML = hours + ':' + minutes + ':' + seconds;
+            }
+
+            window.setInterval(showTime, 100);
+        }
+        )();
+
+        function checkUncommentedSQL() {
+            function isSpaceOrComment(str) {
+                var index = 0;
+                while (index < str.length) {
+                    if ((str[index] == ' ') || (str[index] == '\t')) {
+                        index++;
+                    }
+                    else {
+                        break;
+                    }
+                }
+
+                if (index == str.length) {
+                    return true;
+                }
+
+                if (str[index] == '-') {
+                    if ((index < str.length - 1) && (str[index + 1] == '-')) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                else {
+                    return false;
+                }
+            }
+
+            var rows = document.getElementById('sqlCode').value.split('\n');
+
+            var uncommentedFound = false;
+            for (var i = 0; i < rows.length; i++) {
+                if (!isSpaceOrComment(rows[i])) {
+                    uncommentedFound = true;
+                    break;
+                }
+            }
+
+            if (uncommentedFound) {
+                alert('Found uncommented line: ' + (i + 1));
+            }
+            else {
+                alert('No uncommented lines found.');
+            }
+        }
+
+        function changeQuotes() {
+            var symbols = ['±'];
+
+            var replacement = null;
+
+            var text = document.getElementById('code').value;
+
+            for (var i = 0; i < symbols.length; i++) {
+                if (text.indexOf(symbols[i]) == -1) {
+                    replacement = symbols[i];
+                    break;
+                }
+            }
+
+            if (replacement != null) {
+                text = text.replace(/\"/g, replacement);
+                text = text.replace(/\'/g, '"');
+                text = text.replace(new RegExp(replacement, 'g'), "'");
+                document.getElementById('changed').value = text;
+            }
+            else {
+                document.getElementById('changed').value = 'Bad replacement symbols set.';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -100,7 +100,8 @@
         <p style="margin-bottom: 2px;">Remove line breaks:</p>
         <textarea id="txt"></textarea>
         <br>
-        <button onclick="removeLineBreaks()">Remove</button>
+        <button onclick="removeLineBreaks()" title="Replace line breaks to spaces">Remove</button>
+        <button onclick="removeAllSpaces()" title="Remove spaces, tabs, line breaks etc.">Remove all spaces</button>
     </div>
 
     <script>
@@ -181,6 +182,16 @@
             
             var re = /\n/g;
             var replaceTo = ' ';
+            
+            txt.value = txt.value.replace(re, replaceTo);
+            txt.select();
+        }
+        
+        function removeAllSpaces() {
+            var txt = document.getElementById('txt');
+            
+            var re = /\s/g;
+            var replaceTo = '';
             
             txt.value = txt.value.replace(re, replaceTo);
             txt.select();

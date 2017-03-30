@@ -45,19 +45,19 @@
         .cmpr-btn {
             background-image: url("img/compare.png");
         }
-        
+
         .hover,
         .hover *
         {
             color: #aaa;
         }
-        
+
         .hover:hover,
         .hover:hover *
         {
             color: #444;
         }
-        
+
         #txt {
             margin-top: 2px;
             width: 700px;
@@ -67,47 +67,50 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="input-holder clear-btn" onclick="clearInput(this)">
-            <input type="text" id="str1" oninput="reset()" onchange="reset()" />
+    <div>
+        <div class="container">
+            <div class="input-holder clear-btn" onclick="clearInput(this)">
+                <input type="text" id="str1" oninput="reset()" onchange="reset()" />
+            </div>
         </div>
-    </div>
-    <div class="container">
-        <div class="input-holder clear-btn" onclick="clearInput(this)">
-            <input type="text" id="str2" oninput="reset()" onchange="reset()" />
+        <div class="container">
+            <div class="input-holder clear-btn" onclick="clearInput(this)">
+                <input type="text" id="str2" oninput="reset()" onchange="reset()" />
+            </div>
         </div>
-    </div>
-    <div class="container">
-        <div class="input-holder cmpr-btn" onclick="compare()">
-            <input type="text" id="result"/>
+        <div class="container">
+            <div class="input-holder cmpr-btn" onclick="compare()">
+                <input type="text" id="result"/>
+            </div>
+        </div>
+
+        <p id="count">Differences: ...</p>
+
+        <div class="hover" style="margin-top: 2px; color: #aaa;">
+            <span>Texts' width:</span>
+            <input type=number
+                    id="width"
+                    onkeyup="return onInputKeyUp(event)"
+                    onchange="setLength(document.getElementById('width'))"
+                    value="700"
+                    style="width: 50px;"/>
+            <span>px</span>
         </div>
     </div>
 
-    <p id="count">...</p>
-
-    <div class="hover" style="margin-top: 2px; color: #aaa;">
-        <span>Texts' width:</span>
-        <input type=number
-                id="width"
-                onkeyup="return onInputKeyUp(event)"
-                onchange="setLength(document.getElementById('width'))"
-                value="700"
-                style="width: 50px;"/>
-        <span>px</span>
-    </div>
-    
     <div class="hover">
-        <p style="margin-bottom: 2px;">Remove line breaks:</p>
+        <p style="margin-bottom: 2px;">String manipulations:</p>
         <textarea id="txt"></textarea>
         <br>
-        <button onclick="removeLineBreaks()">Remove</button>
+        <button onclick="removeLineBreaks()" title="Replace to space character">Remove line breaks</button>
+        <button onclick="removeAllSpaces()">Remove all spaces</button>
     </div>
 
     <script>
         document.getElementById('str1').addEventListener('click', stopPropag, false);
         document.getElementById('str2').addEventListener('click', stopPropag, false);
         document.getElementById('result').addEventListener('click', stopPropag, false);
-    
+
         function clearInput(el) {
             el.children[0].value = '';
             reset();
@@ -118,7 +121,7 @@
         }
 
         function reset() {
-            document.getElementById('count').innerHTML = '...';
+            document.getElementById('count').innerHTML = 'Differences: ...';
             document.getElementById('result').value = '';
         }
 
@@ -175,13 +178,23 @@
                 };
             }
         }
-        
+
         function removeLineBreaks() {
             var txt = document.getElementById('txt');
-            
+
             var re = /\n/g;
             var replaceTo = ' ';
-            
+
+            txt.value = txt.value.replace(re, replaceTo);
+            txt.select();
+        }
+
+        function removeAllSpaces() {
+            var txt = document.getElementById('txt');
+
+            var re = /\s/g;
+            var replaceTo = '';
+
             txt.value = txt.value.replace(re, replaceTo);
             txt.select();
         }

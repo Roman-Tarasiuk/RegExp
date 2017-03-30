@@ -106,6 +106,9 @@
         <button onclick="removeAllSpaces()">Remove all spaces</button>
     </div>
 
+    
+    <script src="js/jquery.min.js"></script>
+    
     <script>
         document.getElementById('str1').addEventListener('click', stopPropag, false);
         document.getElementById('str2').addEventListener('click', stopPropag, false);
@@ -198,6 +201,26 @@
             txt.value = txt.value.replace(re, replaceTo);
             txt.select();
         }
+        
+        function removeAllSpaces() {
+            var txt = document.getElementById('txt');
+            
+            var re = /\s/g;
+            var replaceTo = '';
+            
+            txt.value = txt.value.replace(re, replaceTo);
+            txt.select();
+        }
+        
+        $('body').keydown(function(event) {
+            if (event.keyCode == 36) { // Home.
+                $('body').scrollLeft(0);
+            }
+            else if (event.keyCode == 35) { // End.
+                var width = $('#width').val();
+                $('body').scrollLeft(width);
+            }
+        });
     </script>
 </body>
 </html>

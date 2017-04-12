@@ -124,7 +124,8 @@ match[1] + match[2] + '\t' + match[3] + '\t' + match[4] + '\n***'</textarea>
         var replaceCookiesBackRE = new RegExp(replaceCookiesStr, 'g');
 
         function process() {
-            var rePattern = document.getElementById('regexp').value;
+            var rePattern = document.getElementById('regexp').value
+                    .replace(/\\\n/g, '\n');
             var reFlags = document.getElementById('flags').value;
             var resultsPattern = document.getElementById('resultsPattern').value;
 

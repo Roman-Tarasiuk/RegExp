@@ -59,10 +59,10 @@
     <br/>
 
     <div>
-        <p>Swap quotes &#39; &harr; &#34; :</p>
+        <p>Swap quotes &#39; &harr; &#34; (all or in selection):</p>
         <textarea id='code' style='width:1200px; height:120px'></textarea>
         <br/>
-        <input type='button' value='Swap' onclick='changeQuotes()'>
+        <input type='button' value='Swap' onclick='swapQuotes()'>
         <br/>
         <textarea id='changed' style='width:1200px; height:120px'></textarea>
     </div>
@@ -127,18 +127,18 @@
 
             return tmp;
         }
-        
+
         function simpleEncode() {
             var origin = document.getElementById('googleAddress');
             var result = document.getElementById('txt');
-            
+
             result.value = encodeURIComponent(origin.value);
         }
-        
+
         function simpleDecode() {
             var origin = document.getElementById('googleAddress');
             var result = document.getElementById('txt');
-            
+
             result.value = decodeURIComponent(origin.value);
         }
 
@@ -251,12 +251,21 @@
             }
         }
 
-        function changeQuotes() {
+        function swapQuotes() {
             var symbols = ['±'];
 
             var replacement = null;
 
-            var text = document.getElementById('code').value;
+            var code = document.getElementById('code');
+
+            var text;
+
+            if (code.selectionStart < code.selectionEnd) {
+                text = code.value.substring(code.selectionStart, code.selectionEnd);
+            }
+            else {
+                text = code.value;
+            }
 
             for (var i = 0; i < symbols.length; i++) {
                 if (text.indexOf(symbols[i]) == -1) {
@@ -269,7 +278,16 @@
                 text = text.replace(/\"/g, replacement);
                 text = text.replace(/\'/g, '"');
                 text = text.replace(new RegExp(replacement, 'g'), "'");
-                document.getElementById('changed').value = text;
+
+                if (code.selectionStart < code.selectionEnd) {
+                    document.getElementById('changed').value =
+                        code.value.substring(0, code.selectionStart)
+                        + text
+                        + code.value.substring(code.selectionEnd);
+                }
+                else {
+                    document.getElementById('changed').value = text;
+                }
             }
             else {
                 document.getElementById('changed').value = 'Bad replacement symbols set.';

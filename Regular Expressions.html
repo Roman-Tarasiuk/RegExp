@@ -142,7 +142,7 @@ match[1] + match[2] + '\t' + match[3] + '\t' + match[4] + '\n***'</textarea>
 
             var match;
             while ((match = RE.exec(input)) != null && (match.index < input.length)) {
-                resultsStr += eval(resultsPattern) + '\n';
+                resultsStr += eval(resultsPattern);
                 count++;
             }
 

@@ -59,12 +59,19 @@
     <br/>
 
     <div>
-        <p>Swap quotes &#39; &harr; &#34; (all or in selection):</p>
+        <p>Swap quotes &#39; &harr; &#34; (all or in a selection):</p>
         <textarea id='code' style='width:1200px; height:120px'></textarea>
         <br/>
         <input type='button' value='Swap' onclick='swapQuotes()'>
+    </div>
+    
+    <br/>
+    
+    <div>
+        <p>Statistic (occurrences of rows):</p>
+        <textarea id='data' style='width:1200px; height:120px'></textarea>
         <br/>
-        <textarea id='changed' style='width:1200px; height:120px'></textarea>
+        <input type='button' value='Run' onclick='statistic()'>
     </div>
 
 
@@ -74,7 +81,7 @@
         (function() {
             var width = $("#request").width();
             // To Do: Hardcoded '33' and '8' - need to be computed automatically
-            $("#googleAddress").width(width - $("#comment").width() - $("#btnClean").width() - 33);
+            $("#googleAddress").width(width - $("#comment").width() - $("#btnClean").width() - 36);
             $("#result").width(width - 8);
         })();
 
@@ -280,18 +287,41 @@
                 text = text.replace(new RegExp(replacement, 'g'), "'");
 
                 if (code.selectionStart < code.selectionEnd) {
-                    document.getElementById('changed').value =
+                    code.value =
                         code.value.substring(0, code.selectionStart)
                         + text
                         + code.value.substring(code.selectionEnd);
                 }
                 else {
-                    document.getElementById('changed').value = text;
+                    code.value = text;
                 }
             }
             else {
-                document.getElementById('changed').value = 'Bad replacement symbols set.';
+                code.value = 'Bad replacement symbols set.';
             }
+        }
+        
+        function statistic() {
+            var input = document.getElementById('data');
+            var rows = input.value.split('\n');
+            
+            var result = {};
+            
+            for (var i = 0; i < rows.length; i++) {
+                if (rows[i] in result) {
+                    result[rows[i]]++;
+                }
+                else {
+                    result[rows[i]] = 1;
+                }
+            }
+            
+            var resultStr = '';
+            for (var p in result) {
+                resultStr += p + '\t' + result[p] + '\n';
+            }
+            
+            input.value = resultStr;
         }
     </script>
 </body>

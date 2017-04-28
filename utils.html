@@ -71,8 +71,10 @@
         <p>Statistic (occurrences of rows):</p>
         <textarea id='data' style='width:1200px; height:120px'></textarea>
         <br/>
-        <input type='button' value='Run' onclick='statistic()'>
+        <input type='button' value='Clear' onclick='clearData()'>
+        <input type='button' value='Statistic' onclick='statistic()'>
         <input type='button' value='Cumulative' onclick='statisticCumulative()'>
+        <input type='button' value='Unique' onclick='unique()'>
     </div>
 
 
@@ -301,6 +303,12 @@
                 code.value = 'Bad replacement symbols set.';
             }
         }
+        
+        function clearData() {
+            var data = document.getElementById("data");
+            data.focus();
+            data.value = "";
+        }
 
         function statistic() {
             var input = document.getElementById('data');
@@ -352,6 +360,28 @@
             }
 
             input.value = resultStr;
+        }
+        
+        function unique() {
+            var input = document.getElementById('data');
+            var rows = input.value.split('\n');
+
+            var stat = getStatistic(rows);
+
+            var areUnique = true;
+            for (var p in stat) {
+                if (stat[p] > 1) {
+                    areUnique = false;
+                    break;
+                }
+            }
+            
+            if (areUnique) {
+                alert('Rows are unique.');
+            }
+            else {
+                alert('Rows are NOT unique.');
+            }
         }
     </script>
 </body>

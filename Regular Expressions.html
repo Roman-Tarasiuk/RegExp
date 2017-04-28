@@ -19,6 +19,22 @@
         a, a:visited {
             color: #66f;
         }
+        
+        .hover,
+        .hover *
+        {
+            color: #aaa;
+        }
+        
+        .hover * {
+            background-color: #eee;
+        }
+
+        .hover:hover,
+        .hover:hover *
+        {
+            color: #444;
+        }
     </style>
     <script src="scripts.library.js"></script>
 </head>
@@ -26,6 +42,9 @@
 <body>
     <p class="regularExpressionsPluginP">Input:</p>
     <textarea id="input" class="w" style="height: 100px;"></textarea>
+    <div class="hover">
+        <button style="background-color: " onclick="clearInput()">Clear</button>
+    </div>
 
     <p class="regularExpressionsPluginP">Regular expression:</p>
     <textarea id="regexp" class="w" style="height: 22px;"><td><b>(.*?)</b>( .*?)<br>(?:<a href="mailto:(.*?@.*?)">)?.*\n\s*<td>(.*?)</td></textarea>
@@ -122,6 +141,12 @@ match[1] + match[2] + '\t' + match[3] + '\t' + match[4] + '\n***'</textarea>
         var replaceCookiesRE = new RegExp(replaceCookiesOrigin, 'g');
         var replaceCookiesStr = '###';
         var replaceCookiesBackRE = new RegExp(replaceCookiesStr, 'g');
+        
+        function clearInput() {
+            var input = document.getElementById("input");
+            input.focus();
+            input.value = "";
+        }
 
         function process() {
             var rePattern = document.getElementById('regexp').value

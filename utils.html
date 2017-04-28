@@ -64,14 +64,15 @@
         <br/>
         <input type='button' value='Swap' onclick='swapQuotes()'>
     </div>
-    
+
     <br/>
-    
+
     <div>
         <p>Statistic (occurrences of rows):</p>
         <textarea id='data' style='width:1200px; height:120px'></textarea>
         <br/>
         <input type='button' value='Run' onclick='statistic()'>
+        <input type='button' value='Cumulative' onclick='statisticCumulative()'>
     </div>
 
 
@@ -300,13 +301,24 @@
                 code.value = 'Bad replacement symbols set.';
             }
         }
-        
+
         function statistic() {
             var input = document.getElementById('data');
             var rows = input.value.split('\n');
-            
+
+            var stat = getStatistic(rows);
+
+            var resultStr = '';
+            for (var p in stat) {
+                resultStr += p + '\t' + stat[p] + '\n';
+            }
+
+            input.value = resultStr;
+        }
+
+        function getStatistic(rows) {
             var result = {};
-            
+
             for (var i = 0; i < rows.length; i++) {
                 if (rows[i] in result) {
                     result[rows[i]]++;
@@ -315,12 +327,30 @@
                     result[rows[i]] = 1;
                 }
             }
-            
+
+            return result;
+        }
+
+        function statisticCumulative() {
+            var input = document.getElementById('data');
+            var rows = input.value.split('\n');
+
+            var stat = getStatistic(rows);
+
             var resultStr = '';
-            for (var p in result) {
-                resultStr += p + '\t' + result[p] + '\n';
+            var tmp = {};
+
+            for (var i = 0; i < rows.length; i++) {
+                if (rows[i] in tmp) {
+                    tmp[rows[i]]++;
+                }
+                else {
+                    tmp[rows[i]] = 1;
+                }
+
+                resultStr += rows[i] + '\t' + tmp[rows[i]] + '/' + stat[rows[i]] + '\n';
             }
-            
+
             input.value = resultStr;
         }
     </script>

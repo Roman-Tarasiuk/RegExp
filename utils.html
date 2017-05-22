@@ -11,12 +11,17 @@
     <style>
         @font-face {
             font-family: clockFont;
-            src: url('Fonts/LCDAT&TPhoneTimeDate.ttf');
+            src: url("Fonts/LCDAT&TPhoneTimeDate.ttf");
         }
 
         p {
             margin: 0;
             font-weight: bold;
+        }
+        
+        #googleAddress {
+            width: 100%;
+            height: 120px;
         }
     </style>
 
@@ -24,14 +29,12 @@
     <link rel="shortcut icon" href="img/utilities.png">
 </head>
 
-<body style='background-color: #66f;'>
+<body style="background-color: #66f;">
     <div>
         <div id="request" style="width:1200px">
-            <p id="comment" style="display:inline; font-weight: normal;">%-like address (e.g. Google search link):</p>
-            <input type="text" id="googleAddress"></input>
+            <p id="comment">%-like address (e.g. Google search link): <button onclick="clearAndFocus('googleAddress')">Clear</button></p>
+            <textarea id="googleAddress"></textarea>
             <input type="button" value="Decode" onclick="document.getElementById('txt').value = decode()" id="btnClean"></input>
-        </div>
-        <div style="margin-left: 264px;">
             <button onclick="simpleEncode()">Simple encode</button>
             <button onclick="simpleDecode()">Simple decode</button>
         </div>
@@ -42,39 +45,39 @@
 
     <div>
         <p>Now is:
-            <span id="dateTimeNow" style='font-weight: normal' onclick='nowIs()' title='Click to refresh'></span>
+            <span id="dateTimeNow" style="font-weight: normal" onclick="nowIs()" title="Click to refresh"></span>
         </p>
-        <p id='clock' style='width: 155px; font-family: "clockFont", sans-serif; font-size: 32pt; background-color: black; color: lime; padding-left: 4px; padding-right: 4px; margin: 0px;'>00:00:00</p>
+        <p id="clock" style="width: 155px; font-family: 'clockFont', sans-serif; font-size: 32pt; background-color: black; color: lime; padding-left: 4px; padding-right: 4px; margin: 0px;">00:00:00</p>
     </div>
 
     <br/>
 
     <div>
         <p>Check Uncommented SQL:</p>
-        <textarea id='sqlCode' style='width:1200px; height:150px'></textarea>
+        <textarea id="sqlCode" style="width:1200px; height:150px; background-color: #ffc;"></textarea>
         <br/>
-        <input type='button' value='Check SQL' onclick='checkUncommentedSQL()'>
+        <input type="button" value="Check SQL" onclick="checkUncommentedSQL()">
     </div>
 
     <br/>
 
     <div>
         <p>Swap quotes &#39; &harr; &#34; (all or in a selection):</p>
-        <textarea id='code' style='width:1200px; height:120px'></textarea>
+        <textarea id="code" style="width:1200px; height:120px"></textarea>
         <br/>
-        <input type='button' value='Swap' onclick='swapQuotes()'>
+        <input type="button" value="Swap" onclick="swapQuotes()">
     </div>
 
     <br/>
 
     <div>
         <p>Statistic (occurrences of rows):</p>
-        <textarea id='data' style='width:1200px; height:120px'></textarea>
+        <textarea id="data" style="width:1200px; height:120px"></textarea>
         <br/>
-        <input type='button' value='Clear' onclick='clearData()'>
-        <input type='button' value='Statistic' onclick='statistic()'>
-        <input type='button' value='Cumulative' onclick='statisticCumulative()'>
-        <input type='button' value='Unique' onclick='unique()'>
+        <input type="button" value="Clear" onclick="clearAndFocus('data')">
+        <input type="button" value="Statistic" onclick="statistic()">
+        <input type="button" value="Cumulative" onclick="statisticCumulative()">
+        <input type="button" value="Unique" onclick="unique()">
     </div>
 
 
@@ -82,18 +85,18 @@
 
     <script>
         (function() {
-            var width = $("#request").width();
+            var width = $('#request').width();
             // To Do: Hardcoded '33' and '8' - need to be computed automatically
-            $("#googleAddress").width(width - $("#comment").width() - $("#btnClean").width() - 36);
-            $("#result").width(width - 8);
+            //$('#googleAddress').width(width - $('#comment').width() - $('#btnClean').width() - 36);
+            $('#result').width(width - 8);
         })();
 
         //if (isInternetExplorer()) {
-            $("#txt").resizable();
+            $('#txt').resizable();
         //}
 
         function decode() {
-            var address = document.getElementById("googleAddress").value;
+            var address = document.getElementById('googleAddress').value;
             var addressPattern = /url=http.*&usg=/;
             var tmp = addressPattern.exec(address);
 
@@ -108,10 +111,10 @@
             }
 
             /*
-            var percentSymbols = ["%21", "%23", "%24", "%26", "%27", "%28", "%29", "%2A", "%2B", "%2C", "%2F", "%3A", "%3B", "%3D", "%3F", "%40", "%5B", "%5D",
-                                  "%20", "%22", "%25", "%2D", "%2E", "%3C", "%3E", "%5C", "%5E", "%5F", "%60", "%7B", "%7C", "%7D", "%7E", "%C2%AE"];
-            var normalSymbols  = [  "!",   "#",   "$",   "&",   "'",   "(",   ")",   "*",   "+",   ",",   "/",   ":",   ";",   "=",   "?",   "@",   "[",   "]",
-                                    " ",   '"',   "%",   "-",   ".",   "<",   ">",  "\\",   "^",   "_",   "`",   "{",   "|",   "}",   "~",      "®"];
+            var percentSymbols = ['%21', '%23', '%24', '%26', '%27', '%28', '%29', '%2A', '%2B', '%2C', '%2F', '%3A', '%3B', '%3D', '%3F', '%40', '%5B', '%5D',
+                                  '%20', '%22', '%25', '%2D', '%2E', '%3C', '%3E', '%5C', '%5E', '%5F', '%60', '%7B', '%7C', '%7D', '%7E', '%C2%AE'];
+            var normalSymbols  = [  '!',   '#',   '$',   '&',   "'",   '(',   ')',   '*',   '+',   ',',   '/',   ':',   ';',   '=',   '?',   '@',   '[',   ']',
+                                    ' ',   '"',   '%',   '-',   '.',   '<',   '>',  '\\',   '^',   '_',   '`',   '{',   '|',   '}',   '~',      '®'];
 
             for(var i = 0; i < percentSymbols.length; i++) {
                 if(tmp.indexOf(percentSymbols[i]) > 0) {
@@ -124,15 +127,15 @@
             //
             // http://meyerweb.com/eric/tools/dencoder/
             //
-            //tmp = decodeURIComponent(tmp.replace(/\+/g,  " "));
+            //tmp = decodeURIComponent(tmp.replace(/\+/g,  ' '));
             tmp = decodeURIComponent(tmp);
 
             if(!isFullAddress) {
                 tmp = tmp.slice(4, tmp.length - 5);
             }
 
-            if(tmp.indexOf("%") > 0) {
-                tmp = "%%%" + tmp;
+            if(tmp.indexOf('%') > 0) {
+                tmp = '%%%' + tmp;
             }
 
             return tmp;
@@ -157,33 +160,33 @@
 
             var month = d.getMonth() + 1;
             if (month.toString().length == 1) {
-                month = "0" + month;
+                month = '0' + month;
             }
 
             var date = d.getDate();
             if (date.toString().length == 1) {
-                date = "0" + date;
+                date = '0' + date;
             }
 
             var hours = d.getHours();
             if (hours.toString().length == 1) {
-                hours = "0" + hours;
+                hours = '0' + hours;
             }
 
             var minutes = d.getMinutes();
             if (minutes.toString().length == 1) {
-                minutes = "0" + minutes;
+                minutes = '0' + minutes;
             }
 
             var seconds = d.getSeconds();
             if (seconds.toString().length == 1) {
-                seconds = "0" + seconds;
+                seconds = '0' + seconds;
             }
 
-            var s = "";
-            s += d.getFullYear() + "-" + month + "-" + date + "--" + hours + "-" + minutes + "-" + seconds;
+            var s = '';
+            s += d.getFullYear() + '-' + month + '-' + date + '--' + hours + '-' + minutes + '-' + seconds;
 
-            document.getElementById("dateTimeNow").innerHTML = s;
+            document.getElementById('dateTimeNow').innerHTML = s;
         };
 
         nowIs();
@@ -194,17 +197,17 @@
 
                 var hours = d.getHours();
                 if (hours < 10) {
-                    hours = "0" + hours;
+                    hours = '0' + hours;
                 }
 
                 var minutes = d.getMinutes();
                 if (minutes < 10) {
-                    minutes = "0" + minutes;
+                    minutes = '0' + minutes;
                 }
 
                 var seconds = d.getSeconds();
                 if (seconds < 10) {
-                    seconds = "0" + seconds;
+                    seconds = '0' + seconds;
                 }
 
                 document.getElementById('clock').innerHTML = hours + ':' + minutes + ':' + seconds;
@@ -304,10 +307,10 @@
             }
         }
         
-        function clearData() {
-            var data = document.getElementById("data");
+        function clearAndFocus(id) {
+            var data = document.getElementById(id);
             data.focus();
-            data.value = "";
+            data.value = '';
         }
 
         function statistic() {

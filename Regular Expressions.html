@@ -4,46 +4,7 @@
     <meta charset="UTF-8">
     <title>Regular Expressions</title>
     <link rel="shortcut icon" href="img/icon_RegExp.png">
-    <style>
-        .regularExpressionsPluginP {
-                margin: 0;
-                color: #777;
-                padding-left: 10px;
-                margin-top: 4px;
-        }
-
-        .w {
-            width: 85%;
-        }
-
-        a, a:visited {
-            color: #66f;
-        }
-        
-        .hover,
-        .hover *
-        {
-            color: #aaa;
-        }
-        
-        .hover * {
-            background-color: #eee;
-        }
-
-        .hover:hover,
-        .hover:hover *
-        {
-            color: #444;
-        }
-        
-        .zero-margin-bottom {
-            margin-bottom: 0px;
-        }
-        
-        .zero-margin-top {
-            margin-top: 0px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/regular_expressions.css">
     <script src="scripts.library.js"></script>
 </head>
 
@@ -55,14 +16,16 @@
     </div>
 
     <p class="regularExpressionsPluginP">Regular expression:</p>
-    <textarea id="regexp" class="w" style="height: 22px;"><td><b>(.*?)</b>( .*?)<br>(?:<a href="mailto:(.*?@.*?)">)?.*\n\s*<td>(.*?)</td></textarea>
+    <textarea id="regexp" class="w" style="height: 22px;">
+<td><b>(.*?)</b>( .*?)<br>(?:<a href="mailto:(.*?@.*?)">)?.*\n\s*<td>(.*?)</td></textarea>
 
     <p class="regularExpressionsPluginP">Flags:</p>
     <input type=text id="flags" style="height: 22px;" value="g" placeholder="gmi"></textarea>
 
     <p class="regularExpressionsPluginP">Show results like this / Replace:</p>
-    <textarea id="resultsPattern" class="w" style="height: 22px;" placeholder="match[1] + match[2] + '\t' + match[3] + '\t' + match[4] + '\n***'">
-match[1] + match[2] + '\t' + match[3] + '\t' + match[4] + '\n***'</textarea>
+    <textarea id="resultsPattern" class="w" style="height: 22px;"
+            placeholder="match[1] + match[2] + '\t' + match[3] + '\t' + match[4] + '\n'">
+match[1] + '\n'</textarea>
 
     <div id="regularExpressionsPluginSets" style="margin-bottom: 6px; margin-top: -3px;">
         <button onclick="saveSet(false)" style="color: red; margin-left: 10px;">Save set</button>

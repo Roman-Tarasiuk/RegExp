@@ -1,0 +1,58 @@
+input[type=text] {
+    width: 700px;
+    vertical-align: middle;
+    position: relative;
+    top: 50%;
+    margin-top: -20px;
+    margin-right: 5px;
+    margin-left: 36px;
+    font-family: courier;
+}
+
+input#result {
+    color: red;
+}
+
+#count {
+    margin: 8px;
+    color: #444;
+}
+
+div.container {
+    height: 32px;
+}
+
+.input-holder {
+    height: 32px;
+    background-color: #fcc;
+    background-repeat: no-repeat;
+    background-position: left center;
+    width: auto;
+    display: inline-block;
+}
+
+.clear-btn {
+    background-image: url("img/clear.png");
+}
+
+.cmpr-btn {
+    background-image: url("img/compare.png");
+}
+
+.hover,
+.hover *
+{
+    color: #aaa;
+}
+
+.hover:hover,
+.hover:hover *
+{
+    color: #444;
+}
+
+#txt {
+    margin-top: 2px;
+    width: 700px;
+    height: 100px;
+}

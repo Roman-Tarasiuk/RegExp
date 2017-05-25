@@ -5,67 +5,7 @@
     <title>String operations</title>
     
     <link rel="shortcut icon" href="img/icon_StringsOriginal.png">
-
-    <style>
-        input[type=text] {
-            width: 700px;
-            vertical-align: middle;
-            position: relative;
-            top: 50%;
-            margin-top: -20px;
-            margin-right: 5px;
-            margin-left: 36px;
-            font-family: courier;
-        }
-
-        input#result {
-            color: red;
-        }
-
-        #count {
-            margin: 8px;
-            color: #444;
-        }
-
-        div.container {
-            height: 32px;
-        }
-
-        .input-holder {
-            height: 32px;
-            background-color: #fcc;
-            background-repeat: no-repeat;
-            background-position: left center;
-            width: auto;
-            display: inline-block;
-        }
-
-        .clear-btn {
-            background-image: url("img/clear.png");
-        }
-
-        .cmpr-btn {
-            background-image: url("img/compare.png");
-        }
-
-        .hover,
-        .hover *
-        {
-            color: #aaa;
-        }
-
-        .hover:hover,
-        .hover:hover *
-        {
-            color: #444;
-        }
-
-        #txt {
-            margin-top: 2px;
-            width: 700px;
-            height: 100px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/string_operations.css">
 </head>
 
 <body>
@@ -102,10 +42,14 @@
 
     <div class="hover">
         <p style="margin-bottom: 2px;">String manipulations:</p>
-        <textarea id="txt"></textarea>
+        <textarea id="txt" onclick="document.getElementById('length').innerText='';"></textarea>
         <br>
         <button onclick="removeLineBreaks()" title="Replace to space character">Remove line breaks</button>
         <button onclick="removeAllSpaces()">Remove all spaces</button>
+        <span>
+            <button onclick="getLength()">Length</button>
+            <span id="length"></span>
+        </span>
     </div>
 
     
@@ -212,6 +156,13 @@
             
             txt.value = txt.value.replace(re, replaceTo);
             txt.select();
+        }
+        
+        function getLength() {
+            var txt = document.getElementById('txt');
+            var length = document.getElementById('length');
+            
+            length.innerText = txt.value.length;
         }
         
         $('body').keydown(function(event) {

@@ -1,0 +1,14 @@
+@font-face {
+    font-family: clockFont;
+    src: url("../Fonts/LCDAT&TPhoneTimeDate.ttf");
+}
+
+p {
+    margin: 0;
+    font-weight: bold;
+}
+
+#googleAddress {
+    width: 100%;
+    height: 120px;
+}

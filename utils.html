@@ -61,6 +61,7 @@
         <input type="button" value="Clear" onclick="clearAndFocus('data')">
         <input type="button" value="Statistic" onclick="statistic()">
         <input type="button" value="Cumulative" onclick="statisticCumulative()">
+        <input type="button" value="Category count" onclick="statisticCategoryCount()">
         <input type="button" value="Unique" onclick="unique()">
     </div>
 
@@ -290,7 +291,7 @@
                 code.value = 'Bad replacement symbols set.';
             }
         }
-        
+
         function clearAndFocus(id) {
             var data = document.getElementById(id);
             data.focus();
@@ -348,7 +349,43 @@
 
             input.value = resultStr;
         }
-        
+
+        function statisticCategoryCount() {
+        // rows' format: subject \t category
+            var input = document.getElementById('data');
+            var rows = input.value.split('\n');
+
+            var stat = {};
+            var tmp = [];
+
+            for (var i = 0; i < rows.length; i++) {
+                var rowSplitted = rows[i].split('\t');
+                var subj = rowSplitted[0];
+                var cat = rowSplitted[1];
+                if (subj in stat) {
+                    if (!(cat in stat[subj])) {
+                        stat[subj][cat] = null;
+                        // The next two forms are equal.
+                        //stat[subj].count++;
+                        stat[subj]["count"]++;
+                    }
+                }
+                else {
+                    stat[subj] = {[cat]: null, count: 1};
+                }
+
+                tmp.push(subj);
+                tmp.push(cat);
+            }
+
+            var resultStr = '';
+            for (var i = 0; i < rows.length; i++) {
+                resultStr += tmp[i * 2] + '\t' + tmp[i * 2 + 1] + '\t' + stat[tmp[i * 2]].count + '\n';
+            }
+
+            input.value = resultStr;
+        }
+
         function unique() {
             var input = document.getElementById('data');
             var rows = input.value.split('\n');
@@ -362,7 +399,7 @@
                     break;
                 }
             }
-            
+
             if (areUnique) {
                 alert('Rows are unique.');
             }

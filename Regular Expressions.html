@@ -9,44 +9,59 @@
 </head>
 
 <body>
-    <p class="regularExpressionsPluginP">Input:</p>
-    <textarea id="input" class="w" style="height: 100px;"></textarea>
-    <div class="hover">
-        <button style="background-color: " onclick="clearInput()">Clear</button>
+    <div>
+        <p class="regularExpressionsPluginP">Input:</p>
+        <textarea id="input" class="w" style="height: 100px;"></textarea>
+        <div class="hover">
+            <button style="background-color: " onclick="clearData('input')">Clear</button>
+        </div>
     </div>
 
-    <p class="regularExpressionsPluginP">Regular expression:</p>
-    <textarea id="regexp" class="w" style="height: 22px;">
+    <div>
+        <p class="regularExpressionsPluginP">Regular expression:</p>
+        <textarea id="regexp" class="w" style="height: 22px;">
 <td><b>(.*?)</b>( .*?)<br>(?:<a href="mailto:(.*?@.*?)">)?.*\n\s*<td>(.*?)</td></textarea>
 
-    <p class="regularExpressionsPluginP">Flags:</p>
-    <input type=text id="flags" style="height: 22px;" value="g" placeholder="gmi"></textarea>
+        <p class="regularExpressionsPluginP">Flags:</p>
+        <input type=text id="flags" style="height: 22px;" value="g" placeholder="gmi"></textarea>
+    </div>
 
-    <p class="regularExpressionsPluginP">Show results like this / Replace:</p>
-    <textarea id="resultsPattern" class="w" style="height: 22px;"
+    <div>
+        <p class="regularExpressionsPluginP">Show results like this / Replace:</p>
+        <textarea id="resultsPattern" class="w" style="height: 22px;"
             placeholder="match[1] + match[2] + '\t' + match[3] + '\t' + match[4] + '\n'">
 match[1] + '\n'</textarea>
 
-    <div id="regularExpressionsPluginSets" style="margin-bottom: 6px; margin-top: -3px;">
-        <button onclick="saveSet(false)" style="color: red; margin-left: 10px;">Save set</button>
+        <div id="regularExpressionsPluginSets" style="margin-bottom: 6px; margin-top: -3px;">
+            <button onclick="saveSet(false)" style="color: red; margin-left: 10px;">Save set</button>
+        </div>
     </div>
-    <button onclick="process()" style="font-weight: bold;">All matches</button>
-    <button onclick="processReplace()" style="font-weight: bold;">Replace</button>
 
-    <p class="regularExpressionsPluginP">Results:</p>
-    <textarea id="results" class="w" style="height: 100px;"></textarea>
+    <div>
+        <button onclick="process()" style="font-weight: bold;">All matches</button>
+        <button onclick="processReplace()" style="font-weight: bold;">Replace</button>
 
-    <p class="regularExpressionsPluginP">Read more about
-        <a href="Regular Expressions - JavaScript _ MDN.html"  target="_blank">Regular Expressions</a>
-        and
-        <a href="RegExp - JavaScript _ MDN.html"  target="_blank">RegExp</a>
-    </p>
-    <div class="regularExpressionsPluginP">
-    <p class="zero-margin-bottom">Some text utilities:</p>
-    <ul class="zero-margin-top">
-        <li><a href="string_operations.html">String operations</a></li>
-        <li><a href="utils.html">Utils</a></li>
-    </ul>
+        <p class="regularExpressionsPluginP">Results:</p>
+        <textarea id="results" class="w" style="height: 100px;"></textarea>
+
+        <div class="hover">
+            <button style="background-color: " onclick="clearData('results')">Clear</button>
+        </div>
+    </div>
+
+    <div>
+        <p class="regularExpressionsPluginP">Read more about
+            <a href="Regular Expressions - JavaScript _ MDN.html"  target="_blank">Regular Expressions</a>
+            and
+            <a href="RegExp - JavaScript _ MDN.html"  target="_blank">RegExp</a>
+        </p>
+        <div class="regularExpressionsPluginP">
+        <p class="zero-margin-bottom">Some text utilities:</p>
+        <ul class="zero-margin-top">
+            <li><a href="string_operations.html">String operations</a></li>
+            <li><a href="utils.html">Utils</a></li>
+        </ul>
+        </div>
     </div>
 
     <script>
@@ -115,9 +130,9 @@ match[1] + '\n'</textarea>
         var replaceCookiesRE = new RegExp(replaceCookiesOrigin, 'g');
         var replaceCookiesStr = '###';
         var replaceCookiesBackRE = new RegExp(replaceCookiesStr, 'g');
-        
-        function clearInput() {
-            var input = document.getElementById("input");
+
+        function clearData(inp) {
+            var input = document.getElementById(inp);
             input.focus();
             input.value = "";
         }

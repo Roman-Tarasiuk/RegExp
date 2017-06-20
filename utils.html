@@ -16,9 +16,10 @@
 <body style="background-color: #66f;">
     <div>
         <div id="request" style="width:1200px">
-            <p id="comment">%-like address (e.g. Google search link): <button onclick="clearAndFocus('googleAddress')">Clear</button></p>
+            <p id="comment">%-like address (e.g. Google search link):</p>
             <textarea id="googleAddress"></textarea>
-            <input type="button" value="Decode" onclick="document.getElementById('txt').value = decode()" id="btnClean"></input>
+            <button onclick="clearAndFocus('googleAddress')">Clear</button>
+            <button onclick="document.getElementById('txt').value = decode()" id="btnClean">Decode</button>
             <button onclick="simpleEncode()">Simple encode</button>
             <button onclick="simpleDecode()">Simple decode</button>
         </div>
@@ -37,32 +38,33 @@
     <br/>
 
     <div>
-        <p>Check Uncommented SQL:</p>
-        <textarea id="sqlCode" style="width:1200px; height:150px; background-color: #ffc;"></textarea>
+        <p>SQL:</p>
+        <textarea id="sqlCode" style="width:1200px; background-color: #ffc;"></textarea>
         <br/>
-        <input type="button" value="Check SQL" onclick="checkUncommentedSQL()">
+        <button onclick="checkUncommentedSQL()">Check Uncommented</button>
+        <button onclick="argumentSQL()">Argument</button>
     </div>
 
     <br/>
 
     <div>
         <p>Swap quotes &#39; &harr; &#34; (all or in a selection):</p>
-        <textarea id="code" style="width:1200px; height:120px"></textarea>
+        <textarea id="code" style="width:1200px"></textarea>
         <br/>
-        <input type="button" value="Swap" onclick="swapQuotes()">
+        <button onclick="swapQuotes()">Swap</button>
     </div>
 
     <br/>
 
     <div>
         <p>Statistic (occurrences of rows):</p>
-        <textarea id="data" style="width:1200px; height:120px"></textarea>
+        <textarea id="data" style="width:1200px"></textarea>
         <br/>
-        <input type="button" value="Clear" onclick="clearAndFocus('data')">
-        <input type="button" value="Statistic" onclick="statistic()">
-        <input type="button" value="Cumulative" onclick="statisticCumulative()">
-        <input type="button" value="Category count" onclick="statisticCategoryCount()">
-        <input type="button" value="Unique" onclick="unique()">
+        <button onclick="clearAndFocus('data')">Clear</button>
+        <button onclick="statistic()">Statistic</button>
+        <button onclick="statisticCumulative()">Cumulative</button>
+        <button onclick="statisticCategoryCount()">Category count</button>
+        <button onclick="unique()">Unique</button>
     </div>
 
 
@@ -246,6 +248,65 @@
             }
             else {
                 alert('No uncommented lines found.');
+            }
+        }
+
+        function argumentSQL() {
+            // --:: $T1 TM_ACC_TMP2_TRM
+            // --:: $C1 POST_DATE
+            // --:: $C2 STATUS
+            // select distinct T1.$C1 from $T1 T1
+            //     where T1.$C2 is not null
+
+            var argStr = '--::';
+
+            var sqlCtrl = document.getElementById('sqlCode');
+
+            var rows = sqlCtrl.value.split('\n');
+            var replacements = [];
+            var resultStr = '';
+
+            for (var i = 0; i < rows.length; i++) {
+                if (rows[i].startsWith(argStr)) {
+                    var arg = getArg(rows[i]);
+                    if (arg != null) {
+                        replacements.push(arg);
+                    }
+                    resultStr += rows[i] + '\n';
+                }
+                else {
+                    resultStr += processArg(rows[i]) + '\n';
+                }
+            }
+
+            sqlCtrl.value = resultStr;
+
+            function getArg(str) {
+                str = str.substring(argStr.length);
+                str = str.trimLeft();
+
+                var spaceIndex = str.indexOf(' ');
+
+                var result;
+                if (spaceIndex > 0) {
+                    result = {
+                        name: str.substring(0, spaceIndex),
+                        value: str.substring(spaceIndex + 1)
+                    };
+                }
+                else {
+                    result = null;
+                }
+
+                return result;
+            }
+
+            function processArg(str) {
+                for (var i = 0; i < replacements.length; i++) {
+                    str = str.replace(replacements[i].name, replacements[i].value);
+                }
+
+                return str;
             }
         }
 

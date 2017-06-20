@@ -71,6 +71,11 @@
     <!-- <script src="js/script.js"></script> -->
 
     <script>
+        String.prototype.replaceAll = function(search, replacement) {
+            var target = this;
+            return target.split(search).join(replacement);
+        };
+    
         (function() {
             var width = $('#request').width();
             // To Do: Hardcoded '33' and '8' - need to be computed automatically
@@ -303,7 +308,7 @@
 
             function processArg(str) {
                 for (var i = 0; i < replacements.length; i++) {
-                    str = str.replace(replacements[i].name, replacements[i].value);
+                    str = str.replaceAll(replacements[i].name, replacements[i].value);
                 }
 
                 return str;

@@ -32,11 +32,11 @@ div.container {
 }
 
 .clear-btn {
-    background-image: url("img/clear.png");
+    background-image: url("../img/clear.png");
 }
 
 .cmpr-btn {
-    background-image: url("img/compare.png");
+    background-image: url("../img/compare.png");
 }
 
 .hover,

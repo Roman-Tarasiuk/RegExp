@@ -64,6 +64,7 @@
         <button onclick="statistic()">Statistic</button>
         <button onclick="statisticCumulative()">Cumulative</button>
         <button onclick="statisticCategoryCount()">Category count</button>
+        <button onclick="statisticCategoriesList()">Categories list</button>
         <button onclick="unique()">Unique</button>
     </div>
 
@@ -447,6 +448,55 @@
             var resultStr = '';
             for (var i = 0; i < rows.length; i++) {
                 resultStr += tmp[i * 2] + '\t' + tmp[i * 2 + 1] + '\t' + stat[tmp[i * 2]].count + '\n';
+            }
+
+            input.value = resultStr;
+        }
+        
+        function statisticCategoriesList() {
+        // rows' format: subject \t category
+            var input = document.getElementById('data');
+            var rows = input.value.split('\n');
+
+            var stat = {};
+            var tmp = [];
+
+            for (var i = 0; i < rows.length; i++) {
+                var rowSplitted = rows[i].split('\t');
+                var subj = rowSplitted[0];
+                var cat = rowSplitted[1];
+                if (subj in stat) {
+                    if (!(cat in stat[subj])) {
+                        stat[subj][cat] = null;
+                        // The next two forms are equal.
+                        //stat[subj].count++;
+                        stat[subj]["count"]++;
+                    }
+                }
+                else {
+                    stat[subj] = {[cat]: null, count: 1};
+                }
+
+                tmp.push(subj);
+                tmp.push(cat);
+            }
+
+            var resultStr = '';
+            // for (var i = 0; i < rows.length; i++) {
+            //     resultStr += tmp[i * 2] + '\t' + tmp[i * 2 + 1] + '\t' + stat[tmp[i * 2]].count + '\n';
+            // }
+            for (var s in stat) {
+                var tmpStr = s + '\t';
+                for (var c in stat[s]) {
+                    if (c != 'count') {
+                        tmpStr += c + ', ';
+                    }
+                }
+                if (tmpStr.endsWith(', ')) {
+                    tmpStr = tmpStr.substring(0, tmpStr.length - 2);
+                }
+                
+                resultStr += tmpStr + '\n';
             }
 
             input.value = resultStr;

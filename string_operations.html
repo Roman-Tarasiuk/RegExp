@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>String operations</title>
-    
+
     <link rel="shortcut icon" href="img/icon_StringsOriginal.png">
     <link rel="stylesheet" type="text/css" href="css/string_operations.css">
 </head>
@@ -25,6 +25,10 @@
                 <input type="text" id="result"/>
             </div>
         </div>
+
+        <label>
+            <input type="checkbox" id="ignoreCase"> Ignore case
+        </label>
 
         <p id="count">Differences: ...</p>
 
@@ -52,9 +56,9 @@
         </span>
     </div>
 
-    
+
     <script src="js/jquery.min.js"></script>
-    
+
     <script>
         document.getElementById('str1').addEventListener('click', stopPropag, false);
         document.getElementById('str2').addEventListener('click', stopPropag, false);
@@ -94,26 +98,33 @@
         }
 
         function compare() {
-            var text1 = document.getElementById('str1');
-            var text2 = document.getElementById('str2');
+            var str1 = document.getElementById('str1');
+            var str2 = document.getElementById('str2');
+            var ignoreCase = document.getElementById('ignoreCase');
+
             var compareResult = null;
 
-            if (text1.value.length >= text2.value.length) {
-                compareResult = cmp(text1.value, text2.value);
+            if (str1.value.length >= str2.value.length) {
+                compareResult = cmp(str1.value, str2.value, ignoreCase.checked);
             }
             else {
-                compareResult = cmp(text2.value, text1.value);
+                compareResult = cmp(str2.value, str1.value, ignoreCase.checked);
             }
 
             document.getElementById('result').value = compareResult.compareStr;
             document.getElementById('count').innerHTML = 'Differences found: ' + compareResult.placesCount;
 
-            function cmp(txt1, txt2) { // txt1.length >= txt2.length
-                var resultStr = new Array(txt1.length).fill(' ');
+            function cmp(str1, str2, ignoreCase) { // str1.length >= str2.length
+                if (ignoreCase) {
+                    str1 = str1.toUpperCase();
+                    str2 = str2.toUpperCase();
+                }
+
+                var resultStr = new Array(str1.length).fill(' ');
                 var placesCount = 0;
 
-                for (var i = 0; i < txt1.length; i++) {
-                    if (i >= txt2.length || txt2[i] != txt1[i]) {
+                for (var i = 0; i < str1.length; i++) {
+                    if (i >= str2.length || str2[i] != str1[i]) {
                         resultStr[i] = 'x';
                         if (i == 0 || resultStr[i - 1] == ' ') {
                             placesCount++;
@@ -147,24 +158,24 @@
             txt.value = txt.value.replace(re, replaceTo);
             txt.select();
         }
-        
+
         function removeAllSpaces() {
             var txt = document.getElementById('txt');
-            
+
             var re = /\s/g;
             var replaceTo = '';
-            
+
             txt.value = txt.value.replace(re, replaceTo);
             txt.select();
         }
-        
+
         function getLength() {
             var txt = document.getElementById('txt');
             var length = document.getElementById('length');
-            
+
             length.innerText = txt.value.length;
         }
-        
+
         $('body').keydown(function(event) {
             if (event.keyCode == 36) { // Home.
                 $('body').scrollLeft(0);

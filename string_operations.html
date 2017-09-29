@@ -48,8 +48,9 @@
         <p style="margin-bottom: 2px;">String manipulations:</p>
         <textarea id="txt" onclick="document.getElementById('length').innerText='';"></textarea>
         <br>
+        <button onclick="removeSpaces()">Remove spaces</button>
         <button onclick="removeLineBreaks()" title="Replace to space character">Remove line breaks</button>
-        <button onclick="removeAllSpaces()">Remove all spaces</button>
+        <button onclick="removeAllSpaces()">Remove all space characters</button>
         <span>
             <button onclick="getLength()">Length</button>
             <span id="length"></span>
@@ -149,10 +150,10 @@
             txt.select();
         }
 
-        function removeAllSpaces() {
+        function removeSpaces() {
             var txt = document.getElementById('txt');
 
-            var re = /\s/g;
+            var re = / /g;
             var replaceTo = '';
 
             txt.value = txt.value.replace(re, replaceTo);

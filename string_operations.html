@@ -79,7 +79,7 @@
         var newValue = '';
         var newValueLineBreak = ' ';
         var replacements = [];
-        
+
         document.getElementById('str1').addEventListener('click', stopPropag, false);
         document.getElementById('str2').addEventListener('click', stopPropag, false);
         document.getElementById('result').addEventListener('click', stopPropag, false);
@@ -163,16 +163,17 @@
             var txt = document.getElementById('txt');
 
             var re = /\n/g;
-            
+
             var replaceTo = prompt('Enter new value:', newValueLineBreak);
-            
+
             if (replaceTo == null) {
                 return;
             }
 
             newValueLineBreak = replaceTo;
-            replaceTo = processReplacement(replaceTo);
-            
+            replaceTo = replaceTo.replace(/\\n/g, '\n');
+            replaceTo = replaceTo.replace(/\\t/g, '\t');
+
             txt.value = txt.value.replace(re, replaceTo);
             txt.select();
         }
@@ -196,64 +197,68 @@
             txt.value = txt.value.replace(re, replaceTo);
             txt.select();
         }
-        
+
         function replaceAll() {
             var txt = document.getElementById('txt');
 
             var oldVal = document.getElementById('oldValue');
             var newVal = document.getElementById('newValue');
 
-            var oldValue = oldVal.value;
-            if (oldValue == null) {
+            var searchFor = oldVal.value;
+            if (searchFor == null || searchFor == '') {
                 return;
             }
-            
+
             var replaceTo = newVal.value;
 
-            searchValue = oldValue;
+            searchValue = searchFor;
             newValue = replaceTo;
-            
-            oldValue = processReplacement(oldValue);
-            replaceTo = processReplacement(replaceTo);
 
-            var re = new RegExp(oldValue, 'g');
-            
+            searchFor = searchFor.replace(/\\n/g, '\n');
+            searchFor = searchFor.replace(/\\t/g, '\t');
+            searchFor = searchFor.replace(/\./g, '\\.');
+
+            replaceTo = replaceTo.replace(/\\n/g, '\n');
+            replaceTo = replaceTo.replace(/\\t/g, '\t');
+
+            var re = new RegExp(searchFor, 'g');
+
             txt.value = txt.value.replace(re, replaceTo);
             txt.select();
         }
-        
+
         function addReplacement() {
             var oldVal = document.getElementById('oldValue');
             var newVal = document.getElementById('newValue');
             var select = document.getElementById('replacements');
-            
+
             var option = document.createElement("option");
-            option.text = oldVal.value + ' -> ' + newVal.value;
-            
+            option.text = '\'' + oldVal.value + '\' -> \'' + newVal.value + '\'';
+
             replacements.push({
                 'old' : oldVal.value,
                 'new' : newVal.value,
             })
-            
+
             select.add(option);
         }
-        
+
         function removeReplacement() {
             var select = document.getElementById('replacements');
-            
+
             var i = select.selectedIndex;
-            
+
             select.remove(i);
             replacements.splice(i, 1);
         }
-        
+
         function selectedItemChanged() {
             var oldVal = document.getElementById('oldValue');
             var newVal = document.getElementById('newValue');
             var select = document.getElementById('replacements');
-            
+
             var i = select.selectedIndex;
-            
+
             oldVal.value = replacements[i]['old'];
             newVal.value = replacements[i]['new'];
         }
@@ -274,19 +279,6 @@
                 $('body').scrollLeft(width);
             }
         });
-        
-        function processReplacement(str) {
-            var re = /\\n/g;
-            str = str.replace(re, '\n');
-            
-            re = /\\t/g;
-            str = str.replace(re, '\t');
-            
-            re = /\./g;
-            str = str.replace(re, '\\.');
-            
-            return str;
-        }
     </script>
 </body>
 </html>

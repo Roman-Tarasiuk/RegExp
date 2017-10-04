@@ -45,17 +45,30 @@
     </div>
 
     <div class="hover">
-        <p style="margin-bottom: 2px;">String manipulations:</p>
-        <textarea id="txt" onclick="document.getElementById('length').innerText='';"></textarea>
-        <br>
-        <button onclick="replaceAll()">Replace all</button>
-        <button onclick="removeSpaces()">Remove spaces</button>
-        <button onclick="removeLineBreaks()">Remove line breaks</button>
-        <button onclick="removeAllSpaces()">Remove all space characters</button>
-        <span>
-            <button onclick="getLength()">Length</button>
-            <span id="length"></span>
-        </span>
+        <div>
+            <p style="margin-bottom: 2px;">String manipulations:</p>
+            <textarea id="txt" onclick="document.getElementById('length').innerText='';"></textarea>
+            <br>
+            <button onclick="replaceAll()">Replace all</button>
+            <button onclick="removeSpaces()">Remove spaces</button>
+            <button onclick="removeLineBreaks()">Remove line breaks</button>
+            <button onclick="removeAllSpaces()">Remove all space characters</button>
+            <span>
+                <button onclick="getLength()">Length</button>
+                <span id="length"></span>
+            </span>
+        </div>
+        <div style="margin-top: 20px;">
+            <label for="oldValue">Old value:</label>
+            <input type="text" id="oldValue" name="oldValue" style="width: 220px; vertical-align: bottom;"></input>
+            <label for="newValue">New value:</label>
+            <input type="text" id="newValue" name="newValue" style="width: 220px; vertical-align: bottom;"></input>
+            <br>
+            <button onclick="addReplacement()">Add</button>
+            <button onclick="removeReplacement()">Remove</button>
+            <br>
+            <select id="replacements" size="10" onchange="selectedItemChanged()" style="width: 200px;"></select>
+        </div>
     </div>
 
 
@@ -65,6 +78,7 @@
         var searchValue = '';
         var newValue = '';
         var newValueLineBreak = ' ';
+        var replacements = [];
         
         document.getElementById('str1').addEventListener('click', stopPropag, false);
         document.getElementById('str2').addEventListener('click', stopPropag, false);
@@ -186,15 +200,15 @@
         function replaceAll() {
             var txt = document.getElementById('txt');
 
-            var oldValue = prompt('Old value', searchValue);
+            var oldVal = document.getElementById('oldValue');
+            var newVal = document.getElementById('newValue');
+
+            var oldValue = oldVal.value;
             if (oldValue == null) {
                 return;
             }
             
-            var replaceTo = prompt('New value:', newValue);
-            if (replaceTo == null) {
-                return;
-            }
+            var replaceTo = newVal.value;
 
             searchValue = oldValue;
             newValue = replaceTo;
@@ -206,6 +220,42 @@
             
             txt.value = txt.value.replace(re, replaceTo);
             txt.select();
+        }
+        
+        function addReplacement() {
+            var oldVal = document.getElementById('oldValue');
+            var newVal = document.getElementById('newValue');
+            var select = document.getElementById('replacements');
+            
+            var option = document.createElement("option");
+            option.text = oldVal.value + ' -> ' + newVal.value;
+            
+            replacements.push({
+                'old' : oldVal.value,
+                'new' : newVal.value,
+            })
+            
+            select.add(option);
+        }
+        
+        function removeReplacement() {
+            var select = document.getElementById('replacements');
+            
+            var i = select.selectedIndex;
+            
+            select.remove(i);
+            replacements.splice(i, 1);
+        }
+        
+        function selectedItemChanged() {
+            var oldVal = document.getElementById('oldValue');
+            var newVal = document.getElementById('newValue');
+            var select = document.getElementById('replacements');
+            
+            var i = select.selectedIndex;
+            
+            oldVal.value = replacements[i]['old'];
+            newVal.value = replacements[i]['new'];
         }
 
         function getLength() {

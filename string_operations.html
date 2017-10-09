@@ -58,7 +58,8 @@
                 <span id="length"></span>
             </span>
         </div>
-        <div style="margin-top: 20px;">
+        <div style="margin-top: 20px; background-color: #d9d9d9; width: 800px; padding: 5px;">
+            <label style="display: block; padding-bottom: 7px;">Replace all presets:</label>
             <label for="oldValue">Old value:</label>
             <input type="text" id="oldValue" name="oldValue" style="width: 220px; vertical-align: bottom;"></input>
             <label for="newValue">New value:</label>
@@ -67,7 +68,7 @@
             <button onclick="addReplacement()">Add</button>
             <button onclick="removeReplacement()">Remove</button>
             <br>
-            <select id="replacements" size="10" onchange="selectedItemChanged()" style="width: 200px;"></select>
+            <select id="replacements" size="10" onchange="selectedItemChanged()" style="width: 750px;"></select>
         </div>
     </div>
 

@@ -36,3 +36,8 @@ a, a:visited {
 .zero-margin-top {
     margin-top: 0px;
 }
+
+.info {
+    color: #777;
+    margin-left: 15px;
+}

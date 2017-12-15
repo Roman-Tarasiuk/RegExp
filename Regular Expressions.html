@@ -13,7 +13,7 @@
         <p class="regularExpressionsPluginP">Input:</p>
         <textarea id="input" class="w" style="height: 100px;"></textarea>
         <div class="hover">
-            <button style="background-color: " onclick="clearData('input')">Clear</button>
+            <button onclick="clearData('input')">Clear</button>
             <span style="display: inline-block; width: 30px;"></span>
             <input id="userFile" type="file" onchange="onChange(event)"></input>
             <span>Encoding:</span>
@@ -45,11 +45,13 @@ match[1] + '\n'</textarea>
         <button onclick="process()" style="font-weight: bold;">All matches</button>
         <button onclick="processReplace()" style="font-weight: bold;">Replace</button>
 
+        <span id="info" class="info">...</span>
+        
         <p class="regularExpressionsPluginP">Results:</p>
         <textarea id="results" class="w" style="height: 100px;"></textarea>
 
         <div class="hover">
-            <button style="background-color: " onclick="clearData('results')">Clear</button>
+            <button onclick="clearData('results')">Clear</button>
         </div>
     </div>
 
@@ -139,6 +141,7 @@ match[1] + '\n'</textarea>
             var input = document.getElementById(inp);
             input.focus();
             input.value = "";
+            showInfo('...');
         }
 
         function process() {
@@ -148,6 +151,9 @@ match[1] + '\n'</textarea>
             var resultsPattern = document.getElementById('resultsPattern').value;
 
             var RE = new RegExp(rePattern, reFlags);
+            
+            console.log('RE:');
+            console.log(RE);
 
             var input = document.getElementById('input').value;
 
@@ -169,6 +175,7 @@ match[1] + '\n'</textarea>
             }
             else {
                 resultsCtrl.value = resultsStr;
+                showInfo('(' + count + ' match(es) found)');
             }
         }
 
@@ -264,6 +271,10 @@ match[1] + '\n'</textarea>
           };
 
           reader.readAsText(file, encoding);
+        }
+        
+        function showInfo(text) {
+            document.getElementById('info').innerText = text;
         }
     </script>
 </body>

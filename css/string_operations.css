@@ -3,7 +3,7 @@ input[type=text] {
     vertical-align: middle;
     position: relative;
     top: 50%;
-    margin-top: -20px;
+    margin-top: -24px;
     margin-right: 5px;
     margin-left: 36px;
     font-family: courier;
@@ -19,11 +19,11 @@ input#result {
 }
 
 div.container {
-    height: 32px;
+    height: 24px;
 }
 
 .input-holder {
-    height: 32px;
+    height: 24px;
     background-color: #fcc;
     background-repeat: no-repeat;
     background-position: left center;
@@ -55,4 +55,8 @@ div.container {
     margin-top: 2px;
     width: 700px;
     height: 100px;
+}
+
+#ignoreCase {
+    margin-top: 10px;
 }

@@ -11,13 +11,19 @@
 <body>
     <div>
         <p class="regularExpressionsPluginP">Input:</p>
-        <textarea id="input" class="w" style="height: 100px;"></textarea>
+        <textarea id="input" class="w" style="height: 100px;"
+            onchange="inputChanged()"
+            onpaste="inputPaste()"
+            onkeyup="inputKeyup()">
+        </textarea>
         <div class="hover">
-            <button onclick="clearData('input')">Clear</button>
+            <button onclick="clearData('input'); showInfo('info1', '...')">Clear</button>
             <span style="display: inline-block; width: 30px;"></span>
             <input id="userFile" type="file" onchange="onChange(event)"></input>
             <span>Encoding:</span>
             <input id="encoding" value="Windows-1251"></input>
+            <button onclick="showFile()">Show file content</button>
+            <span id="info1" class="info">...</span>
         </div>
     </div>
 
@@ -45,7 +51,7 @@ match[1] + '\t' + fileName + '\n'</textarea>
         <button onclick="process()" style="font-weight: bold;">All matches</button>
         <button onclick="processReplace()" style="font-weight: bold;">Replace</button>
 
-        <span id="info" class="info">...</span>
+        <span id="info2" class="info">...</span>
         
         <p class="regularExpressionsPluginP">Results:</p>
         <textarea id="results" class="w" style="height: 100px;"></textarea>
@@ -132,17 +138,20 @@ match[1] + '\t' + fileName + '\n'</textarea>
         // phones RE: <td><b>(.*?)</b>( .*?)<br>(?:<a href="mailto:(.*?@.*?)">)?.*\n\s*<td>(.*?)</td>
         // results  : match[1] + match[2] + '\t' + match[3] + '\t' + match[4]
 
+        var inputElement = document.getElementById('input');
         var replaceCookiesOrigin = ';';
         var replaceCookiesRE = new RegExp(replaceCookiesOrigin, 'g');
         var replaceCookiesStr = '###';
         var replaceCookiesBackRE = new RegExp(replaceCookiesStr, 'g');
         var fileName = '';
+        var userInputChanged = false;
+        var input = '';
 
         function clearData(inp) {
             var input = document.getElementById(inp);
             input.focus();
             input.value = "";
-            showInfo('...');
+            showInfo('info2', '...');
         }
 
         function process() {
@@ -156,7 +165,10 @@ match[1] + '\t' + fileName + '\n'</textarea>
             console.log('RE:');
             console.log(RE);
 
-            var input = document.getElementById('input').value;
+            if (userInputChanged) {
+                input = inputElement.value;
+                userInputChanged = false;
+            }
 
             var resultsCtrl = document.getElementById('results');
 
@@ -176,7 +188,7 @@ match[1] + '\t' + fileName + '\n'</textarea>
             }
             else {
                 resultsCtrl.value = resultsStr;
-                showInfo('(' + count + ' match(es) found)');
+                showInfo('info2', '(' + count + ' match(es) found)');
             }
         }
 
@@ -187,7 +199,10 @@ match[1] + '\t' + fileName + '\n'</textarea>
 
             var RE = new RegExp(rePattern, reFlags);
 
-            var input = document.getElementById('input').value;
+            if (userInputChanged) {
+                input = inputElement.value;
+                userInputChanged = false;
+            }
 
             var resultsCtrl = document.getElementById('results');
 
@@ -269,14 +284,42 @@ match[1] + '\t' + fileName + '\n'</textarea>
           
           var reader = new FileReader();
           reader.onload = function(event) {
-            document.getElementById('input').value = event.target.result;
+            //inputElement.value = event.target.result;
+            input = event.target.result;
+            userInputChanged = false;
+            inputElement.value = '\'' + fileName + '\' is successfully loaded.';
+            showInfo('info1', 'The input length: ' + input.length);
           };
 
           reader.readAsText(file, encoding);
         }
         
-        function showInfo(text) {
-            document.getElementById('info').innerText = text;
+        function showInfo(id, text) {
+            document.getElementById(id).innerText = text;
+        }
+        
+        function inputChanged() {
+            console.log('** Input changed.');
+            userInputChanged = true;
+            showInfo('info1', 'The input length: ' + inputElement.value.length);
+        }
+        
+        function inputPaste() {
+            console.log('** Input pasted.');
+            userInputChanged = true;
+            showInfo('info1', 'The input length: ' + inputElement.value.length);
+        }
+        
+        function inputKeyup() {
+            console.log('** Input key up.');
+            userInputChanged = true;
+            showInfo('info1', 'The input length: ' + inputElement.value.length);
+        }
+        
+        function showFile() {
+            inputElement.value = input;
+            input = inputElement.value;
+            showInfo('info1', 'The input length: ' + input.length);
         }
     </script>
 </body>

@@ -271,15 +271,19 @@
             length.innerText = txt.value.length;
         }
 
-        $('body').keydown(function(event) {
+        function scrollHomeEnd(event) {
             if (event.keyCode == 36) { // Home.
-                $('body').scrollLeft(0);
+                window.scrollTo(0, 0);
             }
             else if (event.keyCode == 35) { // End.
                 var width = $('#width').val();
-                $('body').scrollLeft(width);
+                window.scrollTo(width, 0);
             }
-        });
+        }
+        
+        $('#str1').keydown(scrollHomeEnd);
+        $('#str2').keydown(scrollHomeEnd);
+        $('#result').keydown(scrollHomeEnd);
     </script>
 </body>
 </html>

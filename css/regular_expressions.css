@@ -9,6 +9,14 @@
     width: 85%;
 }
 
+.w2 {
+    width: 75%;
+}
+
+.w3 {
+    width: 70%;
+}
+
 a, a:visited {
     color: #66f;
 }
@@ -40,4 +48,10 @@ a, a:visited {
 .info {
     color: #777;
     margin-left: 15px;
+}
+
+.description {
+    margin-top: 9px;
+    display: inline-block;
+    vertical-align: top;
 }

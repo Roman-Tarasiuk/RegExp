@@ -14,8 +14,7 @@
         <textarea id="input" class="w" style="height: 100px;"
             onchange="inputChanged()"
             onpaste="inputPaste()"
-            onkeyup="inputKeyup()">
-        </textarea>
+            onkeyup="inputKeyup()"></textarea>
         <div class="hover">
             <button onclick="clearData('input'); showInfo('info1', '...')">Clear</button>
             <span style="display: inline-block; width: 30px;"></span>
@@ -28,17 +27,17 @@
     </div>
 
     <div>
-        <p class="regularExpressionsPluginP">Regular expression:</p>
-        <textarea id="regexp" class="w" style="height: 22px;">
+        <span class="description regularExpressionsPluginP">Regular expression:</span>
+        <textarea id="regexp" class="w2" style="height: 22px; margin-top: 4px;">
 <td><b>(.*?)</b>( .*?)<br>(?:<a href="mailto:(.*?@.*?)">)?.*\n\s*<td>(.*?)</td></textarea>
-
-        <p class="regularExpressionsPluginP">Flags:</p>
-        <input type=text id="flags" style="height: 22px;" value="g" placeholder="gmi"></textarea>
+        <br>
+        <span class="description regularExpressionsPluginP">Flags:</span>
+        <input type=text id="flags" style="height: 22px; margin-top: 4px;" value="g" placeholder="gmi"></textarea>
     </div>
 
     <div>
-        <p class="regularExpressionsPluginP">Show results like this / Replace:</p>
-        <textarea id="resultsPattern" class="w" style="height: 22px;"
+        <span class="description regularExpressionsPluginP">Results patterrn / Replace to:</span>
+        <textarea id="resultsPattern" class="w3" style="height: 22px; margin-top: 4px;"
             placeholder="match[1] + match[2] + '\t' + match[3] + '\t' + fileName + '\n'">
 match[1] + '\t' + fileName + '\n'</textarea>
 

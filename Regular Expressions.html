@@ -145,7 +145,12 @@ match[1] + '\t' + fileName + '\n'</textarea>
         var fileName = '';
         var userInputChanged = false;
         var input = '';
+        
+        
+        String.prototype.lines = function() { return this.split(/\r*\n/); }
+        String.prototype.lineCount = function() { return this.lines().length; }
 
+        
         function clearData(inp) {
             var input = document.getElementById(inp);
             input.focus();
@@ -284,10 +289,13 @@ match[1] + '\t' + fileName + '\n'</textarea>
           var reader = new FileReader();
           reader.onload = function(event) {
             //inputElement.value = event.target.result;
-            input = event.target.result;
+            var rRe = /\r/g;
+            input = event.target.result.replace(rRe, '');
             userInputChanged = false;
             inputElement.value = '\'' + fileName + '\' is successfully loaded.';
-            showInfo('info1', 'The input length: ' + input.length);
+            showInfo('info1', input.length + ' characters / '
+                + input.lineCount() + ' row(s)');
+            // input.length
           };
 
           reader.readAsText(file, encoding);
@@ -297,28 +305,33 @@ match[1] + '\t' + fileName + '\n'</textarea>
             document.getElementById(id).innerText = text;
         }
         
+        function showInputInfo() {
+            showInfo('info1', inputElement.value.length + ' characters / '
+                + inputElement.value.lineCount() + ' row(s)');
+        }
+        
         function inputChanged() {
             console.log('** Input changed.');
             userInputChanged = true;
-            showInfo('info1', 'The input length: ' + inputElement.value.length);
+            showInputInfo();
         }
         
         function inputPaste() {
             console.log('** Input pasted.');
             userInputChanged = true;
-            showInfo('info1', 'The input length: ' + inputElement.value.length);
+            showInputInfo();
         }
         
         function inputKeyup() {
             console.log('** Input key up.');
             userInputChanged = true;
-            showInfo('info1', 'The input length: ' + inputElement.value.length);
+            showInputInfo();
         }
         
         function showFile() {
             inputElement.value = input;
             input = inputElement.value;
-            showInfo('info1', 'The input length: ' + input.length);
+            showInputInfo();
         }
     </script>
 </body>

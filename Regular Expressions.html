@@ -38,8 +38,8 @@
     <div>
         <span class="description regularExpressionsPluginP">Results patterrn / Replace to:</span>
         <textarea id="resultsPattern" class="w3" style="height: 22px; margin-top: 4px;"
-            placeholder="match[1] + match[2] + '\t' + match[3] + '\t' + fileName + '\n'">
-match[1] + '\t' + fileName + '\n'</textarea>
+            placeholder="match[0] + '\t' + getRow(match.index) + '\t' + fileName + '\n'">
+match[0] + '\t' + getRow(match.index) + '\t' + fileName + '\n'</textarea>
 
         <div id="regularExpressionsPluginSets" style="margin-bottom: 6px; margin-top: -3px;">
             <button onclick="saveSet(false)" style="color: red; margin-left: 10px;">Save set</button>
@@ -145,6 +145,7 @@ match[1] + '\t' + fileName + '\n'</textarea>
         var fileName = '';
         var userInputChanged = false;
         var input = '';
+        var rowsMap = {};
         
         
         String.prototype.lines = function() { return this.split(/\r*\n/); }
@@ -173,6 +174,8 @@ match[1] + '\t' + fileName + '\n'</textarea>
                 input = inputElement.value;
                 userInputChanged = false;
             }
+            
+            mapRows(input);
 
             var resultsCtrl = document.getElementById('results');
 
@@ -193,6 +196,33 @@ match[1] + '\t' + fileName + '\n'</textarea>
             else {
                 resultsCtrl.value = resultsStr;
                 showInfo('info2', '(' + count + ' match(es) found)');
+            }
+        }
+        
+        function mapRows(input) {
+            console.log('** mapRows():')
+            
+            var rows = input.split('\n');
+            rowsMap = {};
+            var totalLength = 0;
+            
+            for (var i = 0; i < rows.length; i++) {
+                rowsMap[i] = (totalLength = totalLength + rows[i].length + 1);
+            }
+        }
+        
+        function getRow(index) {
+            if (index < 0) {
+                return -1;
+            }
+            if (index > input.length) {
+                return -1;
+            }
+            
+            for (var r in rowsMap) {
+                if (rowsMap[r] >= index) {
+                    return parseInt(r) + 1;
+                }
             }
         }
 

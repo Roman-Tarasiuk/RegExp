@@ -160,8 +160,7 @@ match[0] + '\t' + getRow(match.index) + '\t' + fileName + '\n'</textarea>
         }
 
         function process() {
-            var rePattern = document.getElementById('regexp').value
-                    .replace(/\\\n/g, '\n');
+            var rePattern = document.getElementById('regexp').value;
             var reFlags = document.getElementById('flags').value;
             var resultsPattern = document.getElementById('resultsPattern').value;
 
@@ -263,7 +262,7 @@ match[0] + '\t' + getRow(match.index) + '\t' + fileName + '\n'</textarea>
             radio.setAttribute('type', 'radio');
             radio.setAttribute('id', id);
             radio.setAttribute('name', 'regularExpressionsPluginSets');
-            radio.addEventListener('click', window.selectSet = function (event) {
+            radio.addEventListener('click', window.selectSet = function(event) {
                 var index = parseInt(event.target.id.substring('regularExpressionsPluginSets'.length));
                 console.log(index + ' set selected');
 

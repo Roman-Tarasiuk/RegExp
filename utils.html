@@ -61,11 +61,15 @@
         <textarea id="data" style="width:1200px"></textarea>
         <br/>
         <button onclick="clearAndFocus('data')">Clear</button>
-        <button onclick="unique()" title="Checks whether rows are unique">Unique</button>
-        <button onclick="statistic()" title="Each row's occurrence number">Statistic</button>
-        <button onclick="statisticCumulative()" title="Row X/Y">Cumulative</button>
-        <button onclick="statisticCategoryCount()" title="Split your values and categories using tabulation">Category count</button>
-        <button onclick="statisticCategoriesList()" title="Split your values and categories using tabulation">Categories list</button>
+        <button onclick="unique()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Checks whether rows are unique">Unique</button>
+        <button onclick="statistic()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Each row's occurrence number">Statistic</button>
+        <button onclick="statisticCumulative()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Row X/Y">Cumulative</button>
+        <button onclick="statisticCategoryCount()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Split your categories and values using tabulation">Category count</button>
+        <button onclick="statisticCategoriesList()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Split your categories and values using tabulation">Categories list</button>
+    </div>
+    
+    <div style="margin-top: 12px;">
+        <input id="help" style="width: 60%" readonly disabled></input>
     </div>
 
 
@@ -519,6 +523,18 @@
             else {
                 alert('Rows are NOT unique.');
             }
+        }
+        
+        function showHelp(obj) {
+            var helpElement = document.getElementById('help');
+            
+            help.value =  obj.getAttribute('data-title');
+        }
+        
+        function hideHelp() {
+            var helpElement = document.getElementById('help');
+            
+            help.value = '';
         }
     </script>
 </body>

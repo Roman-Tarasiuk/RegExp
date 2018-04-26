@@ -38,7 +38,7 @@
                     id="width"
                     onkeyup="return onInputKeyUp(event)"
                     onchange="setLength(document.getElementById('width'))"
-                    value="700"
+                    value="760"
                     style="width: 50px;"/>
             <span>px</span>
         </div>
@@ -46,7 +46,7 @@
 
     <div class="hover">
         <div class="group">
-            <p style="margin-bottom: 2px;">String manipulations:</p>
+            <p style="margin-top: 2px; margin-bottom: 2px;">String manipulations:</p>
             <textarea id="txt" onclick="document.getElementById('length').innerText='';"></textarea>
             <br>
             <button onclick="replaceAll()">Replace all</button>
@@ -58,17 +58,20 @@
                 <span id="length"></span>
             </span>
         </div>
-        <div class="group" style="margin-top: 20px; background-color: #d9d9d9; width: 800px; padding: 5px;">
-            <label style="display: block; padding-bottom: 7px;">Replace all presets:</label>
-            <label for="oldValue">Old value:</label>
-            <input type="text" id="oldValue" name="oldValue" style="width: 220px; vertical-align: bottom;"></input>
-            <label for="newValue">New value:</label>
-            <input type="text" id="newValue" name="newValue" style="width: 220px; vertical-align: bottom;"></input>
-            <br>
-            <button onclick="addReplacement()">Add</button>
-            <button onclick="removeReplacement()">Remove</button>
-            <br>
-            <select id="replacements" size="10" onchange="selectedItemChanged()" style="width: 750px;"></select>
+        
+        <div class="group">
+            <div style="margin-top: 2px; background-color: #d9d9d9; width: 800px; padding: 5px;">
+                <label style="display: block; padding-bottom: 7px;">Replace all presets:</label>
+                <label for="oldValue">Old value:</label>
+                <input type="text" id="oldValue" name="oldValue" style="width: 220px; vertical-align: bottom;"></input>
+                <label for="newValue">New value:</label>
+                <input type="text" id="newValue" name="newValue" style="width: 220px; vertical-align: bottom;"></input>
+                <br>
+                <button onclick="addReplacement()">Add</button>
+                <button onclick="removeReplacement()">Remove</button>
+                <br>
+                <select id="replacements" size="10" onchange="selectedItemChanged()" style="width: 750px;"></select>
+            </div>
         </div>
     </div>
 

@@ -1,5 +1,5 @@
 input[type=text] {
-    width: 700px;
+    width: 760px;
     vertical-align: middle;
     position: relative;
     top: 50%;
@@ -58,7 +58,7 @@ div.container {
 
 #txt {
     margin-top: 2px;
-    width: 700px;
+    width: 800px;
     height: 100px;
 }
 

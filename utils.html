@@ -18,9 +18,10 @@
         <div id="request" style="width:1200px">
             <p id="comment">%-like address (e.g. Google search link):</p>
             <textarea id="googleAddress"></textarea>
-            <button onclick="clearAndFocus('googleAddress')">Clear</button>
+            <button onclick="clearInput('googleAddress')">Clear</button>
             <button onclick="document.getElementById('txt').value = decode()" id="btnClean">Decode</button>
             <button onclick="simpleEncode()">Simple encode</button>
+            <button onclick="encodeSpaces()">Encode spaces</button>
             <button onclick="simpleDecode()">Simple decode</button>
         </div>
         <div id="result">
@@ -60,7 +61,7 @@
         <p>Statistics:</p>
         <textarea id="data" style="width:1200px"></textarea>
         <br/>
-        <button onclick="clearAndFocus('data')">Clear</button>
+        <button onclick="clearInput('data')">Clear</button>
         <button onclick="unique()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Checks whether rows are unique">Unique</button>
         <button onclick="statistic()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Each row's occurrence number">Statistic</button>
         <button onclick="statisticCumulative()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Row X/Y">Cumulative</button>
@@ -150,6 +151,15 @@
             var result = document.getElementById('txt');
 
             result.value = decodeURIComponent(origin.value);
+        }
+        
+        function encodeSpaces() {
+            var originElement = document.getElementById('googleAddress');
+            var resultElement = document.getElementById('txt');
+            
+            var re = / /g;
+            
+            resultElement.value = originElement.value.replace(re, '%20');
         }
 
         function nowIs() {
@@ -363,7 +373,7 @@
             }
         }
 
-        function clearAndFocus(id) {
+        function clearInput(id) {
             var data = document.getElementById(id);
             data.focus();
             data.value = '';

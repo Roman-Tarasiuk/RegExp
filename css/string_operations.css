@@ -15,7 +15,12 @@ input#result {
 
 #count {
     margin: 8px;
-    color: #444;
+}
+
+.group {
+    border: 1px solid #aaa;
+    padding: 4px;
+    margin: 2px;
 }
 
 div.container {

@@ -74,8 +74,6 @@
     </div>
 
 
-    <!-- <script src="js/script.js"></script> -->
-
     <script>
         String.prototype.replaceAll = function(search, replacement) {
             var target = this;
@@ -107,20 +105,6 @@
                 tmp = tmp.toString();
                 isFullAddress = false;
             }
-
-            /*
-            var percentSymbols = ['%21', '%23', '%24', '%26', '%27', '%28', '%29', '%2A', '%2B', '%2C', '%2F', '%3A', '%3B', '%3D', '%3F', '%40', '%5B', '%5D',
-                                  '%20', '%22', '%25', '%2D', '%2E', '%3C', '%3E', '%5C', '%5E', '%5F', '%60', '%7B', '%7C', '%7D', '%7E', '%C2%AE'];
-            var normalSymbols  = [  '!',   '#',   '$',   '&',   "'",   '(',   ')',   '*',   '+',   ',',   '/',   ':',   ';',   '=',   '?',   '@',   '[',   ']',
-                                    ' ',   '"',   '%',   '-',   '.',   '<',   '>',  '\\',   '^',   '_',   '`',   '{',   '|',   '}',   '~',      '®'];
-
-            for(var i = 0; i < percentSymbols.length; i++) {
-                if(tmp.indexOf(percentSymbols[i]) > 0) {
-                    var re = new RegExp(percentSymbols[i], 'g');
-                    tmp = tmp.replace(re, normalSymbols[i]);
-                }
-            }
-            //*/
 
             //
             // http://meyerweb.com/eric/tools/dencoder/

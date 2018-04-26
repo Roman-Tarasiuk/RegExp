@@ -5,12 +5,10 @@
 
 p {
     margin: 0;
-    /*font-weight: bold;*/
 }
 
 #txtInput {
     width: 100%;
-    /* height: 120px; */
 }
 
 .comment {

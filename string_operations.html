@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div>
+    <div class="group hover">
         <div class="container">
             <div class="input-holder clear-btn" onclick="clearInput(this)">
                 <input type="text" id="str1" oninput="reset()" onchange="reset()" />
@@ -32,7 +32,7 @@
 
         <p id="count">Differences: ...</p>
 
-        <div class="hover" style="margin-top: 2px; color: #aaa;">
+        <div style="margin-top: 2px; color: #aaa;">
             <span>Texts' width:</span>
             <input type=number
                     id="width"
@@ -45,7 +45,7 @@
     </div>
 
     <div class="hover">
-        <div>
+        <div class="group">
             <p style="margin-bottom: 2px;">String manipulations:</p>
             <textarea id="txt" onclick="document.getElementById('length').innerText='';"></textarea>
             <br>
@@ -58,7 +58,7 @@
                 <span id="length"></span>
             </span>
         </div>
-        <div style="margin-top: 20px; background-color: #d9d9d9; width: 800px; padding: 5px;">
+        <div class="group" style="margin-top: 20px; background-color: #d9d9d9; width: 800px; padding: 5px;">
             <label style="display: block; padding-bottom: 7px;">Replace all presets:</label>
             <label for="oldValue">Old value:</label>
             <input type="text" id="oldValue" name="oldValue" style="width: 220px; vertical-align: bottom;"></input>

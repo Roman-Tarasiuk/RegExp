@@ -19,10 +19,10 @@
             <p id="comment">%-like address <span class="comment">(e.g. Google search link)</span>:</p>
             <textarea id="txtInput"></textarea>
             <button onclick="clearInput('txtInput')">Clear</button>
-            <button onclick="document.getElementById('txtResult').value = decode()" id="btnClean">Decode</button>
+            <button onclick="decode()" id="btnClean" title="Including extracting an url from Google search results">Decode</button>
+            <button onclick="simpleDecode()">Simple decode</button>
             <button onclick="simpleEncode()">Simple encode</button>
             <button onclick="encodeSpaces()">Encode spaces</button>
-            <button onclick="simpleDecode()">Simple decode</button>
         </div>
         <div id="result">
             <textarea id="txtResult" style="width:100%"></textarea>
@@ -96,14 +96,14 @@
             var addressPattern = /url=http.*&usg=/;
             var tmp = addressPattern.exec(address);
 
-            var isFullAddress;
+            var isGoogleAddress;
             if(tmp == null) {
                 tmp = address;
-                isFullAddress = true;
+                isGoogleAddress = false;
             }
             else {
                 tmp = tmp.toString();
-                isFullAddress = false;
+                isGoogleAddress = true;
             }
 
             //
@@ -112,15 +112,16 @@
             //tmp = decodeURIComponent(tmp.replace(/\+/g,  ' '));
             tmp = decodeURIComponent(tmp);
 
-            if(!isFullAddress) {
-                tmp = tmp.slice(4, tmp.length - 5);
+            if(isGoogleAddress) {
+                // It's need to decode twice, I do not know why.
+                tmp = decodeURIComponent(tmp.slice(4, tmp.length - 5));
             }
 
             if(tmp.indexOf('%') > 0) {
                 tmp = '%%%' + tmp;
             }
 
-            return tmp;
+            document.getElementById('txtResult').value = tmp;
         }
 
         function simpleEncode() {

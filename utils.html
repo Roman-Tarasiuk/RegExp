@@ -16,16 +16,16 @@
 <body style="background-color: #ccf;">
     <div>
         <div id="request" style="width:1200px">
-            <p id="comment">%-like address (e.g. Google search link):</p>
-            <textarea id="googleAddress"></textarea>
-            <button onclick="clearInput('googleAddress')">Clear</button>
-            <button onclick="document.getElementById('txt').value = decode()" id="btnClean">Decode</button>
+            <p id="comment">%-like address <span class="comment">(e.g. Google search link)</span>:</p>
+            <textarea id="txtInput"></textarea>
+            <button onclick="clearInput('txtInput')">Clear</button>
+            <button onclick="document.getElementById('txtResult').value = decode()" id="btnClean">Decode</button>
             <button onclick="simpleEncode()">Simple encode</button>
             <button onclick="encodeSpaces()">Encode spaces</button>
             <button onclick="simpleDecode()">Simple decode</button>
         </div>
         <div id="result">
-            <textarea id="txt" style="width:100%"></textarea>
+            <textarea id="txtResult" style="width:100%"></textarea>
         </div>
     </div>
 
@@ -49,7 +49,7 @@
     <br/>
 
     <div>
-        <p>Swap quotes &#39; &harr; &#34; (all or in a selection):</p>
+        <p>Swap quotes &#39; &harr; &#34; <span class="comment">(all or in a selection)</span>:</p>
         <textarea id="code" style="width:1200px"></textarea>
         <br/>
         <button onclick="swapQuotes()">Swap</button>
@@ -65,8 +65,8 @@
         <button onclick="unique()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Checks whether rows are unique">Unique</button>
         <button onclick="statistic()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Each row's occurrence number">Statistic</button>
         <button onclick="statisticCumulative()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Row X/Y">Cumulative</button>
-        <button onclick="statisticCategoryCount()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Split your categories and values using tabulation">Category count</button>
-        <button onclick="statisticCategoriesList()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Split your categories and values using tabulation">Categories list</button>
+        <button onclick="statisticCategoryCount()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Split your categories and values using tabulation">Categories counts</button>
+        <button onclick="statisticCategoriesList()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Grouping values by categories. Split your categories and values using tabulation">Categories list</button>
     </div>
     
     <div style="margin-top: 12px;">
@@ -85,16 +85,16 @@
         (function() {
             var width = $('#request').width();
             // To Do: Hardcoded '33' and '8' - need to be computed automatically
-            //$('#googleAddress').width(width - $('#comment').width() - $('#btnClean').width() - 36);
+            //$('#txtInput').width(width - $('#comment').width() - $('#btnClean').width() - 36);
             $('#result').width(width - 8);
         })();
 
         //if (isInternetExplorer()) {
-            $('#txt').resizable();
+            $('#txtResult').resizable();
         //}
 
         function decode() {
-            var address = document.getElementById('googleAddress').value;
+            var address = document.getElementById('txtInput').value;
             var addressPattern = /url=http.*&usg=/;
             var tmp = addressPattern.exec(address);
 
@@ -140,22 +140,22 @@
         }
 
         function simpleEncode() {
-            var origin = document.getElementById('googleAddress');
-            var result = document.getElementById('txt');
+            var origin = document.getElementById('txtInput');
+            var result = document.getElementById('txtResult');
 
             result.value = encodeURIComponent(origin.value);
         }
 
         function simpleDecode() {
-            var origin = document.getElementById('googleAddress');
-            var result = document.getElementById('txt');
+            var origin = document.getElementById('txtInput');
+            var result = document.getElementById('txtResult');
 
             result.value = decodeURIComponent(origin.value);
         }
         
         function encodeSpaces() {
-            var originElement = document.getElementById('googleAddress');
-            var resultElement = document.getElementById('txt');
+            var originElement = document.getElementById('txtInput');
+            var resultElement = document.getElementById('txtResult');
             
             var re = / /g;
             

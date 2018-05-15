@@ -6,7 +6,7 @@
 
     <style>
         .description {
-            color: grey;
+            color: #444;
             margin-bottom: 0;
         }
 
@@ -15,6 +15,7 @@
             margin-top: 0;
             white-space: pre;
             font-family: Consolas, monaco, monospace;
+            padding: 4px;
         }
 
         .input {
@@ -54,11 +55,12 @@
                 onchange = "helperObject.userInput()"
                 placeholder="Put any text here (HTML page source may work with some troubles)."></textarea>
 
-    <button onclick="helperObject.userInput(); helperObject.parameters()">Apply</button>
+    <button onclick="helperObject.userInput()">Set input</button>
     <button onclick="helperObject.clearInput()">Clear</button>
 
-    <span>Select/result width: </span>
-    <input id="width" type="text" value="100%"></input>
+    <span class="description">Select/result width: </span>
+    <input id="width" type="text" style="width: 80px;" value="100%"></input>
+    <button onclick="helperObject.parameters()">Apply</button>
 
     <div class="container">
         <label class="description">Select here:</label>

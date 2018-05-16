@@ -11,7 +11,6 @@
         }
 
         .p {
-            /*border: 1px solid grey;*/
             margin-top: 0;
             margin-bottom: 0;
             white-space: pre;
@@ -48,24 +47,41 @@
         .container-result {
             height: 600px;
         }
+        
+        .small-button {
+            border: none;
+            font-size: 70%;
+            background-color: white;
+            padding: 2px;
+            margin-left: 16px;
+            color: #3399ff;
+        }
+        
+        .small-button:hover {
+            background-color: #c6e2ff;
+        }
     </style>
 </head>
 <body>
-    <label class="description">Input your text here:</label>
-    <textarea id="input" class="input"
-                onkeyup = "helperObject.userInput()"
-                onchange = "helperObject.userInput()"
-                placeholder="Put your text here."></textarea>
+    <button id="toggleInput" onclick="helperObject.toggleInput()" class="small-button">Hide input</button>
+    <br>
+    <span id="userInput">
+        <label class="description">Input your text here:</label>
+        <textarea id="input" class="input"
+                    onkeyup = "helperObject.userInput()"
+                    onchange = "helperObject.userInput()"
+                    placeholder="Put your text here."></textarea>
 
-    <!-- Use the next button in case when text is not displayed automatically
-            in the selection ('#result') paragraph,
-            e.g. when you use Paste menu item of the textarea context menu. -->
-    <button onclick="helperObject.userInput()">Set input / Clear selection</button>
-    <button onclick="helperObject.clearInput()">Clear</button>
+        <!-- Use the next button in case when text is not displayed automatically
+                in the selection ('#result') paragraph,
+                e.g. when you use Paste menu item of the textarea context menu. -->
+        <button onclick="helperObject.userInput()">Set input / Clear selection</button>
+        <button onclick="helperObject.clearInput()">Clear</button>
 
-    <span class="description">Select/result width: </span>
-    <input id="width" type="text" style="width: 80px;" value="100%"></input>
-    <button onclick="helperObject.parameters()">Apply</button>
+        <span class="description">Select/result width: </span>
+        <input id="width" type="text" style="width: 80px;" value="100%"></input>
+        <button onclick="helperObject.parameters()">Apply</button>
+    </span>
 
     <div id="container-txt" class="container-txt container-result">
         <code>
@@ -175,7 +191,20 @@
 
             document.body.addEventListener('mousedown', helperObject.mouseDown);
             document.body.addEventListener('mouseup', helperObject.mouseUp);
-
+            
+            helperObject.toggleInput = function() {
+                var styleCtrl = document.getElementById('userInput').style;
+                var toggleBtn = document.getElementById('toggleInput');
+                
+                if (styleCtrl.display == 'none') {
+                    styleCtrl.display = '';
+                    toggleBtn.innerText = 'Hide input';
+                }
+                else if (styleCtrl.display == ''){
+                    styleCtrl.display = 'none';
+                    toggleBtn.innerText = 'Show input';
+                }
+            }
         })(helperObject || (helperObject = {}));
     </script>
 </body>

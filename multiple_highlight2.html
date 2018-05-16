@@ -60,7 +60,7 @@
     <!-- Use the next button in case when text is not displayed automatically
             in the selection ('#result') paragraph,
             e.g. when you use Paste menu item of the textarea context menu. -->
-    <button onclick="helperObject.userInput()">Set input</button>
+    <button onclick="helperObject.userInput()">Set input / Clear selection</button>
     <button onclick="helperObject.clearInput()">Clear</button>
 
     <span class="description">Select/result width: </span>
@@ -122,7 +122,7 @@
             helperObject.mouseUp = function() {
                 mouseDown = false;
             }
-
+            
             setInterval(function() {
                 if (!selectionChanged || mouseDown) {
                     return;

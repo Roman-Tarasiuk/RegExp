@@ -68,7 +68,7 @@
     <button onclick="helperObject.parameters()">Apply</button>
 
     <div class="container">
-        <div id="txt2" class="container-txt container-result">
+        <div id="container-txt" class="container-txt container-result">
             <code>
                 <p id="result" class="p result"></p>
             </code>
@@ -96,8 +96,7 @@
             }
 
             helperObject.parameters = function() {
-                document.querySelector('#txt1').style.width = widthCtrl.value;
-                document.querySelector('#txt2').style.width = widthCtrl.value;
+                document.querySelector('#container-txt').style.width = widthCtrl.value;
             }
 
             helperObject.clearInput = function() {

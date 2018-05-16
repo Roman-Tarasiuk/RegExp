@@ -11,8 +11,9 @@
         }
 
         .p {
-            border: 1px solid grey;
+            /*border: 1px solid grey;*/
             margin-top: 0;
+            margin-bottom: 0;
             white-space: pre;
             font-family: Consolas, monaco, monospace;
             padding: 4px;
@@ -31,14 +32,13 @@
             background-color: #3399ff;
         }
 
-        .container {
-            margin-top: 8px;
-        }
-
         .container-txt {
+            margin-top: 8px;
+            border: 1px solid #3399ff;
             overflow: scroll;
             resize: both;
             width: 100%;
+            background-color: #dfd;
         }
 
         .container-input {
@@ -55,7 +55,7 @@
     <textarea id="input" class="input"
                 onkeyup = "helperObject.userInput()"
                 onchange = "helperObject.userInput()"
-                placeholder="Put any text here (HTML page source may work with some troubles)."></textarea>
+                placeholder="Put your text here."></textarea>
 
     <!-- Use the next button in case when text is not displayed automatically
             in the selection ('#result') paragraph,
@@ -67,12 +67,10 @@
     <input id="width" type="text" style="width: 80px;" value="100%"></input>
     <button onclick="helperObject.parameters()">Apply</button>
 
-    <div class="container">
-        <div id="container-txt" class="container-txt container-result">
-            <code>
-                <p id="result" class="p result"></p>
-            </code>
-        </div>
+    <div id="container-txt" class="container-txt container-result">
+        <code>
+            <p id="result" class="p result"></p>
+        </code>
     </div>
 
     <script>
@@ -143,10 +141,7 @@
             }, 100);
 
             function processSelection() {
-                //console.log('Processed.');
-
                 var selection = window.getSelection();
-                //console.log(selection);
 
                 var txt = "";
 
@@ -162,6 +157,8 @@
                 if (txt == '') {
                     return;
                 }
+                
+                txt = replaceAngleBrackets(txt);
 
                 var replaceRe;
                 try {
@@ -171,7 +168,6 @@
                     return;
                 }
 
-                //var resultTxt = inputCtrl.value.replace(replaceRe, '<span class="selection-processed">$1</span>');
                 var resultTxt = replaceAngleBrackets(inputCtrl.value).replace(replaceRe, '<span class="selection-processed">$1</span>');
 
                 resultCtrl.innerHTML = resultTxt;

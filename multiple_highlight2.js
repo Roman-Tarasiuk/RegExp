@@ -4,6 +4,9 @@ var helperObject;
     var mouseDown = false;
     var selectionChanged = false;
     var selectionProcessing = false;
+    
+    var lastKeyPressTime = null;
+    var keyPressProcessed = true;
 
     var inputCtrl = document.getElementById('input');
     var resultCtrl = document.getElementById('result');
@@ -58,26 +61,14 @@ var helperObject;
 
         selectionProcessing = true;
 
-        processSelection();
+        var selectedText = getSelectedText();
+        processSelection(selectedText);
 
         selectionProcessing = false;
         selectionChanged = false;
     }, 100);
 
-    function processSelection() {
-        var selection = window.getSelection();
-
-        var txt = "";
-
-        var start = selection.anchorOffset;
-        var end = selection.focusOffset;
-        try {
-            txt = selection.anchorNode.textContent.substring(start, end);
-        }
-        catch {
-            return;
-        }
-
+    function processSelection(txt) {
         if (txt == '') {
             return;
         }
@@ -97,6 +88,23 @@ var helperObject;
         resultCtrl.innerHTML = resultTxt;
     }
 
+    function getSelectedText() {
+        var selection = window.getSelection();
+
+        var txt = "";
+
+        var start = selection.anchorOffset;
+        var end = selection.focusOffset;
+        try {
+            txt = selection.anchorNode.textContent.substring(start, end);
+        }
+        catch {
+            return '';
+        }
+        
+        return txt;
+    }
+
     document.body.addEventListener('mousedown', helperObject.mouseDown);
     document.body.addEventListener('mouseup', helperObject.mouseUp);
     
@@ -113,4 +121,8 @@ var helperObject;
             toggleBtn.innerText = 'Show input';
         }
     }
+    
+    document.getElementById("find").addEventListener('keyup', function(){
+        console.log('Hello World!');
+    })
 })(helperObject || (helperObject = {}));

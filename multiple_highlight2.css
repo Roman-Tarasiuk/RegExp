@@ -37,6 +37,10 @@
     height: 200px;
 }
 
+.container-find {
+    margin-top: 8px;
+}
+
 .container-result {
     height: 600px;
 }

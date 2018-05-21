@@ -7,6 +7,7 @@ var helperObject;
     
     var lastKeyPressTime = null;
     var keyPressProcessed = true;
+    var keyPressThreshold = 800; // Milliseconds.
 
     var inputCtrl = document.getElementById('input');
     var resultCtrl = document.getElementById('result');
@@ -122,7 +123,31 @@ var helperObject;
         }
     }
     
+    setInterval(function() {
+        if (keyPressProcessed) {
+            return;
+        }
+
+        if (selectionProcessing) {
+            return;
+        }
+        
+        var now = Date.now();
+        if ((now - lastKeyPressTime) < keyPressThreshold) {
+            return;
+        }
+
+        selectionProcessing = true;
+
+        var userFind = document.getElementById('find').value;
+        processSelection(userFind);
+
+        selectionProcessing = false;
+        keyPressProcessed = true;
+    }, 100);
+    
     document.getElementById("find").addEventListener('keyup', function(){
-        console.log('Hello World!');
+        lastKeyPressTime = Date.now();
+        keyPressProcessed = false;
     })
 })(helperObject || (helperObject = {}));

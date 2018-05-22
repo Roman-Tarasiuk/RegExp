@@ -74,7 +74,8 @@ var helperObject;
             return;
         }
         
-        txt = replaceAngleBrackets(txt);
+        txt = replaceAngleBrackets(txt)
+                .replace(/\?/g, '\\?');
 
         var replaceRe;
         try {

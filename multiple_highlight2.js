@@ -12,6 +12,7 @@ var helperObject;
     var inputCtrl = document.getElementById('input');
     var resultCtrl = document.getElementById('result');
     var widthCtrl = document.getElementById('width');
+    var wordWrapCtrl = document.getElementById('wordWrap');
 
 
     helperObject.userInput = function() {
@@ -151,4 +152,14 @@ var helperObject;
         lastKeyPressTime = Date.now();
         keyPressProcessed = false;
     })
+    
+    helperObject.wordWrap = function() {
+        if (wordWrapCtrl.checked) {
+            resultCtrl.classList.remove('p-pre');
+        }
+        else {
+            resultCtrl.classList.add('p-pre');
+        }
+    }
+
 })(helperObject || (helperObject = {}));

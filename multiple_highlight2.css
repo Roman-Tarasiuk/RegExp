@@ -6,9 +6,12 @@
 .p {
     margin-top: 0;
     margin-bottom: 0;
-    white-space: pre;
     font-family: Consolas, monaco, monospace;
     padding: 4px;
+}
+
+.p-pre {
+    white-space: pre;
 }
 
 .input {
@@ -56,4 +59,8 @@
 
 .small-button:hover {
     background-color: #c6e2ff;
+}
+
+.break-word {
+    word-wrap: break-word;
 }

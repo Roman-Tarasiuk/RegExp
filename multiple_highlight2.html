@@ -27,13 +27,15 @@
         <button onclick="helperObject.parameters()">Apply</button>
     </span>
     
+    <label class="description"> <input type="checkbox" id="wordWrap" onclick="helperObject.wordWrap()">Word wrap</input> </label>
+    
     <div class="container-find">
         <input type="text" id="find" style="width: 100%;" placeholder="Type a text here to find or select it below"></input>
     </div>
 
-    <div id="container-txt" class="container-txt container-result">
+    <div id="container-txt" class="container-txt container-result break-word">
         <code>
-            <p id="result" class="p result"></p>
+            <p id="result" class="p p-pre result"></p>
         </code>
     </div>
 

@@ -13,6 +13,7 @@ var helperObject;
     var resultCtrl = document.getElementById('result');
     var widthCtrl = document.getElementById('width');
     var wordWrapCtrl = document.getElementById('wordWrap');
+    var infoCtrl = document.getElementById('info');
 
 
     helperObject.userInput = function() {
@@ -86,7 +87,15 @@ var helperObject;
             return;
         }
 
-        var resultTxt = replaceAngleBrackets(inputCtrl.value).replace(replaceRe, '<span class="selection-processed">$1</span>');
+        var wrapStart = '<span class="selection-processed">';
+        var wrapEnd = '</span>';
+        var tmp = replaceAngleBrackets(inputCtrl.value);
+        var resultTxt = tmp.replace(replaceRe, wrapStart + '$1' + wrapEnd);
+        
+        if (resultTxt.length != tmp.length) {
+            var matchesCount = (resultTxt.length - tmp.length) / (wrapStart.length + wrapEnd.length);
+            infoCtrl.innerText = matchesCount + ' match(es) found';
+        }
 
         resultCtrl.innerHTML = resultTxt;
     }

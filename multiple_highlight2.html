@@ -19,8 +19,8 @@
         <!-- Use the next button in case when text is not displayed automatically
                 in the selection ('#result') paragraph,
                 e.g. when you use Paste menu item of the textarea context menu. -->
-        <button onclick="helperObject.userInput()">Set input / Clear selection</button>
-        <button onclick="helperObject.clearInput()">Clear</button>
+        <button onclick="helperObject.userInput()">Set input / Clear <span class="selection-processed p-pre"> selection </span></button>
+        <button onclick="helperObject.clearInput()">Clear all</button>
 
         <span class="description">Select/result width: </span>
         <input id="width" type="text" style="width: 80px;" value="100%"></input>

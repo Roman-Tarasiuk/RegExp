@@ -19,6 +19,8 @@ var helperObject;
     helperObject.userInput = function() {
         var input = inputCtrl.value;
         input = replaceAngleBrackets(input);
+        
+        infoCtrl.innerText = '';
 
         resultCtrl.innerHTML = input;
     }
@@ -30,6 +32,8 @@ var helperObject;
     helperObject.clearInput = function() {
         inputCtrl.value = "";
         resultCtrl.innerHTML = "";
+        
+        infoCtrl.innerText = '';
 
         inputCtrl.focus();
     }

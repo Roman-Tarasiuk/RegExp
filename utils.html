@@ -14,7 +14,15 @@
 </head>
 
 <body style="background-color: #ccf;">
-    <div>
+    <div class="tab">
+      <button class="tablinks" onclick="openTab(event, 'tabAddresses')">%-like addresses</button>
+      <button class="tablinks" onclick="openTab(event, 'tabNowIs')">Now is</button>
+      <button class="tablinks" onclick="openTab(event, 'tabSQL')">SQL</button>
+      <button class="tablinks" onclick="openTab(event, 'tabQuotes')">Quotes</button>
+      <button class="tablinks" onclick="openTab(event, 'tabStatistics')">Statistics</button>
+    </div>
+
+    <div id="tabAddresses" class="tabcontent">
         <div id="request" style="width:1200px">
             <p id="comment">%-like address <span class="comment">(e.g. Google search link)</span>:</p>
             <textarea id="txtInput"></textarea>
@@ -25,41 +33,35 @@
             <button onclick="encodeSpaces()">Encode spaces</button>
         </div>
         <div id="result">
-            <textarea id="txtResult" style="width:100%"></textarea>
+            <textarea id="txtResult"></textarea>
         </div>
     </div>
 
-    <div>
+    <div id="tabNowIs" class="tabcontent">
         <p>Now is:
             <span id="dateTimeNow" style="font-weight: normal" onclick="nowIs()" title="Click to refresh"></span>
         </p>
         <p id="clock" style="width: 155px; font-family: 'clockFont', sans-serif; font-size: 32pt; background-color: black; color: lime; padding-left: 4px; padding-right: 4px; margin: 0px;">00:00:00</p>
     </div>
 
-    <br/>
-
-    <div>
+    <div id="tabSQL" class="tabcontent">
         <p>SQL:</p>
-        <textarea id="sqlCode" style="width:1200px; background-color: #ffc;"></textarea>
+        <textarea id="sqlCode" style="background-color: #ffc;"></textarea>
         <br/>
         <button onclick="checkUncommentedSQL()">Check Uncommented</button>
         <button onclick="argumentSQL()">Argument</button>
     </div>
 
-    <br/>
-
-    <div>
+    <div id="tabQuotes" class="tabcontent">
         <p>Swap quotes &#39; &harr; &#34; <span class="comment">(all or in a selection)</span>:</p>
-        <textarea id="code" style="width:1200px"></textarea>
+        <textarea id="code"></textarea>
         <br/>
         <button onclick="swapQuotes()">Swap</button>
     </div>
 
-    <br/>
-
-    <div>
+    <div id="tabStatistics" class="tabcontent">
         <p>Statistics:</p>
-        <textarea id="data" style="width:1200px"></textarea>
+        <textarea id="data"></textarea>
         <br/>
         <button onclick="clearInput('data')">Clear</button>
         <button onclick="unique()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Checks whether rows are unique">Unique</button>
@@ -67,14 +69,35 @@
         <button onclick="statisticCumulative()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Row X/Y">Cumulative</button>
         <button onclick="statisticCategoryCount()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Split your categories and values using tabulation">Categories counts</button>
         <button onclick="statisticCategoriesList()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Grouping values by categories. Split your categories and values using tabulation">Categories list</button>
-    </div>
     
-    <div style="margin-top: 12px;">
-        <input id="help" style="width: 60%" readonly disabled></input>
+        <div style="margin-top: 12px;">
+            <input id="help" style="width: 60%" readonly disabled></input>
+        </div>
     </div>
 
 
     <script>
+        function openTab(evt, tabName) {
+            // Declare all variables
+            var i, tabcontent, tablinks;
+
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tablinks" and remove the class "active"
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show the current tab, and add an "active" class to the button that opened the tab
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    
         String.prototype.replaceAll = function(search, replacement) {
             var target = this;
             return target.split(search).join(replacement);
@@ -88,7 +111,7 @@
         })();
 
         //if (isInternetExplorer()) {
-            $('#txtResult').resizable();
+            //$('#txtResult').resizable();
         //}
 
         function decode() {

@@ -43,14 +43,8 @@ div.container {
     background-image: url("../img/compare.png");
 }
 
-.hover,
-.hover *
-{
-    color: #aaa;
-}
-
-.hover:hover,
-.hover:hover *
+.color,
+.color *
 {
     color: #444;
 }

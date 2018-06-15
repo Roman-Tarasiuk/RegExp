@@ -39,8 +39,8 @@ var helperObject;
     }
 
     function replaceAngleBrackets(input) {
-        input = input.replace(/</g, '&lt');
-        input = input.replace(/>/g, '&gt');
+        input = input.replace(/</g, '&lt')
+                .replace(/>/g, '&gt');
 
         return input;
     }
@@ -81,10 +81,13 @@ var helperObject;
         }
         
         txt = replaceAngleBrackets(txt)
-                .replace(/\?/g, '\\?');
+                .replace(/\?/g, '\\?')
+                .replace(/\(/g, '\\(')
+                .replace(/\)/g, '\\)');
 
         var replaceRe;
         try {
+            // Group.
             replaceRe = new RegExp('(' + txt + ')', 'gi');
         }
         catch {

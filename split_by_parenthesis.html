@@ -45,13 +45,13 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Opening: </span>
                 </div>
-                <input class="params" type="text" id="openSym" value="("></input class="params">
+                <input class="params" type="text" id="openSym" value="("></input>
             </div>
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Closing: </span>
                 </div>
-                <input class="params" type="text" id="closeSym" value=")"></input class="params">
+                <input class="params" type="text" id="closeSym" value=")"></input>
             </div>
             <div class="input-group">
                 <div class="input-group-prepend">
@@ -74,18 +74,14 @@
     <script>
         (function(){
         
-            // Configurations.
-        
-            var openSym = document.getElementById('openSym').value;
-            var closeSym = document.getElementById('closeSym').value;
-            var splitStr = document.getElementById('splitStr').value.replace(/\\n/g, '\n');
-            
-            // Workink variables and functions.
-        
             var inputEl = document.getElementById('input');
             var resultEl = document.getElementById('result');
 
             function processInput() {
+        
+                var openSym = document.getElementById('openSym').value;
+                var closeSym = document.getElementById('closeSym').value;
+                var splitStr = document.getElementById('splitStr').value.replace(/\\n/g, '\n');
                 
                 var input = inputEl.value;
                 var count = 0;
@@ -115,6 +111,10 @@
                     }
                     
                     current++;
+                }
+                
+                if (resultStr == '') {
+                    resultStr = input;
                 }
                 
                 resultEl.value = resultStr;

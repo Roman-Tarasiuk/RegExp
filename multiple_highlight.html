@@ -19,7 +19,6 @@
         <!-- Use the next button in case when text is not displayed automatically
                 in the selection ('#result') paragraph,
                 e.g. when you use Paste menu item of the textarea context menu. -->
-        <button onclick="helperObject.userInput()">Set input / Clear selection(s)</button>
         <button onclick="helperObject.clearInput()">Clear all</button>
 
         <span class="description">Select/result width: </span>
@@ -27,8 +26,9 @@
         <button onclick="helperObject.parameters()">Apply</button>
     </span>
     
-    <label class="description"> <input type="checkbox" id="wordWrap" onclick="helperObject.wordWrap()">Word wrap</input> </label>
+    <button onclick="helperObject.userInput()">Set input / Clear selection(s)</button>
     <label class="description"> <input type="checkbox" id="wholeWord">Whole word</input> </label>
+    <label class="description"> <input type="checkbox" id="caseSensitive">Case-sensitive</input> </label>
     <label id="info" class="description"></label>
     
     <div class="container-find">
@@ -40,6 +40,10 @@
             <p id="result" class="p p-pre result"></p>
         </code>
     </div>
+    <div>
+        <label class="description"> <input type="checkbox" id="wordWrap" onclick="helperObject.wordWrap()">Word wrap</input> </label>
+    </div>
+    <hr>
     
     <a href="multiple_highlight_simple.html">Multiple highlight – simple version</a>
 

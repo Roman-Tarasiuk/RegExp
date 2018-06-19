@@ -14,6 +14,7 @@ var helperObject;
     var widthCtrl = document.getElementById('width');
     var wordWrapCtrl = document.getElementById('wordWrap');
     var wholeWordCtrl = document.getElementById('wholeWord');
+    var caseSensitiveCtrl = document.getElementById('caseSensitive');
     var infoCtrl = document.getElementById('info');
 
 
@@ -82,6 +83,8 @@ var helperObject;
         }
         
         var wholeWord = wholeWordCtrl.checked;
+        var caseSensitive = caseSensitiveCtrl.checked;
+        
         // To do: improve the next regular expression to use \s in [].
         var surrountWholeWord = '([\t \.,\(\)\n])';
         
@@ -96,7 +99,7 @@ var helperObject;
             replaceRe = new RegExp(
                 (wholeWord ? surrountWholeWord : '')
                 + '(' + txt + ')'
-                + (wholeWord ? surrountWholeWord : ''), 'gi');
+                + (wholeWord ? surrountWholeWord : ''), caseSensitive ? 'g' : 'gi');
         }
         catch {
             return;

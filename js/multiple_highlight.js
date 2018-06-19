@@ -13,6 +13,7 @@ var helperObject;
     var resultCtrl = document.getElementById('result');
     var widthCtrl = document.getElementById('width');
     var wordWrapCtrl = document.getElementById('wordWrap');
+    var wholeWordCtrl = document.getElementById('wholeWord');
     var infoCtrl = document.getElementById('info');
 
 
@@ -80,6 +81,10 @@ var helperObject;
             return;
         }
         
+        var wholeWord = wholeWordCtrl.checked;
+        // To do: improve the next regular expression to use \s in [].
+        var surrountWholeWord = '([\t \.,\(\)\n])';
+        
         txt = replaceAngleBrackets(txt)
                 .replace(/\?/g, '\\?')
                 .replace(/\(/g, '\\(')
@@ -88,7 +93,10 @@ var helperObject;
         var replaceRe;
         try {
             // Group.
-            replaceRe = new RegExp('(' + txt + ')', 'gi');
+            replaceRe = new RegExp(
+                (wholeWord ? surrountWholeWord : '')
+                + '(' + txt + ')'
+                + (wholeWord ? surrountWholeWord : ''), 'gi');
         }
         catch {
             return;
@@ -97,7 +105,12 @@ var helperObject;
         var wrapStart = '<span class="selection-processed">';
         var wrapEnd = '</span>';
         var tmp = replaceAngleBrackets(inputCtrl.value);
-        var resultTxt = tmp.replace(replaceRe, wrapStart + '$1' + wrapEnd);
+        var resultTxt = tmp.replace(replaceRe,
+            (wholeWord ? '$1' : '')
+            + wrapStart
+            + (wholeWord ? '$2' : '$1')
+            + wrapEnd
+            + (wholeWord ? '$3' : ''));
         
         if (resultTxt.length != tmp.length) {
             var matchesCount = (resultTxt.length - tmp.length) / (wrapStart.length + wrapEnd.length);

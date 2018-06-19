@@ -19,7 +19,7 @@
         <!-- Use the next button in case when text is not displayed automatically
                 in the selection ('#result') paragraph,
                 e.g. when you use Paste menu item of the textarea context menu. -->
-        <button onclick="helperObject.userInput()">Set input / Clear <span class="selection-processed p-pre"> selection </span></button>
+        <button onclick="helperObject.userInput()">Set input / Clear selection(s)</button>
         <button onclick="helperObject.clearInput()">Clear all</button>
 
         <span class="description">Select/result width: </span>
@@ -28,6 +28,7 @@
     </span>
     
     <label class="description"> <input type="checkbox" id="wordWrap" onclick="helperObject.wordWrap()">Word wrap</input> </label>
+    <label class="description"> <input type="checkbox" id="wholeWord">Whole word</input> </label>
     <label id="info" class="description"></label>
     
     <div class="container-find">

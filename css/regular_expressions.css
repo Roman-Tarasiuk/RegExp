@@ -37,14 +37,6 @@ a, a:visited {
     color: #444;
 }
 
-.zero-margin-bottom {
-    margin-bottom: 0px;
-}
-
-.zero-margin-top {
-    margin-top: 0px;
-}
-
 .info {
     color: #777;
     margin-left: 15px;
@@ -55,4 +47,14 @@ a, a:visited {
     display: inline-block;
     vertical-align: top;
     width: 190px;
+}
+
+.li-links, .ul-links {
+    display: inline;
+    margin-right: 0.5em;
+}
+
+.li-links:before {
+  content: '\2022';
+  margin-right: 0.3em;
 }

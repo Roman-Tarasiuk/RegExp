@@ -16,11 +16,11 @@
 
 <body style="background-color: #ccf;">
     <div class="tab">
-      <button class="tablinks" onclick="openTab(event, 'tabAddresses')">%-like addresses</button>
-      <button class="tablinks" onclick="openTab(event, 'tabNowIs')">Now is</button>
-      <button class="tablinks" onclick="openTab(event, 'tabSQL')">SQL</button>
-      <button class="tablinks" onclick="openTab(event, 'tabQuotes')">Quotes</button>
-      <button class="tablinks" onclick="openTab(event, 'tabStatistics')">Statistics</button>
+      <button class="tablinks" onclick="openTab(this, 'tabAddresses')" id="item1">%-like addresses</button>
+      <button class="tablinks" onclick="openTab(this, 'tabNowIs')">Now is</button>
+      <button class="tablinks" onclick="openTab(this, 'tabSQL')">SQL</button>
+      <button class="tablinks" onclick="openTab(this, 'tabQuotes')">Quotes</button>
+      <button class="tablinks" onclick="openTab(this, 'tabStatistics')">Statistics</button>
     </div>
 
     <div id="tabAddresses" class="tabcontent">
@@ -70,7 +70,7 @@
         <button onclick="statisticCumulative()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Row X/Y">Cumulative</button>
         <button onclick="statisticCategoryCount()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Split your categories and values using tabulation">Categories counts</button>
         <button onclick="statisticCategoriesList()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Grouping values by categories. Split your categories and values using tabulation">Categories list</button>
-    
+
         <div style="margin-top: 12px;">
             <input id="help" style="width: 60%" readonly disabled></input>
         </div>
@@ -79,11 +79,16 @@
     <script src="js/tabs.js"></script>
 
     <script>
+        window.onload = function() {
+            var item1 = document.getElementById('item1');
+            openTab(item1, 'tabAddresses');
+        }
+
         String.prototype.replaceAll = function(search, replacement) {
             var target = this;
             return target.split(search).join(replacement);
         };
-    
+
         (function() {
             var width = $('#request').width();
             // To Do: Hardcoded '33' and '8' - need to be computed automatically
@@ -141,13 +146,13 @@
 
             result.value = decodeURIComponent(origin.value);
         }
-        
+
         function encodeSpaces() {
             var originElement = document.getElementById('txtInput');
             var resultElement = document.getElementById('txtResult');
-            
+
             var re = / /g;
-            
+
             resultElement.value = originElement.value.replace(re, '%20');
         }
 
@@ -455,7 +460,7 @@
 
             input.value = resultStr;
         }
-        
+
         function statisticCategoriesList() {
         // rows' format: subject \t category
             var input = document.getElementById('data');
@@ -495,7 +500,7 @@
                 if (tmpStr.endsWith(', ')) {
                     tmpStr = tmpStr.substring(0, tmpStr.length - 2);
                 }
-                
+
                 resultStr += tmpStr + '\n';
             }
 
@@ -523,16 +528,16 @@
                 alert('Rows are NOT unique.');
             }
         }
-        
+
         function showHelp(obj) {
             var helpElement = document.getElementById('help');
-            
+
             help.value =  obj.getAttribute('data-title');
         }
-        
+
         function hideHelp() {
             var helpElement = document.getElementById('help');
-            
+
             help.value = '';
         }
     </script>

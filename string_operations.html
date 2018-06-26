@@ -11,10 +11,10 @@
 
 <body>
     <div class="tab">
-      <button class="tablinks" onclick="openTab(event, 'tabCompare')">Compare</button>
-      <button class="tablinks" onclick="openTab(event, 'tabManipulations')">String manipulations</button>
+      <button class="tablinks" onclick="openTab(this, 'tabCompare')" id="item1">Compare</button>
+      <button class="tablinks" onclick="openTab(this, 'tabManipulations')">String manipulations</button>
     </div>
-    
+
     <div id="tabCompare" class="color tabcontent">
         <div class="container">
             <div class="input-holder clear-btn" onclick="clearInput(this)">
@@ -63,7 +63,7 @@
                 <span id="length"></span>
             </span>
         </div>
-        
+
         <div class="group">
             <div style="margin-top: 2px; background-color: #d9d9d9; width: 800px; padding: 5px;">
                 <label style="display: block; padding-bottom: 7px;">Replace all presets:</label>
@@ -84,5 +84,12 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/tabs.js"></script>
     <script src="js/string_operations.js"></script>
+
+    <script>
+        window.onload = function() {
+            var item1 = document.getElementById('item1');
+            openTab(item1, 'tabCompare');
+        }
+    </script>
 </body>
 </html>

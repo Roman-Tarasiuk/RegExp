@@ -144,16 +144,20 @@ var helperObject;
     document.body.addEventListener('mouseup', helperObject.mouseUp);
     
     helperObject.toggleInput = function() {
-        var styleCtrl = document.getElementById('userInput').style;
+        var targets = document.getElementsByClassName('userInput');
         var toggleBtn = document.getElementById('toggleInput');
         
-        if (styleCtrl.display == 'none') {
-            styleCtrl.display = '';
-            toggleBtn.innerText = 'Hide input';
-        }
-        else if (styleCtrl.display == ''){
-            styleCtrl.display = 'none';
-            toggleBtn.innerText = 'Show input';
+        for (var i = 0; i < targets.length; i++) {
+            var styleCtrl = targets[i].style;
+            
+            if (styleCtrl.display == 'none') {
+                styleCtrl.display = '';
+                toggleBtn.innerText = 'Hide input';
+            }
+            else if (styleCtrl.display == ''){
+                styleCtrl.display = 'none';
+                toggleBtn.innerText = 'Show input';
+            }
         }
     }
     

@@ -9,7 +9,7 @@
 <body>
     <button id="toggleInput" onclick="helperObject.toggleInput()" class="small-button">Hide input</button>
     <br>
-    <span id="userInput">
+    <span class="userInput">
         <label class="description">Input your text here:</label>
         <textarea id="input" class="input"
                     onkeyup = "helperObject.userInput()"
@@ -19,6 +19,9 @@
         <!-- Use the next button in case when text is not displayed automatically
                 in the selection ('#result') paragraph,
                 e.g. when you use Paste menu item of the textarea context menu. -->
+    </span>
+    <button onclick="helperObject.userInput()">Set input / Clear selection(s)</button>
+    <span class="userInput">
         <button onclick="helperObject.clearInput()">Clear all</button>
 
         <span class="description">Select/result width: </span>
@@ -26,7 +29,6 @@
         <button onclick="helperObject.parameters()">Apply</button>
     </span>
     
-    <button onclick="helperObject.userInput()">Set input / Clear selection(s)</button>
     <label class="description"> <input type="checkbox" id="wholeWord">Whole word</input> </label>
     <label class="description"> <input type="checkbox" id="caseSensitive">Case-sensitive</input> </label>
     <label id="info" class="description"></label>

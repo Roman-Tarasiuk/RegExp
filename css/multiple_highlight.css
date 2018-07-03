@@ -65,6 +65,10 @@
     word-wrap: break-word;
 }
 
-#info {
+.align {
     margin-left: 20px;
+}
+
+.info {
+    margin-top: 5px;
 }

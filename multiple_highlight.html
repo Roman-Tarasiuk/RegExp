@@ -23,15 +23,18 @@
     <button onclick="helperObject.userInput()">Set input / Clear selection(s)</button>
     <span class="userInput">
         <button onclick="helperObject.clearInput()">Clear all</button>
-
-        <span class="description">Select/result width: </span>
+    </span>
+    <label class="description"> <input type="checkbox" id="wholeWord">Whole word</input> </label>
+    <label class="description"> <input type="checkbox" id="caseSensitive">Case-sensitive</input> </label>
+    <span class="userInput">
+        <span class="align description">Select/result width: </span>
         <input id="width" type="text" style="width: 80px;" value="100%"></input>
         <button onclick="helperObject.parameters()">Apply</button>
     </span>
     
-    <label class="description"> <input type="checkbox" id="wholeWord">Whole word</input> </label>
-    <label class="description"> <input type="checkbox" id="caseSensitive">Case-sensitive</input> </label>
-    <label id="info" class="description"></label>
+    <div class="info">
+        <label id="info" class="align description"></label>
+    </div>
     
     <div class="container-find">
         <input type="text" id="find" style="width: 100%;" placeholder="Type a text here to find or select it below"></input>

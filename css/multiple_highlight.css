@@ -72,3 +72,8 @@
 .info {
     margin-top: 5px;
 }
+
+#info {
+    background-color: #9df;
+    padding: 0 4px;
+}

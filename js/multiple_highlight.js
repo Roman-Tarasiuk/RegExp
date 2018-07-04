@@ -22,7 +22,7 @@ var helperObject;
         var input = inputCtrl.value;
         input = replaceAngleBrackets(input);
         
-        infoCtrl.innerText = '';
+        infoCtrl.innerText = '...';
 
         resultCtrl.innerHTML = input;
     }
@@ -32,10 +32,10 @@ var helperObject;
     }
 
     helperObject.clearInput = function() {
-        inputCtrl.value = "";
-        resultCtrl.innerHTML = "";
+        inputCtrl.value = '';
+        resultCtrl.innerHTML = '';
         
-        infoCtrl.innerText = '';
+        infoCtrl.innerText = '...';
 
         inputCtrl.focus();
     }
@@ -126,7 +126,7 @@ var helperObject;
     function getSelectedText() {
         var selection = window.getSelection();
 
-        var txt = "";
+        var txt = '';
 
         var start = selection.anchorOffset;
         var end = selection.focusOffset;
@@ -184,7 +184,7 @@ var helperObject;
         keyPressProcessed = true;
     }, 100);
     
-    document.getElementById("find").addEventListener('keyup', function(){
+    document.getElementById('find').addEventListener('keyup', function(){
         lastKeyPressTime = Date.now();
         keyPressProcessed = false;
     })

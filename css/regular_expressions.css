@@ -58,3 +58,9 @@ a, a:visited {
   content: '\2022';
   margin-right: 0.3em;
 }
+
+.clear-btn {
+    width: 20px;
+    height: 20px;
+    margin-bottom: -4px;
+}

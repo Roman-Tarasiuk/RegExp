@@ -10,14 +10,18 @@
 
 <body>
     <div>
-        <p class="regularExpressionsPluginP">Input:</p>
+        <div class="regularExpressionsPluginP">
+            Input:
+            <input class="clear-btn" type="image"
+                  src="img/clear.png"
+                  alt="Clear input"
+                  onclick="clearData('input'); showInfo('info1', '...')">
+        </div>
         <textarea id="input" class="w" style="height: 100px;"
             onchange="inputChanged()"
             onpaste="inputPaste()"
             onkeyup="inputKeyup()"></textarea>
         <div class="hover">
-            <button onclick="clearData('input'); showInfo('info1', '...')">Clear</button>
-            <span style="display: inline-block; width: 30px;"></span>
             <input id="userFile" type="file" onchange="onChange(event)"></input>
             <span>Encoding:</span>
             <input id="encoding" value="Windows-1251"></input>
@@ -52,12 +56,14 @@ match[0] + '\t' + getRow(match.index) + '\t' + fileName + '\n'</textarea>
 
         <span id="info2" class="info">...</span>
         
-        <p class="regularExpressionsPluginP">Results:</p>
-        <textarea id="results" class="w" style="height: 100px;"></textarea>
-
-        <div class="hover">
-            <button onclick="clearData('results')">Clear</button>
+        <div class="regularExpressionsPluginP">
+            Results:
+            <input class="clear-btn" type="image"
+                  src="img/clear.png"
+                  alt="Clear results"
+                  onclick="clearData('results')">
         </div>
+        <textarea id="results" class="w" style="height: 100px;"></textarea>
     </div>
 
     <div>

@@ -7,6 +7,7 @@ var fileName = '';
 var userInputChanged = false;
 var input = '';
 var rowsMap = {};
+var showAutoEl = document.getElementById('showAuto');
 
 
 String.prototype.lines = function() { return this.split(/\r*\n/); }
@@ -186,6 +187,10 @@ function onChange(event) {
     inputElement.value = '\'' + fileName + '\' is successfully loaded.';
     showInfo('info1', input.length + ' characters / '
         + input.lineCount() + ' row(s)');
+    
+    if (showAutoEl.checked) {
+        inputElement.value = input;
+    }
     // input.length
   };
 
@@ -216,11 +221,5 @@ function inputPaste() {
 function inputKeyup() {
     console.log('** Input key up.');
     userInputChanged = true;
-    showInputInfo();
-}
-
-function showFile() {
-    inputElement.value = input;
-    input = inputElement.value;
     showInputInfo();
 }

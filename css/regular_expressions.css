@@ -27,10 +27,6 @@ a, a:visited {
     color: #aaa;
 }
 
-.hover * {
-    background-color: #eee;
-}
-
 .hover:hover,
 .hover:hover *
 {

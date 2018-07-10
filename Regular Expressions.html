@@ -20,7 +20,7 @@
                 <input id="userFile" type="file" onchange="onChange(event)"></input>
                 <span>Encoding:</span>
                 <input id="encoding" value="Windows-1251"></input>
-                <button onclick="showFile()">Show file content</button>
+                <label for="showAuto"><input type="checkbox" id="showAuto">Show file when opened</input></label>
                 <span id="info1" class="info">...</span>
             </span>
         </div>
@@ -41,7 +41,7 @@
                       src="img/clear-24x24-2.png"
                       alt="Clear input"
                       onclick="clearData('regexp'); showInfo('info2', '...')">
-            <textarea id="regexp" class="w2" style="height: 22px; margin-top: 4px;"></textarea>
+            <textarea id="regexp" class="w2" style="height: 22px;"></textarea>
             <br>
             <span class="description regularExpressionsPluginP">Flags:</span>
             <input type="image"
@@ -49,7 +49,7 @@
                       src="img/clear-24x24-2.png"
                       alt="Clear input"
                       onclick="clearData('flags'); showInfo('info2', '...')">
-            <input type=text id="flags" style="height: 22px; margin-top: 4px;" value="g" placeholder="gmi"></textarea>
+            <input type=text id="flags" style="height: 22px;" value="g" placeholder="gmi"></textarea>
             <br>
             <span class="description regularExpressionsPluginP">Results patterrn / Replace to:</span>
             <input type="image"
@@ -57,7 +57,7 @@
                       src="img/clear-24x24-2.png"
                       alt="Clear input"
                       onclick="clearData('resultsPattern'); showInfo('info2', '...')">
-            <textarea id="resultsPattern" class="w2" style="height: 22px; margin-top: 4px;"
+            <textarea id="resultsPattern" class="w2" style="height: 22px;"
                 placeholder="match[0] + '\t' + getRow(match.index) + '\t' + fileName + '\n'">
 match[0] + '\t' + getRow(match.index) + '\t' + fileName + '\n'</textarea>
 

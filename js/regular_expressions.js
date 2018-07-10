@@ -52,6 +52,7 @@ function process() {
 
     if (count == 0) {
         resultsCtrl.value = 'No matches...';
+        showInfo('info2', '...');
     }
     else {
         resultsCtrl.value = resultsStr;

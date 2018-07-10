@@ -12,7 +12,7 @@
     <div>
         <div class="regularExpressionsPluginP">
             Input:
-            <input class="clear-btn" type="image"
+            <input class="clear-btn align1" type="image"
                   src="img/clear-24x24-2.png"
                   alt="Clear input"
                   onclick="clearData('input'); showInfo('info1', '...')">
@@ -32,15 +32,29 @@
 
     <div>
         <span class="description regularExpressionsPluginP">Regular expression:</span>
-        <textarea id="regexp" class="w2" style="height: 22px; margin-top: 4px;">
-<td><b>(.*?)</b>( .*?)<br>(?:<a href="mailto:(.*?@.*?)">)?.*\n\s*<td>(.*?)</td></textarea>
+        <input type="image"
+                  class="clear-btn"
+                  src="img/clear-24x24-2.png"
+                  alt="Clear input"
+                  onclick="clearData('regexp'); showInfo('info1', '...')">
+        <textarea id="regexp" class="w2" style="height: 22px; margin-top: 4px;"></textarea>
         <br>
         <span class="description regularExpressionsPluginP">Flags:</span>
+        <input type="image"
+                  class="clear-btn align2"
+                  src="img/clear-24x24-2.png"
+                  alt="Clear input"
+                  onclick="clearData('flags'); showInfo('info1', '...')">
         <input type=text id="flags" style="height: 22px; margin-top: 4px;" value="g" placeholder="gmi"></textarea>
     </div>
 
     <div>
         <span class="description regularExpressionsPluginP">Results patterrn / Replace to:</span>
+        <input type="image"
+                  class="clear-btn"
+                  src="img/clear-24x24-2.png"
+                  alt="Clear input"
+                  onclick="clearData('resultsPattern'); showInfo('info1', '...')">
         <textarea id="resultsPattern" class="w2" style="height: 22px; margin-top: 4px;"
             placeholder="match[0] + '\t' + getRow(match.index) + '\t' + fileName + '\n'">
 match[0] + '\t' + getRow(match.index) + '\t' + fileName + '\n'</textarea>
@@ -58,7 +72,7 @@ match[0] + '\t' + getRow(match.index) + '\t' + fileName + '\n'</textarea>
         
         <div class="regularExpressionsPluginP">
             Results:
-            <input class="clear-btn" type="image"
+            <input class="clear-btn align1" type="image"
                   src="img/clear-24x24-2.png"
                   alt="Clear results"
                   onclick="clearData('results')">

@@ -16,52 +16,55 @@
                   src="img/clear-24x24-2.png"
                   alt="Clear input"
                   onclick="clearData('input'); showInfo('info1', '...')">
+            <span class="hover" style="margin-left: 15px;">
+                <input id="userFile" type="file" onchange="onChange(event)"></input>
+                <span>Encoding:</span>
+                <input id="encoding" value="Windows-1251"></input>
+                <button onclick="showFile()">Show file content</button>
+                <span id="info1" class="info">...</span>
+            </span>
         </div>
         <textarea id="input" class="w" style="height: 100px;"
             onchange="inputChanged()"
             onpaste="inputPaste()"
             onkeyup="inputKeyup()"></textarea>
-        <div class="hover">
-            <input id="userFile" type="file" onchange="onChange(event)"></input>
-            <span>Encoding:</span>
-            <input id="encoding" value="Windows-1251"></input>
-            <button onclick="showFile()">Show file content</button>
-            <span id="info1" class="info">...</span>
-        </div>
     </div>
 
-    <div>
-        <span class="description regularExpressionsPluginP">Regular expression:</span>
-        <input type="image"
-                  class="clear-btn"
-                  src="img/clear-24x24-2.png"
-                  alt="Clear input"
-                  onclick="clearData('regexp'); showInfo('info2', '...')">
-        <textarea id="regexp" class="w2" style="height: 22px; margin-top: 4px;"></textarea>
-        <br>
-        <span class="description regularExpressionsPluginP">Flags:</span>
-        <input type="image"
-                  class="clear-btn align2"
-                  src="img/clear-24x24-2.png"
-                  alt="Clear input"
-                  onclick="clearData('flags'); showInfo('info2', '...')">
-        <input type=text id="flags" style="height: 22px; margin-top: 4px;" value="g" placeholder="gmi"></textarea>
-    </div>
-
-    <div>
-        <span class="description regularExpressionsPluginP">Results patterrn / Replace to:</span>
-        <input type="image"
-                  class="clear-btn"
-                  src="img/clear-24x24-2.png"
-                  alt="Clear input"
-                  onclick="clearData('resultsPattern'); showInfo('info2', '...')">
-        <textarea id="resultsPattern" class="w2" style="height: 22px; margin-top: 4px;"
-            placeholder="match[0] + '\t' + getRow(match.index) + '\t' + fileName + '\n'">
+    <div id="regExpValue">
+        <details open="">
+            <summary>
+                <span class="description regularExpressionsPluginP">Regular expression:</span>
+            </summary>
+            <span class="description regularExpressionsPluginP"></span>
+            <input type="image"
+                      class="clear-btn"
+                      src="img/clear-24x24-2.png"
+                      alt="Clear input"
+                      onclick="clearData('regexp'); showInfo('info2', '...')">
+            <textarea id="regexp" class="w2" style="height: 22px; margin-top: 4px;"></textarea>
+            <br>
+            <span class="description regularExpressionsPluginP">Flags:</span>
+            <input type="image"
+                      class="clear-btn align2"
+                      src="img/clear-24x24-2.png"
+                      alt="Clear input"
+                      onclick="clearData('flags'); showInfo('info2', '...')">
+            <input type=text id="flags" style="height: 22px; margin-top: 4px;" value="g" placeholder="gmi"></textarea>
+            <br>
+            <span class="description regularExpressionsPluginP">Results patterrn / Replace to:</span>
+            <input type="image"
+                      class="clear-btn"
+                      src="img/clear-24x24-2.png"
+                      alt="Clear input"
+                      onclick="clearData('resultsPattern'); showInfo('info2', '...')">
+            <textarea id="resultsPattern" class="w2" style="height: 22px; margin-top: 4px;"
+                placeholder="match[0] + '\t' + getRow(match.index) + '\t' + fileName + '\n'">
 match[0] + '\t' + getRow(match.index) + '\t' + fileName + '\n'</textarea>
 
-        <div id="regularExpressionsPluginSets" style="margin-bottom: 6px; margin-top: -3px;">
-            <button onclick="saveSet(false)" style="color: red; margin-left: 10px;">Save set</button>
-        </div>
+            <div id="regularExpressionsPluginSets" style="margin-bottom: 6px; margin-top: -1px;">
+                <button onclick="saveSet(false)" style="color: #444; border: 1px solid #aaa;" disabled>Save set</button>
+            </div>
+        </details>
     </div>
 
     <div>

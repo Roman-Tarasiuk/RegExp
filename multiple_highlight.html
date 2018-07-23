@@ -20,7 +20,7 @@
                 in the selection ('#result') paragraph,
                 e.g. when you use Paste menu item of the textarea context menu. -->
     </span>
-    <button onclick="helperObject.userInput()">Set input / Clear selection(s)</button>
+    <button onclick="helperObject.userInput()">Set input / Clear selections</button>
     <span class="userInput">
         <button onclick="helperObject.clearInput()">Clear all</button>
     </span>
@@ -37,7 +37,8 @@
     </div>
     
     <div class="container-find">
-        <input type="text" id="find" style="width: 100%;" placeholder="Type a text here to find or select it below"></input>
+        <input type="text" id="find" style="width: 100%;" placeholder="Type a text here to find or select it below"
+                onfocus="helperObject.txtFocus()" onblur="helperObject.txtBlur()"></input>
     </div>
 
     <div id="container-txt" class="container-txt container-result break-word">

@@ -16,13 +16,23 @@ var helperObject;
     var wholeWordCtrl = document.getElementById('wholeWord');
     var caseSensitiveCtrl = document.getElementById('caseSensitive');
     var infoCtrl = document.getElementById('info');
+    var findCtrl = document.getElementById('find');
+    var findIsActive = false;
 
+    helperObject.txtFocus = function() {
+        findIsActive = true;
+    }
+    
+    helperObject.txtBlur = function() {
+        findIsActive = false;
+    }
 
     helperObject.userInput = function() {
         var input = inputCtrl.value;
         input = replaceAngleBrackets(input);
         
         infoCtrl.innerText = '...';
+        findCtrl.value = '';
 
         resultCtrl.innerHTML = input;
     }
@@ -36,6 +46,7 @@ var helperObject;
         resultCtrl.innerHTML = '';
         
         infoCtrl.innerText = '...';
+        findCtrl.value = '';
 
         inputCtrl.focus();
     }
@@ -43,6 +54,13 @@ var helperObject;
     function replaceAngleBrackets(input) {
         input = input.replace(/</g, '&lt')
                 .replace(/>/g, '&gt');
+
+        return input;
+    }
+    
+    function replaceToAngleBrackets(input) {
+        input = input.replace(/&lt/g, '<')
+                .replace(/&gt/g, '>');
 
         return input;
     }
@@ -82,6 +100,10 @@ var helperObject;
             return;
         }
         
+        if (findIsActive && keyPressProcessed) {
+            return;
+        }
+        
         var wholeWord = wholeWordCtrl.checked;
         var caseSensitive = caseSensitiveCtrl.checked;
         
@@ -118,6 +140,8 @@ var helperObject;
         if (resultTxt.length != tmp.length) {
             var matchesCount = (resultTxt.length - tmp.length) / (wrapStart.length + wrapEnd.length);
             infoCtrl.innerText = matchesCount + ' match(es) found';
+            
+            findCtrl.value = replaceToAngleBrackets(txt);
         }
 
         resultCtrl.innerHTML = resultTxt;
@@ -177,7 +201,7 @@ var helperObject;
 
         selectionProcessing = true;
 
-        var userFind = document.getElementById('find').value;
+        var userFind = findCtrl.value;
         processSelection(userFind);
 
         selectionProcessing = false;

@@ -113,7 +113,8 @@ var helperObject;
         txt = replaceAngleBrackets(txt)
                 .replace(/\?/g, '\\?')
                 .replace(/\(/g, '\\(')
-                .replace(/\)/g, '\\)');
+                .replace(/\)/g, '\\)')
+                .replace(/\\/g, '\\\\');
 
         var replaceRe;
         try {

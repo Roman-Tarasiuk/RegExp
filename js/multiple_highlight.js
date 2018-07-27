@@ -114,7 +114,9 @@ var helperObject;
                 .replace(/\?/g, '\\?')
                 .replace(/\(/g, '\\(')
                 .replace(/\)/g, '\\)')
-                .replace(/\\/g, '\\\\');
+                .replace(/\\/g, '\\\\')
+                .replace(/\[/g, '\\[')
+                .replace(/\]/g, '\\]');
 
         var replaceRe;
         try {

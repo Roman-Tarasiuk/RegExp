@@ -27,15 +27,6 @@
     background-color: #3399ff;
 }
 
-.container-txt {
-    margin-top: 8px;
-    border: 1px solid #3399ff;
-    overflow: scroll;
-    resize: both;
-    width: 100%;
-    background-color: #dfd;
-}
-
 .container-input {
     height: 200px;
 }
@@ -45,7 +36,13 @@
 }
 
 .container-result {
-    height: 600px;
+    margin-top: 8px;
+    border: 1px solid #3399ff;
+    overflow: scroll;
+    resize: both;
+    width: 100%;
+    background-color: #dfd;
+    height: 540px;
 }
 
 .small-button {
@@ -53,7 +50,7 @@
     font-size: 70%;
     background-color: white;
     padding: 2px;
-    margin-left: 16px;
+    /*margin-left: 16px;*/
     color: #3399ff;
 }
 
@@ -66,7 +63,7 @@
 }
 
 .align {
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
 .info {

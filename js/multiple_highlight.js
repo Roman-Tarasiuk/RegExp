@@ -31,7 +31,7 @@ var helperObject;
         var input = inputCtrl.value;
         input = replaceAngleBrackets(input);
         
-        infoCtrl.innerText = '...';
+        infoCtrl.innerText = '';
         findCtrl.value = '';
 
         resultCtrl.innerHTML = input;
@@ -45,7 +45,7 @@ var helperObject;
         inputCtrl.value = '';
         resultCtrl.innerHTML = '';
         
-        infoCtrl.innerText = '...';
+        infoCtrl.innerText = '';
         findCtrl.value = '';
 
         inputCtrl.focus();
@@ -116,7 +116,11 @@ var helperObject;
                 .replace(/\)/g, '\\)')
                 .replace(/\\/g, '\\\\')
                 .replace(/\[/g, '\\[')
-                .replace(/\]/g, '\\]');
+                .replace(/\]/g, '\\]')
+                .replace(/\./g, '\\.')
+                .replace(/\*/g, '\\*')
+                .replace(/\^/g, '\\^')
+                .replace(/\|/g, '\\|');
 
         var replaceRe;
         try {

@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="css/multiple_highlight.css">
 </head>
 <body>
-    <button id="toggleInput" onclick="helperObject.toggleInput()" class="small-button">Hide input</button>
-    <br>
     <span class="userInput">
         <label class="description">Input your text here:</label>
         <textarea id="input" class="input"
@@ -24,30 +22,26 @@
     <span class="userInput">
         <button onclick="helperObject.clearInput()">Clear all</button>
     </span>
-    <label class="description"> <input type="checkbox" id="wholeWord">Whole word</input> </label>
-    <label class="description"> <input type="checkbox" id="caseSensitive">Case-sensitive</input> </label>
-    <span class="userInput">
-        <span class="align description">Select/result width: </span>
-        <input id="width" type="text" style="width: 80px;" value="100%"></input>
-        <button onclick="helperObject.parameters()">Apply</button>
-    </span>
-    
-    <div class="info">
-        <label id="info" class="align description">...</label>
-    </div>
+    <label id="info" class="align description"></label>
+    <button id="toggleInput" onclick="helperObject.toggleInput()" class="small-button align">Hide input</button>
     
     <div class="container-find">
         <input type="text" id="find" style="width: 100%;" placeholder="Type a text here to find or select it below"
                 onfocus="helperObject.txtFocus()" onblur="helperObject.txtBlur()"></input>
     </div>
 
-    <div id="container-txt" class="container-txt container-result break-word">
+    <div id="container-txt" class="container-result break-word">
         <code>
             <p id="result" class="p p-pre result"></p>
         </code>
     </div>
-    <div>
+    <div style="margin-top: 2px;">
         <label class="description"> <input type="checkbox" id="wordWrap" onclick="helperObject.wordWrap()">Word wrap</input> </label>
+        <label class="description"> <input type="checkbox" id="wholeWord">Whole word</input> </label>
+        <label class="description"> <input type="checkbox" id="caseSensitive">Case-sensitive</input> </label>
+        <span class="align description">Select/result width: </span>
+        <input id="width" type="text" style="width: 80px;" value="100%"></input>
+        <button onclick="helperObject.parameters()">Apply</button>
     </div>
     <hr>
     

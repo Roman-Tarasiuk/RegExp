@@ -1,3 +1,8 @@
+window.onload = function() {
+    var item1 = document.getElementById('item1');
+    openTab(item1, 'tabCompare');
+}
+
 var searchValue = '';
 var newValue = '';
 var newValueLineBreak = ' ';
@@ -201,6 +206,30 @@ function scrollHomeEnd(event) {
         var width = $('#width').val();
         window.scrollTo(width, 0);
     }
+}
+
+function uniqueChars() {
+    var txt = document.getElementById('txt');
+    
+    var s = txt.value;
+    
+    var unique = [];
+    
+    for (var i = 0; i < s.length; i++) {
+        if (unique.indexOf(s[i]) == -1) {
+            unique.push(s[i]);
+        }
+    }
+    
+    unique.sort();
+    
+    var resultStr = '';
+    
+    for (var i = 0; i < unique.length; i++) {
+        resultStr += unique[i];
+    }
+    
+    txt.value = resultStr;
 }
 
 $('#str1').keydown(scrollHomeEnd);

@@ -22,7 +22,7 @@ function stopPropag(event) {
 }
 
 function reset() {
-    document.getElementById('count').innerHTML = 'Differences: ...';
+    document.getElementById('count').innerHTML = '...';
     document.getElementById('result').value = '';
 }
 
@@ -60,7 +60,8 @@ function compare() {
     }
 
     document.getElementById('result').value = compareResult.compareStr;
-    document.getElementById('count').innerHTML = 'Differences found: ' + compareResult.placesCount;
+    document.getElementById('count').innerHTML = 
+        compareResult.placesCount == 0 ? 'Strings are equal.' : 'Differences found: ' + compareResult.placesCount + '.';
 
     function cmp(str1, str2, ignoreCase) { // str1.length >= str2.length
         if (ignoreCase) {

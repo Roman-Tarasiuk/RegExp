@@ -13,8 +13,8 @@ document.getElementById('str2').addEventListener('click', stopPropag, false);
 document.getElementById('result').addEventListener('click', stopPropag, false);
 
 function clearInput(el) {
-    el.children[0].value = '';
-    reset();
+    el.value = '';
+    el.focus();
 }
 
 function stopPropag(event) {

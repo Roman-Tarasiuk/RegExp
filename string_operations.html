@@ -12,17 +12,17 @@
 <body>
     <div class="tab">
       <button class="tablinks" onclick="openTab(this, 'tabCompare')" id="item1">Compare</button>
-      <button class="tablinks" onclick="openTab(this, 'tabManipulations')">String manipulations</button>
+      <button class="tablinks" onclick="openTab(this, 'tabManipulations')">String processing</button>
     </div>
 
     <div id="tabCompare" class="color tabcontent">
         <div class="container">
-            <div class="input-holder clear-btn" onclick="clearInput(this)">
+            <div class="input-holder clear-btn" onclick="clearInput(this.children[0]); reset();">
                 <input type="text" id="str1" oninput="reset()" onchange="reset()" />
             </div>
         </div>
         <div class="container">
-            <div class="input-holder clear-btn" onclick="clearInput(this)">
+            <div class="input-holder clear-btn" onclick="clearInput(this.children[0]); reset();">
                 <input type="text" id="str2" oninput="reset()" onchange="reset()" />
             </div>
         </div>
@@ -45,7 +45,7 @@
                     onkeyup="return onInputKeyUp(event)"
                     onchange="setLength(document.getElementById('width'))"
                     value="760"
-                    style="width: 50px;"/>
+                    style="width: 80px;"/>
             <span>px</span>
         </div>
     </div>
@@ -54,6 +54,7 @@
         <div class="group">
             <textarea id="txt" onclick="document.getElementById('length').innerText='';"></textarea>
             <br>
+            <button onclick="clearInput(document.getElementById('txt'))" style="width: 26px;" title="Clear"><image src="./img/clear.png" class="clear-btn-img"></button>
             <button onclick="removeSpaces()">Remove spaces</button>
             <button onclick="removeLineBreaks()">Remove line breaks</button>
             <button onclick="removeAllSpaces()"><b>Remove all space characters</b></button>

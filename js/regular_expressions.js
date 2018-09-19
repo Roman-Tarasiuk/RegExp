@@ -13,6 +13,9 @@ var showAutoEl = document.getElementById('showAuto');
 String.prototype.lines = function() { return this.split(/\r*\n/); }
 String.prototype.lineCount = function() { return this.lines().length; }
 
+window.onload = function() {
+    inputElement.focus();
+}
 
 function clearData(inp) {
     var input = document.getElementById(inp);
@@ -218,8 +221,20 @@ function inputPaste() {
     showInputInfo();
 }
 
-function inputKeyup() {
+function inputKeyup(ev) {
+    if (ev.key == 'ArrowLeft'
+        || ev.key == 'ArrowUp'
+        || ev.key == 'ArrowRight'
+        || ev.key == 'ArrowLeft'
+        || ev.key == 'ArrowDown'
+        || ev.key == 'Home'
+        || ev.key == 'End'
+        || ev.key == 'PageUp'
+        || ev.key == 'PageDown') {
+        return
+    }
     console.log('** Input key up.');
+    console.log(ev);
     userInputChanged = true;
     showInputInfo();
 }

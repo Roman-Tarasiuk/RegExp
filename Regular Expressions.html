@@ -15,19 +15,21 @@
             <input class="clear-btn align1" type="image"
                   src="img/clear-24x24-2.png"
                   alt="Clear input"
+                  title="Clear"
                   onclick="clearData('input'); showInfo('info1', '...')">
             <span class="hover" style="margin-left: 15px;">
                 <input id="userFile" type="file" onchange="onChange(event)"></input>
                 <span>Encoding:</span>
                 <input id="encoding" value="Windows-1251"></input>
                 <label for="showAuto"><input type="checkbox" id="showAuto">Show file when opened</input></label>
-                <span id="info1" class="info">...</span>
+                <span id="info1" class="info" title="Press Esc/Shoft/Ctrl or change the input to get text info">...</span>
             </span>
         </div>
         <textarea id="input" class="w" style="height: 100px;"
             onchange="inputChanged()"
             onpaste="inputPaste()"
-            onkeyup="inputKeyup()"></textarea>
+            onkeyup="inputKeyup(event)"
+            autofocus></textarea>
     </div>
 
     <div id="regExpValue">
@@ -40,6 +42,7 @@
                       class="clear-btn"
                       src="img/clear-24x24-2.png"
                       alt="Clear input"
+                      title="Clear"
                       onclick="clearData('regexp'); showInfo('info2', '...')">
             <textarea id="regexp" class="w2" style="height: 22px;"></textarea>
             <br>
@@ -48,6 +51,7 @@
                       class="clear-btn align2"
                       src="img/clear-24x24-2.png"
                       alt="Clear input"
+                      title="Clear"
                       onclick="clearData('flags'); showInfo('info2', '...')">
             <input type=text id="flags" style="height: 22px;" value="g" placeholder="gmi"></textarea>
             <br>
@@ -56,6 +60,7 @@
                       class="clear-btn"
                       src="img/clear-24x24-2.png"
                       alt="Clear input"
+                      title="Clear"
                       onclick="clearData('resultsPattern'); showInfo('info2', '...')">
             <textarea id="resultsPattern" class="w2" style="height: 22px;"
                 placeholder="match[0] + '\t' + getRow(match.index) + '\t' + fileName + '\n'">
@@ -78,6 +83,7 @@ match[0] + '\t' + getRow(match.index) + '\t' + fileName + '\n'</textarea>
             <input class="clear-btn align1" type="image"
                   src="img/clear-24x24-2.png"
                   alt="Clear results"
+                  title="Clear"
                   onclick="clearData('results')">
         </div>
         <textarea id="results" class="w" style="height: 100px;"></textarea>

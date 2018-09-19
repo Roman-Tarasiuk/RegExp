@@ -243,6 +243,17 @@ function argumentSQL() {
     }
 }
 
+function removeCommentsSQL()
+{
+    var sqlCtrl = document.getElementById('sqlCode');
+    
+    var str = sqlCtrl.value;
+    
+    str = str.replace(/--.*/g, '');
+    
+    sqlCtrl.value = str;
+}
+
 function swapQuotes() {
     var symbols = ['±'];
 

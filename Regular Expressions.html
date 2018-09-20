@@ -23,6 +23,7 @@
                 <input id="encoding" value="Windows-1251"></input>
                 <label for="showAuto"><input type="checkbox" id="showAuto">Show file when opened</input></label>
                 <span id="info1" class="info" title="Press Esc/Shoft/Ctrl or change the input to get text info">...</span>
+                <label class="option-resize"><input id="optionWidth" type="checkbox" onclick="optionWidth();">The same width / vertical resize</input></label>
             </span>
         </div>
         <textarea id="input" class="w" style="height: 100px;"
@@ -106,6 +107,7 @@ match[0] + '\t' + getRow(match.index) + '\t' + fileName + '\n'</textarea>
         </div>
     </div>
 
+    <script src="js/jquery.min.js"></script>
     <script src="js/regular_expressions.js"></script>
 </body>
 </html>

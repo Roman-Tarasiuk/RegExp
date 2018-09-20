@@ -68,3 +68,11 @@ a, a:visited {
 .align2 {
     margin-bottom: -6px;
 }
+
+.option-resize {
+    float: right;
+}
+
+.resize-vertical {
+    resize: vertical;
+}

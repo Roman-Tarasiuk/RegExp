@@ -1,4 +1,6 @@
 var inputElement = document.getElementById('input');
+var regexpElement = document.getElementById('regexp');
+var resultsPatternElement = document.getElementById('resultsPattern');
 var replaceCookiesOrigin = ';';
 var replaceCookiesRE = new RegExp(replaceCookiesOrigin, 'g');
 var replaceCookiesStr = '###';
@@ -8,6 +10,7 @@ var userInputChanged = false;
 var input = '';
 var rowsMap = {};
 var showAutoEl = document.getElementById('showAuto');
+var widthOffset;
 
 
 String.prototype.lines = function() { return this.split(/\r*\n/); }
@@ -15,6 +18,8 @@ String.prototype.lineCount = function() { return this.lines().length; }
 
 window.onload = function() {
     inputElement.focus();
+    widthOffset = $(inputElement).width() - $(regexpElement).width();
+    //console.log(inputElement);
 }
 
 function clearData(inp) {
@@ -25,9 +30,9 @@ function clearData(inp) {
 }
 
 function process() {
-    var rePattern = document.getElementById('regexp').value;
+    var rePattern = regexpElement.value;
     var reFlags = document.getElementById('flags').value;
-    var resultsPattern = document.getElementById('resultsPattern').value;
+    var resultsPattern = resultsPatternElement.value;
 
     var RE = new RegExp(rePattern, reFlags);
     
@@ -49,7 +54,9 @@ function process() {
     var resultsStr = '';
 
     var match;
-    while ((match = RE.exec(input)) != null && (match.index < input.length) && (resultsStr.length <= input.length * 10)) {
+    while ((match = RE.exec(input)) != null
+      && (match.index < input.length)
+      && (resultsStr.length <= input.length * 10)) {
         resultsStr += eval(resultsPattern);
         count++;
     }
@@ -92,9 +99,9 @@ function getRow(index) {
 }
 
 function processReplace() {
-    var rePattern = document.getElementById('regexp').value;
+    var rePattern = regexpElement.value;
     var reFlags = document.getElementById('flags').value;
-    var resultsPattern = document.getElementById('resultsPattern').value;
+    var resultsPattern = resultsPatternElement.value;
 
     var RE = new RegExp(rePattern, reFlags);
 
@@ -132,8 +139,8 @@ function saveSet(readFromCookies, ID) {
         var index = parseInt(event.target.id.substring('regularExpressionsPluginSets'.length));
         console.log(index + ' set selected');
 
-        document.getElementById('regexp').value = window.regularExpressionsPluginSetsArray[index].re;
-        document.getElementById('resultsPattern').value = window.regularExpressionsPluginSetsArray[index].resPatt;
+        regexpElement.value = window.regularExpressionsPluginSetsArray[index].re;
+        resultsPatternElement.value = window.regularExpressionsPluginSetsArray[index].resPatt;
     });
 
     var label = document.createElement('label');
@@ -144,8 +151,8 @@ function saveSet(readFromCookies, ID) {
     document.getElementById('regularExpressionsPluginSets').appendChild(label);
 
     if (!readFromCookies) {
-        var re = document.getElementById('regexp').value;
-        var resPatt = document.getElementById('resultsPattern').value;
+        var re = regexpElement.value;
+        var resPatt = resultsPatternElement.value;
 
         regularExpressionsPluginSetsArray.push({re: re, resPatt: resPatt});
 
@@ -168,8 +175,8 @@ function getSetsFromCookies() {
     window.regularExpressionsPluginSetsArray = JSON.parse(cookie.replace(replaceCookiesBackRE, replaceCookiesOrigin));
 
     for (var i = 0; i < regularExpressionsPluginSetsArray.length; i++) {
-        document.getElementById('regexp').value = regularExpressionsPluginSetsArray[i].re;
-        document.getElementById('resultsPattern').value = regularExpressionsPluginSetsArray[i].resPatt;
+        regexpElement.value = regularExpressionsPluginSetsArray[i].re;
+        resultsPatternElement.value = regularExpressionsPluginSetsArray[i].resPatt;
         saveSet(true, i);
     }
 }
@@ -223,18 +230,34 @@ function inputPaste() {
 
 function inputKeyup(ev) {
     if (ev.key == 'ArrowLeft'
-        || ev.key == 'ArrowUp'
-        || ev.key == 'ArrowRight'
-        || ev.key == 'ArrowLeft'
-        || ev.key == 'ArrowDown'
-        || ev.key == 'Home'
-        || ev.key == 'End'
-        || ev.key == 'PageUp'
-        || ev.key == 'PageDown') {
+      || ev.key == 'ArrowUp'
+      || ev.key == 'ArrowRight'
+      || ev.key == 'ArrowLeft'
+      || ev.key == 'ArrowDown'
+      || ev.key == 'Home'
+      || ev.key == 'End'
+      || ev.key == 'PageUp'
+      || ev.key == 'PageDown') {
         return
     }
     console.log('** Input key up.');
     console.log(ev);
     userInputChanged = true;
     showInputInfo();
+}
+
+function optionWidth() {
+    var optionChkbox = document.getElementById('optionWidth');
+    if (optionChkbox.checked) {
+        var newWidth = inputElement.clientWidth - widthOffset - 4;
+        
+        $(regexpElement).width(newWidth);
+        $('#resultsPattern').width(newWidth);
+        $('#results').width(inputElement.clientWidth - 4);
+    }
+    
+    $(inputElement).toggleClass('resize-vertical');
+    $(regexpElement).toggleClass('resize-vertical');
+    $('#resultsPattern').toggleClass('resize-vertical');
+    $('#results').toggleClass('resize-vertical');
 }

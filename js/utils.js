@@ -306,6 +306,7 @@ function clearInput(id) {
 function statistic() {
     var input = document.getElementById('data');
     var rows = input.value.split('\n');
+    clearEmptyStrings(rows);
 
     var stat = getStatistic(rows);
 
@@ -332,9 +333,19 @@ function getStatistic(rows) {
     return result;
 }
 
+function clearEmptyStrings(arr) {
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i] == '') {
+            arr.splice(i, 1);
+            i--;
+        }
+    }
+}
+
 function statisticCumulative() {
     var input = document.getElementById('data');
     var rows = input.value.split('\n');
+    clearEmptyStrings(rows);
 
     var stat = getStatistic(rows);
 
@@ -359,6 +370,7 @@ function statisticCategoryCount() {
 // rows' format: subject \t category
     var input = document.getElementById('data');
     var rows = input.value.split('\n');
+    clearEmptyStrings(rows);
 
     var stat = {};
     var tmp = [];
@@ -395,6 +407,7 @@ function statisticCategoriesList() {
 // rows' format: subject \t category
     var input = document.getElementById('data');
     var rows = input.value.split('\n');
+    clearEmptyStrings(rows);
 
     var stat = {};
     var tmp = [];
@@ -440,6 +453,7 @@ function statisticCategoriesList() {
 function unique() {
     var input = document.getElementById('data');
     var rows = input.value.split('\n');
+    clearEmptyStrings(rows);
 
     var stat = getStatistic(rows);
 

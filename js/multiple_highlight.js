@@ -108,7 +108,7 @@ var helperObject;
         var caseSensitive = caseSensitiveCtrl.checked;
         
         // To do: improve the next regular expression to use \s in [].
-        var surrountWholeWord = '([\t \.,\(\)\n])';
+        var surrountWholeWord = '([;"\t \.,\(\)\n\[\])';
         
         txt = replaceAngleBrackets(txt)
                 .replace(/\?/g, '\\?')

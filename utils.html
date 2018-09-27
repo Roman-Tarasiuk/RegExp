@@ -21,6 +21,7 @@
       <button class="tablinks" onclick="openTab(this, 'tabSQL')">SQL</button>
       <button class="tablinks" onclick="openTab(this, 'tabQuotes')">Quotes</button>
       <button class="tablinks" onclick="openTab(this, 'tabStatistics')">Statistics</button>
+      <button class="tablinks" onclick="openTab(this, 'tabNumbers')">Number conversions</button>
     </div>
 
     <div id="tabAddresses" class="tabcontent">
@@ -48,7 +49,7 @@
     <div id="tabSQL" class="tabcontent">
         <p>SQL:</p>
         <textarea id="sqlCode"></textarea>
-        <br/>
+        <br>
         <button onclick="checkUncommentedSQL()">Check Uncommented</button>
         <button onclick="argumentSQL()">Argument</button>
         <button onclick="removeCommentsSQL()">Remove Comments</button>
@@ -57,14 +58,14 @@
     <div id="tabQuotes" class="tabcontent">
         <p>Swap quotes &#39; &harr; &#34; <span class="comment">(all or in a selection)</span>:</p>
         <textarea id="code"></textarea>
-        <br/>
+        <br>
         <button onclick="swapQuotes()">Swap</button>
     </div>
 
     <div id="tabStatistics" class="tabcontent">
         <p>Statistics:</p>
         <textarea id="data"></textarea>
-        <br/>
+        <br>
         <button onclick="clearInput('data')">Clear</button>
         <button onclick="unique()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Checks whether rows are unique">Unique</button>
         <button onclick="statistic()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Each row's occurrence number">Statistic</button>
@@ -75,6 +76,27 @@
         <div style="margin-top: 12px;">
             <input id="help" style="width: 60%" readonly disabled></input>
         </div>
+    </div>
+    
+    <div id="tabNumbers" class="tabcontent">
+        <label><input id="o2"  type="radio" name="origin"></input>2</label>
+        <label><input id="o8"  type="radio" name="origin"></input>8</label>
+        <label><input id="o10" type="radio" name="origin"></input>10</label>
+        <label><input id="o16" type="radio" name="origin"></input>16</label>
+        <br>
+        <textarea id="inputNumbers" placeholder="Split your numbers by new line"></textarea>
+        <br>
+        <button onclick="convertNumbers()">Convert</button>
+        <br>
+        <label><input id="r2" type="radio" name="result"></input>2</label>
+        <label><input id="r8" type="radio" name="result"></input>8</label>
+        <label><input id="r10" type="radio" name="result"></input>10</label>
+        <label><input id="r16" type="radio" name="result"></input>16</label>
+        <br>
+        <textarea id="convertedNumbers"></textarea>
+        <br>
+        <span>Padding:</span>
+        <input id="padding" value="20"></input>
     </div>
 
     <script src="js/tabs.js"></script>

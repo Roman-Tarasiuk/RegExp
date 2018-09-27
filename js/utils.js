@@ -484,3 +484,64 @@ function hideHelp() {
 
     help.value = '';
 }
+
+function convertNumbers() {
+    var base = 0;
+    if (document.getElementById('o2').checked) {
+        base = 2;
+    }
+    else if (document.getElementById('o8').checked) {
+        base = 8;
+    }
+    else if (document.getElementById('o10').checked) {
+        base = 10;
+    }
+    else if (document.getElementById('o16').checked) {
+        base = 16;
+    }
+    
+    if (base == 0) {
+        return;
+    }
+    
+    var baseResult = 0;
+    var prefix = '';
+    if (document.getElementById('r2').checked) {
+        baseResult = 2;
+    }
+    else if (document.getElementById('r8').checked) {
+        baseResult = 8;
+    }
+    else if (document.getElementById('r10').checked) {
+        baseResult = 10;
+    }
+    else if (document.getElementById('r16').checked) {
+        baseResult = 16;
+        prefix = '0x';
+    }
+    
+    if (baseResult == 0) {
+        return;
+    }
+    
+    console.log(base + ' -> ' + baseResult);
+    
+    var str = document.getElementById('inputNumbers').value;
+    var numbers = str.split('\n');
+    clearEmptyStrings(numbers);
+    
+    var resultStr = '';
+    var padding = parseInt(document.getElementById('padding').value);
+    
+    for (var i = 0; i < numbers.length; i++) {
+        resultStr += prefix + pad(parseInt(numbers[i], base).toString(baseResult), padding) + '\n';
+    }
+    
+    document.getElementById('convertedNumbers').value = resultStr;
+}
+
+function pad(num, size) {
+    var s = num+"";
+    while (s.length < size) s = "0" + s;
+    return s;
+}

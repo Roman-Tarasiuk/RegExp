@@ -3,9 +3,8 @@ input[type=text] {
     vertical-align: middle;
     position: relative;
     top: 50%;
-    margin-top: -24px;
+    margin-top: -4px;
     margin-right: 5px;
-    margin-left: 36px;
     font-family: courier;
 }
 
@@ -34,16 +33,17 @@ div.container {
 }
 
 .input-holder {
-    height: 24px;
     background-color: #fcc;
     background-repeat: no-repeat;
     background-position: left center;
     width: auto;
     display: inline-block;
+    padding-top: 3px;
 }
 
 .clear-btn {
     background-image: url("../img/clear.png");
+    background-size: 18px;
 }
 
 .clear-btn-img {
@@ -54,8 +54,15 @@ div.container {
     position: relative;
 }
 
+.q {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+}
+
 .cmpr-btn {
     background-image: url("../img/compare.png");
+    background-size: 18px;
 }
 
 .color,

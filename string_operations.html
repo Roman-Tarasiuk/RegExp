@@ -17,17 +17,20 @@
 
     <div id="tabCompare" class="color tabcontent">
         <div class="container">
-            <div class="input-holder clear-btn" onclick="clearInput(this.children[0]); reset();">
+            <div class="input-holder"">
+                <span class="clear-btn q" onclick="clearInput(this.parentElement.children[1]); reset();">&nbsp;</span>
                 <input type="text" id="str1" oninput="reset()" onchange="reset()" />
             </div>
         </div>
         <div class="container">
-            <div class="input-holder clear-btn" onclick="clearInput(this.children[0]); reset();">
+            <div class="input-holder">
+                <span class="clear-btn q" onclick="clearInput(this.parentElement.children[1]); reset();">&nbsp;</span>
                 <input type="text" id="str2" oninput="reset()" onchange="reset()" />
             </div>
         </div>
         <div class="container">
-            <div class="input-holder cmpr-btn" onclick="compare()">
+            <div class="input-holder">
+                <span class="cmpr-btn q" onclick="compare();">&nbsp;</span>
                 <input type="text" id="result"/>
             </div>
         </div>

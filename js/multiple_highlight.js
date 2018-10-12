@@ -53,7 +53,9 @@ var helperObject;
 
     function replaceAngleBrackets(input) {
         input = input.replace(/</g, '&lt')
-                .replace(/>/g, '&gt');
+                .replace(/>/g, '&gt')
+                .replace(/\(/g, '&#x0028;')
+                .replace(/\)/g, '&#x0029;');
 
         return input;
     }
@@ -112,8 +114,6 @@ var helperObject;
         
         txt = replaceAngleBrackets(txt)
                 .replace(/\?/g, '\\?')
-                .replace(/\(/g, '\\(')
-                .replace(/\)/g, '\\)')
                 .replace(/\\/g, '\\\\')
                 .replace(/\[/g, '\\[')
                 .replace(/\]/g, '\\]')
@@ -130,7 +130,9 @@ var helperObject;
                 + '(' + txt + ')'
                 + (wholeWord ? surrountWholeWord : ''), caseSensitive ? 'g' : 'gi');
         }
-        catch {
+        catch (exception) {
+            console.log('** Exception while constructing regular expression:');
+            console.log(exception);
             return;
         }
 

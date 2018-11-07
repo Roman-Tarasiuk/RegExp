@@ -62,7 +62,9 @@ var helperObject;
     
     function replaceToAngleBrackets(input) {
         input = input.replace(/&lt/g, '<')
-                .replace(/&gt/g, '>');
+                .replace(/&gt/g, '>')
+                .replace(/&#x0028;/g, '(')
+                .replace(/&#x0029;/g, ')');
 
         return input;
     }

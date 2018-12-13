@@ -40,9 +40,9 @@ function onInputKeyUp(e) {
 }
 
 function setLength(numberElem) {
-    document.getElementById('result').style.width = numberElem.value + 'px';
-    document.getElementById('str1').style.width = numberElem.value + 'px';
-    document.getElementById('str2').style.width = numberElem.value + 'px';
+    document.getElementById('divresult').style.width = numberElem.value + 'px';
+    document.getElementById('divstr1').style.width = numberElem.value + 'px';
+    document.getElementById('divstr2').style.width = numberElem.value + 'px';
 }
 
 function compare() {

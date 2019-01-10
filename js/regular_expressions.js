@@ -11,6 +11,7 @@ var input = '';
 var rowsMap = {};
 var showAutoEl = document.getElementById('showAuto');
 var widthOffset;
+var fileNameEl = document.getElementById('fileName');
 
 
 String.prototype.lines = function() { return this.split(/\r*\n/); }
@@ -201,9 +202,12 @@ function onChange(event) {
     if (showAutoEl.checked) {
         inputElement.value = input;
     }
+    
+    fileNameEl.innerText = fileName;
     // input.length
   };
 
+  fileNameEl.innerText = '';
   reader.readAsText(file, encoding);
 }
 

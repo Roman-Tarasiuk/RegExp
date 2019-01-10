@@ -112,23 +112,36 @@ function nowIs() {
 nowIs();
 
 (function() {
+    var h = 0;
+    var m = 0;
+    var s = 0;
+    
     var showTime = function() {
         var d = new Date(Date.now());
 
         var hours = d.getHours();
+        var minutes = d.getMinutes();
+        var seconds = d.getSeconds();
+        
+        if (hours == h && minutes == m && seconds == s) {
+            return;
+        }
+
         if (hours < 10) {
             hours = '0' + hours;
         }
 
-        var minutes = d.getMinutes();
         if (minutes < 10) {
             minutes = '0' + minutes;
         }
 
-        var seconds = d.getSeconds();
         if (seconds < 10) {
             seconds = '0' + seconds;
         }
+        
+        h = hours;
+        m = minutes;
+        s = seconds;
 
         document.getElementById('clock').innerHTML = hours + ':' + minutes + ':' + seconds;
     }

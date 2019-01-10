@@ -18,7 +18,10 @@
                   title="Clear"
                   onclick="clearData('input'); showInfo('info1', '...')">
             <span class="hover" style="margin-left: 15px;">
-                <input id="userFile" type="file" onchange="onChange(event)"></input>
+                <label class="btn btn-outline-success btn-sm">Open file...
+                    <input id="userFile" type="file" onchange="onChange(event)" style="display: none"></input>
+                </label>
+                <span id="fileName" class="file-name"></span>
                 <span>Encoding:</span>
                 <input id="encoding" value="Windows-1251"></input>
                 <label for="showAuto"><input type="checkbox" id="showAuto" checked>Show file when opened</input></label>

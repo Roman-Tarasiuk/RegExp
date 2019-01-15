@@ -1,5 +1,6 @@
 var inputElement = document.getElementById('input');
 var regexpElement = document.getElementById('regexp');
+var resetPatternButton = document.getElementById('resetPattern');
 var resultsPatternElement = document.getElementById('resultsPattern');
 var replaceCookiesOrigin = ';';
 var replaceCookiesRE = new RegExp(replaceCookiesOrigin, 'g');
@@ -12,6 +13,7 @@ var rowsMap = {};
 var showAutoEl = document.getElementById('showAuto');
 var widthOffset;
 var fileNameEl = document.getElementById('fileName');
+var defaultPattern = "match[0] + '\\t' + getRow(match.index) + '\\t' + fileName + '\\n'";
 
 
 String.prototype.lines = function() { return this.split(/\r*\n/); }
@@ -20,7 +22,8 @@ String.prototype.lineCount = function() { return this.lines().length; }
 window.onload = function() {
     inputElement.focus();
     widthOffset = $(inputElement).width() - $(regexpElement).width();
-    //console.log(inputElement);
+    resetPattern();
+    toggleResetButton();
 }
 
 function clearData(inp) {
@@ -264,4 +267,20 @@ function optionWidth() {
     $(regexpElement).toggleClass('resize-vertical');
     $('#resultsPattern').toggleClass('resize-vertical');
     $('#results').toggleClass('resize-vertical');
+}
+
+function toggleResetButton() {
+    if (resultsPatternElement.value != defaultPattern) {
+        console.log('Focused.');
+        resetPatternButton.style.display  = 'inline';
+    }
+    else {
+        console.log('Not Focused.');
+        resetPatternButton.style.display  = 'none';
+    }
+}
+
+function resetPattern() {
+    resultsPatternElement.value = defaultPattern;
+    toggleResetButton();
 }

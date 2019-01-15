@@ -67,8 +67,9 @@
                       title="Clear"
                       onclick="clearData('resultsPattern'); showInfo('info2', '...')">
             <textarea id="resultsPattern" class="w2" style="height: 22px;"
-                placeholder="match[0] + '\t' + getRow(match.index) + '\t' + fileName + '\n'">
-match[0] + '\t' + getRow(match.index) + '\t' + fileName + '\n'</textarea>
+                placeholder="match[0] + '\t' + getRow(match.index) + '\t' + fileName + '\n'"
+                onfocus="toggleResetButton()"
+                onblur="toggleResetButton()"></textarea>
 
             <div id="regularExpressionsPluginSets" style="margin-bottom: 6px; margin-top: -1px;">
                 <button onclick="saveSet(false)" style="color: #444; border: 1px solid #aaa;" disabled>Save set</button>
@@ -109,6 +110,8 @@ match[0] + '\t' + getRow(match.index) + '\t' + fileName + '\n'</textarea>
         </ul>
         </div>
     </div>
+    <br>
+    <button id="resetPattern" onclick="resetPattern()">Reset pattern</button>
 
     <script src="js/jquery.min.js"></script>
     <script src="js/regular_expressions.js"></script>

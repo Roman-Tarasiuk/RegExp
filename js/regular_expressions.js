@@ -269,18 +269,22 @@ function optionWidth() {
     $('#results').toggleClass('resize-vertical');
 }
 
-function toggleResetButton() {
-    if (resultsPatternElement.value != defaultPattern) {
-        console.log('Focused.');
-        resetPatternButton.style.display  = 'inline';
-    }
-    else {
-        console.log('Not Focused.');
-        resetPatternButton.style.display  = 'none';
-    }
-}
-
 function resetPattern() {
     resultsPatternElement.value = defaultPattern;
     toggleResetButton();
 }
+
+// https://codepen.io/mozzi/pen/EgZvjg
+$("#resultsPattern").bind("contextmenu", function(event) {
+  $(".custom-menu").finish().toggle(100).
+  css({
+    top: event.pageY + "px",
+    left: event.pageX + "px"
+  });
+});
+
+$(document).bind("mousedown", function(e) {
+  if (!$(e.target).parents(".custom-menu").length > 0) {
+    $(".custom-menu").hide(100);
+  }
+});

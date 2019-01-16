@@ -43,6 +43,8 @@ a, a:visited {
     display: inline-block;
     vertical-align: top;
     width: 190px;
+    position: relative;
+    top: 4px;
 }
 
 .li-links, .ul-links {
@@ -69,9 +71,6 @@ a, a:visited {
     margin-bottom: -6px;
 }
 
-.option-resize {
-    float: right;
-}
 
 .resize-vertical {
     resize: vertical;
@@ -164,4 +163,8 @@ a, a:visited {
 
 .custom-menu li:hover {
     background-color: #DEF;
+}
+
+.settings {
+    display: none;
 }

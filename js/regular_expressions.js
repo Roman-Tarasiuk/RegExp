@@ -1,7 +1,15 @@
+
+// Settings.
+var resultsPatternShowDefaultContextMenu = false;
+
+
+// Variables.
+
 var inputElement = document.getElementById('input');
 var regexpElement = document.getElementById('regexp');
 var resetPatternButton = document.getElementById('resetPattern');
 var resultsPatternElement = document.getElementById('resultsPattern');
+var settingsElement = document.getElementById('settings');
 var replaceCookiesOrigin = ';';
 var replaceCookiesRE = new RegExp(replaceCookiesOrigin, 'g');
 var replaceCookiesStr = '###';
@@ -14,7 +22,10 @@ var showAutoEl = document.getElementById('showAuto');
 var widthOffset;
 var fileNameEl = document.getElementById('fileName');
 var defaultPattern = "match[0] + '\\t' + getRow(match.index) + '\\t' + fileName + '\\n'";
+var showSettings = false;
 
+
+// Main functionality.
 
 String.prototype.lines = function() { return this.split(/\r*\n/); }
 String.prototype.lineCount = function() { return this.lines().length; }
@@ -23,7 +34,6 @@ window.onload = function() {
     inputElement.focus();
     widthOffset = $(inputElement).width() - $(regexpElement).width();
     resetPattern();
-    toggleResetButton();
 }
 
 function clearData(inp) {
@@ -271,11 +281,15 @@ function optionWidth() {
 
 function resetPattern() {
     resultsPatternElement.value = defaultPattern;
-    toggleResetButton();
+    $(".custom-menu").hide(100);
+    resultsPatternElement.focus();
 }
 
 // https://codepen.io/mozzi/pen/EgZvjg
 $("#resultsPattern").bind("contextmenu", function(event) {
+  if (!resultsPatternShowDefaultContextMenu) {
+    event.preventDefault();
+  }
   $(".custom-menu").finish().toggle(100).
   css({
     top: event.pageY + "px",
@@ -286,5 +300,20 @@ $("#resultsPattern").bind("contextmenu", function(event) {
 $(document).bind("mousedown", function(e) {
   if (!$(e.target).parents(".custom-menu").length > 0) {
     $(".custom-menu").hide(100);
+    resultsPatternElement.focus();
   }
 });
+
+function toggleSettings() {
+    if (!showSettings) {
+        settingsElement.style.display = "block";
+    }
+    else {
+        settingsElement.style.display = "none";
+    }
+    showSettings = !showSettings;
+}
+
+function handleClick(cb) {
+  resultsPatternShowDefaultContextMenu = cb.checked;
+}

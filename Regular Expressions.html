@@ -16,17 +16,13 @@
                   src="img/clear-24x24-2.png"
                   alt="Clear input"
                   title="Clear"
-                  onclick="clearData('input'); showInfo('info1', '...')">
+                  onclick="clearData('input'); showInfo('info1', '...'); fileNameEl.innerText='';">
             <span class="hover" style="margin-left: 15px;">
                 <label class="btn btn-outline-success btn-sm">Open file...
                     <input id="userFile" type="file" onchange="onChange(event)" style="display: none"></input>
                 </label>
                 <span id="fileName" class="file-name"></span>
-                <span>Encoding:</span>
-                <input id="encoding" value="Windows-1251"></input>
-                <label for="showAuto"><input type="checkbox" id="showAuto" checked>Show file when opened</input></label>
                 <span id="info1" class="info" title="Press Esc/Shoft/Ctrl or change the input to get text info">...</span>
-                <label class="option-resize"><input id="optionWidth" type="checkbox" onclick="optionWidth();">The same width / vertical resize</input></label>
             </span>
         </div>
         <textarea id="input" class="w" style="height: 100px;"
@@ -43,9 +39,9 @@
         </ul>
         <details open="">
             <summary>
-                <span class="description regularExpressionsPluginP">Regular expression:</span>
+                <span class="regularExpressionsPluginP">Search for</span>
             </summary>
-            <span class="description regularExpressionsPluginP"></span>
+            <span class="description regularExpressionsPluginP">Regular expression:</span>
             <input type="image"
                       class="clear-btn"
                       src="img/clear-24x24-2.png"
@@ -53,15 +49,6 @@
                       title="Clear"
                       onclick="clearData('regexp'); showInfo('info2', '...')">
             <textarea id="regexp" class="w2" style="height: 22px;"></textarea>
-            <br>
-            <span class="description regularExpressionsPluginP">Flags:</span>
-            <input type="image"
-                      class="clear-btn align2"
-                      src="img/clear-24x24-2.png"
-                      alt="Clear input"
-                      title="Clear"
-                      onclick="clearData('flags'); showInfo('info2', '...')">
-            <input type=text id="flags" style="height: 22px;" value="g" placeholder="gmi"></textarea>
             <br>
             <span class="description regularExpressionsPluginP" title="Use $1, $2 syntax for replacement">Results patterrn / Replace to:</span>
             <input type="image"
@@ -111,6 +98,22 @@
             <li class="li-links"><a href="split_by_parenthesis.html">Split by parenthesis</a></li>
         </ul>
         </div>
+    </div>
+    
+    <br>
+    <button onclick="toggleSettings()">Settings</button>
+    <div id="settings" class="settings">
+        <span>Flags:</span>
+        <input type=text id="flags" style="height: 22px;" value="g" title="gmi"></textarea>
+        <br>
+
+        <label><input id="optionWidth" type="checkbox" onclick="optionWidth();">The same width / vertical resize</input></label>
+        <br>
+        <span>File encoding:</span>
+        <input id="encoding" value="Windows-1251"></input>
+        <label for="showAuto"><input type="checkbox" id="showAuto" checked>Show file when opened</input></label>
+        <br>
+        <label><input type="checkbox" onclick='handleClick(this)'>Show results pattern's default context menu</label>
     </div>
 
     <script src="js/jquery.min.js"></script>

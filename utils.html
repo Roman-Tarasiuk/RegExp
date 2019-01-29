@@ -19,6 +19,7 @@
       <button class="tablinks" onclick="openTab(this, 'tabAddresses')" id="item1">%-like addresses</button>
       <button class="tablinks" onclick="openTab(this, 'tabNowIs')">Now is</button>
       <button class="tablinks" onclick="openTab(this, 'tabSQL')">SQL</button>
+      <button class="tablinks" onclick="openTab(this, 'tabCSharp')">C#</button>
       <button class="tablinks" onclick="openTab(this, 'tabQuotes')">Quotes</button>
       <button class="tablinks" onclick="openTab(this, 'tabStatistics')">Statistics</button>
       <button class="tablinks" onclick="openTab(this, 'tabNumbers')">Number conversions</button>
@@ -54,6 +55,14 @@
         <button onclick="checkUncommentedSQL()">Check Uncommented</button>
         <button onclick="argumentSQL()">Argument</button>
         <button onclick="removeCommentsSQL()">Remove Comments</button>
+    </div>
+
+    <div id="tabCSharp" class="tabcontent">
+        <p>C#:</p>
+        <textarea id="cSharpCode"></textarea>
+        <br>
+        <button onclick="padCSharp()">Pad as first line</button>
+        <button onclick="commentCSharp()">Comment</button>
     </div>
 
     <div id="tabQuotes" class="tabcontent">

@@ -150,6 +150,75 @@ nowIs();
 }
 )();
 
+//
+
+function getPadSpacec(s) {
+    var count = 0;
+    for (var i = 0; i < s.length; i++) {
+        if (s[i] == ' ') {
+            count++;
+        }
+        else {
+            break;
+        }
+    }
+    
+    return count;
+}
+
+function getPaddingString(length) {
+    var str = '';
+    for (var i = 1; i <= length; i++) {
+        str += ' ';
+    }
+    
+    return str;
+}
+
+function padCSharp() {
+    var inputEl = document.getElementById('cSharpCode');
+    var rows = inputEl.value.split('\n');
+        
+    var padCount = getPadSpacec(rows[0]);
+    padding = getPaddingString(padCount);
+    
+    //
+    
+    var result = '';
+    for (var i = 0; i < rows.length; i++) {
+        if (rows[i] == '' && i < (rows.length - 1)) {
+            result += padding + rows[i] + '\n';
+        }
+        else {
+            result += rows[i] + (i < (rows.length - 1) ? '\n' : '');
+        }
+    }
+    
+    inputEl.value = result;
+}
+
+function commentCSharp() {
+    var inputEl = document.getElementById('cSharpCode');
+    var rows = inputEl.value.split('\n');
+        
+    var padCount = getPadSpacec(rows[0]);
+    padding = getPaddingString(padCount);
+    
+    //
+    
+    var re = new RegExp('^' + padding, 'g');
+    var replacement = padding + '// ';
+    
+    var result = '';
+    for (var i = 0; i < rows.length; i++) {
+        result += rows[i].replace(re, replacement) + (i < (rows.length - 1) ? '\n' : '');
+    }
+    
+    inputEl.value = result;
+}
+
+//
+
 function checkUncommentedSQL() {
     function isSpaceOrComment(str) {
         var index = 0;

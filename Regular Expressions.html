@@ -61,14 +61,14 @@
                 placeholder="match[0] + '\t' + getRow(match.index) + '\t' + fileName + '\n'"></textarea>
 
             <div id="regularExpressionsPluginSets" style="margin-bottom: 6px; margin-top: -1px;">
-                <button onclick="saveSet(false)" style="color: #444; border: 1px solid #aaa;" disabled>Save set</button>
+                <button onclick="saveSet(false)" class="btn btn-outline-success btn-sm" disabled>Save set</button>
             </div>
         </details>
     </div>
 
     <div>
-        <button onclick="process()" style="font-weight: bold;">All matches</button>
-        <button onclick="processReplace()" style="font-weight: bold;" title="$1, $2 syntax">Replace</button>
+        <button class="btn btn-success" onclick="process()">All matches</button>
+        <button class="btn btn-success" onclick="processReplace()" title="$1, $2 syntax">Replace</button>
 
         <span id="info2" class="info">...</span>
         

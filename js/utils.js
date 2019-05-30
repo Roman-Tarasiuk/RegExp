@@ -627,3 +627,102 @@ function pad(num, size) {
     while (s.length < size) s = "0" + s;
     return s;
 }
+
+function Moment() {
+    var second = 1000;
+    var minute = second * 60;
+    var hour = minute * 60;
+    var day = hour * 24;
+
+    this.subtractDates = function(d1, d2) {    
+        var result = d2 > d1 ? '-' : '';
+        
+        var diff = Math.abs(d1 - d2);
+        
+        var days = Math.floor(diff / day);
+        diff -= days * day;
+        
+        var hours = Math.floor(diff / hour);
+        diff -= hours * hour;
+        
+        var minutes = Math.floor(diff / minute);
+        diff -= minutes * minute;
+        
+        var seconds = Math.floor(diff / second);
+        
+        result += (days > 0 ? days + ' day(s) ' : '')
+                + (hours < 10 ? '0' : '') + hours + ':'
+                + (minutes < 10 ? '0' : '') + minutes + ':'
+                + (seconds < 10 ? '0' : '') + seconds;
+        
+        return result;
+    };
+
+    // "hh:mm[:ss][ DD.MM[.YYYY]]"
+    this.parseTime = function(dtString) {
+        var hh, mm, ss, DD, MM, YYYY;
+        
+        var parts = dtString.split(' ');
+        
+        var timeParts = parts[0].split(':');
+        if (timeParts.length == 1) {
+            throw 'Invalid time';
+        }
+        
+        hh = timeParts[0];
+        mm = timeParts[1];
+        ss = timeParts.length == 3 ? timeParts[2] : 0;
+        
+        if (parts.length == 2) {
+            var dateParts = parts[1].split('.');
+            DD = parseInt(dateParts[0]);
+            MM = parseInt(dateParts[1]) - 1;
+            YYYY = dateParts.length == 3 ? parseInt(dateParts[2]) - 1 : new Date().getFullYear();
+        }
+        else {
+            var d = new Date();
+            YYYY = d.getFullYear();
+            MM = d.getMonth();
+            DD = d.getDate();
+        }
+        
+        return new Date(YYYY, MM, DD, hh, mm, ss);
+    }
+    
+    return this;
+}
+
+// Time before.
+(function() {
+    var intervalId = -1;
+    
+    var timeBeforeEl = document.getElementById('timeBefore');
+    var timeBeforeClockEl = document.getElementById('timeBeforeClock');
+
+    var moment = new Moment();    
+    
+    function showTimeBefore(dt) {
+        var now = Date.now();
+        
+        var str = moment.subtractDates(dt, now);
+
+        timeBeforeClockEl.innerHTML = str;
+    }
+    
+    timeBeforeEl.addEventListener('keydown', function(event) {
+        if (event.code == 'Enter' || event.code == 'NumpadEnter') {
+            try {
+                var t = moment.parseTime(timeBeforeEl.value);
+                
+                clearInterval(intervalId);
+                
+                intervalId = setInterval(function() {
+                    showTimeBefore(t);
+                }, 1000);
+            }
+            catch (e) {
+                console.log('Wrong input: ' + e);
+            }
+        }
+    });
+})();

@@ -698,6 +698,7 @@ function Moment() {
     
     var timeBeforeEl = document.getElementById('timeBefore');
     var timeBeforeClockEl = document.getElementById('timeBeforeClock');
+    var stopTimeBeforeEl = document.getElementById('stopTimeBefore');
 
     var moment = new Moment();    
     
@@ -709,6 +710,21 @@ function Moment() {
         timeBeforeClockEl.innerHTML = str;
     }
     
+    function toggleState(run) {
+        if (run) {
+            stopTimeBeforeEl.style.visibility = 'visible';
+        }
+        else {
+            stopTimeBeforeEl.style.visibility = 'hidden';
+        }
+    }
+    
+    stopTimeBeforeEl.addEventListener('click', function() {
+        clearInterval(intervalId);
+        timeBeforeClockEl.innerHTML = '';
+        toggleState(false);
+    });
+    
     timeBeforeEl.addEventListener('keydown', function(event) {
         if (event.code == 'Enter' || event.code == 'NumpadEnter') {
             try {
@@ -716,9 +732,13 @@ function Moment() {
                 
                 clearInterval(intervalId);
                 
+                timeBeforeClockEl.innerHTML = '00:00:00';
+                
                 intervalId = setInterval(function() {
                     showTimeBefore(t);
                 }, 1000);
+                
+                toggleState(true);
             }
             catch (e) {
                 console.log('Wrong input: ' + e);

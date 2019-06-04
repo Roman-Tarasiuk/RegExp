@@ -20,3 +20,14 @@ p {
     font-size: 85%;
     color: #777;
 }
+
+.clock {
+    width: 155px;
+    font-family: 'clockFont', sans-serif;
+    font-size: 32pt;
+    background-color: black;
+    color: lime;
+    padding-left: 4px;
+    padding-right: 4px;
+    margin: 0px;
+}

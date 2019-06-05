@@ -111,44 +111,155 @@ function nowIs() {
 
 nowIs();
 
+
+function Moment() {
+    var second = 1000;
+    var minute = second * 60;
+    var hour = minute * 60;
+    var day = hour * 24;
+
+    this.subtractDates = function(d1, d2) {
+        var result = d2 > d1 ? '-' : '';
+
+        var diff = Math.abs(d1 - d2);
+
+        var days = Math.floor(diff / day);
+        diff -= days * day;
+
+        var hours = Math.floor(diff / hour);
+        diff -= hours * hour;
+
+        var minutes = Math.floor(diff / minute);
+        diff -= minutes * minute;
+
+        var seconds = Math.floor(diff / second);
+
+        result += (days > 0 ? days + ' day(s) ' : '')
+                + (hours < 10 ? '0' : '') + hours + ':'
+                + (minutes < 10 ? '0' : '') + minutes + ':'
+                + (seconds < 10 ? '0' : '') + seconds;
+
+        return result;
+    };
+
+    // "hh:mm[:ss][ DD.MM[.YYYY]]"
+    this.parseTime = function(dtString) {
+        var hh, mm, ss, DD, MM, YYYY;
+
+        var parts = dtString.split(' ');
+
+        var timeParts = parts[0].split(':');
+        if (timeParts.length == 1) {
+            throw 'Invalid time';
+        }
+
+        hh = timeParts[0];
+        mm = timeParts[1];
+        ss = timeParts.length == 3 ? timeParts[2] : 0;
+
+        if (parts.length == 2) {
+            var dateParts = parts[1].split('.');
+            DD = parseInt(dateParts[0]);
+            MM = parseInt(dateParts[1]) - 1;
+            YYYY = dateParts.length == 3 ? parseInt(dateParts[2]) - 1 : new Date().getFullYear();
+        }
+        else {
+            var d = new Date();
+            YYYY = d.getFullYear();
+            MM = d.getMonth();
+            DD = d.getDate();
+        }
+
+        return new Date(YYYY, MM, DD, hh, mm, ss);
+    }
+
+    return this;
+}
+
 (function() {
     var h = 0;
     var m = 0;
     var s = 0;
-    
+
+    var intervalId = -1;
+
+    var timeBeforeEl = document.getElementById('timeBefore');
+    var timeBeforeClockEl = document.getElementById('timeBeforeClock');
+    var stopTimeBeforeEl = document.getElementById('stopTimeBefore');
+    var toShowTimeBefore = false;
+
+    var moment = new Moment();
+
+    function showTimeBefore(dt) {
+        var now = Date.now();
+
+        var str = moment.subtractDates(dt, now);
+
+        timeBeforeClockEl.innerHTML = str;
+    }
+
+    function toggleState(run) {
+        if (run) {
+            stopTimeBeforeEl.style.visibility = 'visible';
+        }
+        else {
+            stopTimeBeforeEl.style.visibility = 'hidden';
+        }
+    }
+
+    stopTimeBeforeEl.addEventListener('click', function() {
+        toShowTimeBefore = false;
+        timeBeforeClockEl.innerHTML = '';
+        toggleState(false);
+    });
+
     var showTime = function() {
         var d = new Date(Date.now());
 
         var hours = d.getHours();
         var minutes = d.getMinutes();
         var seconds = d.getSeconds();
-        
+
         if (hours == h && minutes == m && seconds == s) {
             return;
         }
 
-        if (hours < 10) {
-            hours = '0' + hours;
-        }
-
-        if (minutes < 10) {
-            minutes = '0' + minutes;
-        }
-
-        if (seconds < 10) {
-            seconds = '0' + seconds;
-        }
-        
         h = hours;
         m = minutes;
         s = seconds;
 
-        document.getElementById('clock').innerHTML = hours + ':' + minutes + ':' + seconds;
+        var timeStr = (hours < 10 ? '0' : '') + hours + ':'
+                    + (minutes < 10 ? '0' : '') + minutes + ':'
+                    + (seconds < 10 ? '0' : '') + seconds;
+
+        document.getElementById('clock').innerHTML = timeStr;
+
+        if (toShowTimeBefore) {
+            var t = moment.parseTime(timeBeforeEl.value);
+
+            showTimeBefore(t);
+        }
     }
 
+    timeBeforeEl.addEventListener('keydown', function(event) {
+        if (event.code == 'Enter' || event.code == 'NumpadEnter') {
+            try {
+                toShowTimeBefore = true;
+
+                var t = moment.parseTime(timeBeforeEl.value);
+                showTimeBefore(t);
+
+                toggleState(true);
+            }
+            catch (e) {
+                console.log('Wrong input: ' + e);
+            }
+        }
+    });
+
+    // Run.
     window.setInterval(showTime, 100);
-}
-)();
+})();
 
 //
 
@@ -162,7 +273,7 @@ function getPadSpacec(s) {
             break;
         }
     }
-    
+
     return count;
 }
 
@@ -171,19 +282,19 @@ function getPaddingString(length) {
     for (var i = 1; i <= length; i++) {
         str += ' ';
     }
-    
+
     return str;
 }
 
 function padCSharp() {
     var inputEl = document.getElementById('cSharpCode');
     var rows = inputEl.value.split('\n');
-        
+
     var padCount = getPadSpacec(rows[0]);
     padding = getPaddingString(padCount);
-    
+
     //
-    
+
     var result = '';
     for (var i = 0; i < rows.length; i++) {
         if (rows[i] == '' && i < (rows.length - 1)) {
@@ -193,27 +304,27 @@ function padCSharp() {
             result += rows[i] + (i < (rows.length - 1) ? '\n' : '');
         }
     }
-    
+
     inputEl.value = result;
 }
 
 function commentCSharp() {
     var inputEl = document.getElementById('cSharpCode');
     var rows = inputEl.value.split('\n');
-        
+
     var padCount = getPadSpacec(rows[0]);
     padding = getPaddingString(padCount);
-    
+
     //
-    
+
     var re = new RegExp('^' + padding, 'g');
     var replacement = padding + '// ';
-    
+
     var result = '';
     for (var i = 0; i < rows.length; i++) {
         result += rows[i].replace(re, replacement) + (i < (rows.length - 1) ? '\n' : '');
     }
-    
+
     inputEl.value = result;
 }
 
@@ -328,11 +439,11 @@ function argumentSQL() {
 function removeCommentsSQL()
 {
     var sqlCtrl = document.getElementById('sqlCode');
-    
+
     var str = sqlCtrl.value;
-    
+
     str = str.replace(/--.*/g, '');
-    
+
     sqlCtrl.value = str;
 }
 
@@ -581,11 +692,11 @@ function convertNumbers() {
     else if (document.getElementById('o16').checked) {
         base = 16;
     }
-    
+
     if (base == 0) {
         return;
     }
-    
+
     var baseResult = 0;
     var prefix = '';
     if (document.getElementById('r2').checked) {
@@ -601,24 +712,24 @@ function convertNumbers() {
         baseResult = 16;
         prefix = '0x';
     }
-    
+
     if (baseResult == 0) {
         return;
     }
-    
+
     console.log(base + ' -> ' + baseResult);
-    
+
     var str = document.getElementById('inputNumbers').value;
     var numbers = str.split('\n');
     clearEmptyStrings(numbers);
-    
+
     var resultStr = '';
     var padding = parseInt(document.getElementById('padding').value);
-    
+
     for (var i = 0; i < numbers.length; i++) {
         resultStr += prefix + pad(parseInt(numbers[i], base).toString(baseResult), padding) + '\n';
     }
-    
+
     document.getElementById('convertedNumbers').value = resultStr;
 }
 
@@ -627,122 +738,3 @@ function pad(num, size) {
     while (s.length < size) s = "0" + s;
     return s;
 }
-
-function Moment() {
-    var second = 1000;
-    var minute = second * 60;
-    var hour = minute * 60;
-    var day = hour * 24;
-
-    this.subtractDates = function(d1, d2) {    
-        var result = d2 > d1 ? '-' : '';
-        
-        var diff = Math.abs(d1 - d2);
-        
-        var days = Math.floor(diff / day);
-        diff -= days * day;
-        
-        var hours = Math.floor(diff / hour);
-        diff -= hours * hour;
-        
-        var minutes = Math.floor(diff / minute);
-        diff -= minutes * minute;
-        
-        var seconds = Math.floor(diff / second);
-        
-        result += (days > 0 ? days + ' day(s) ' : '')
-                + (hours < 10 ? '0' : '') + hours + ':'
-                + (minutes < 10 ? '0' : '') + minutes + ':'
-                + (seconds < 10 ? '0' : '') + seconds;
-        
-        return result;
-    };
-
-    // "hh:mm[:ss][ DD.MM[.YYYY]]"
-    this.parseTime = function(dtString) {
-        var hh, mm, ss, DD, MM, YYYY;
-        
-        var parts = dtString.split(' ');
-        
-        var timeParts = parts[0].split(':');
-        if (timeParts.length == 1) {
-            throw 'Invalid time';
-        }
-        
-        hh = timeParts[0];
-        mm = timeParts[1];
-        ss = timeParts.length == 3 ? timeParts[2] : 0;
-        
-        if (parts.length == 2) {
-            var dateParts = parts[1].split('.');
-            DD = parseInt(dateParts[0]);
-            MM = parseInt(dateParts[1]) - 1;
-            YYYY = dateParts.length == 3 ? parseInt(dateParts[2]) - 1 : new Date().getFullYear();
-        }
-        else {
-            var d = new Date();
-            YYYY = d.getFullYear();
-            MM = d.getMonth();
-            DD = d.getDate();
-        }
-        
-        return new Date(YYYY, MM, DD, hh, mm, ss);
-    }
-    
-    return this;
-}
-
-// Time before.
-(function() {
-    var intervalId = -1;
-    
-    var timeBeforeEl = document.getElementById('timeBefore');
-    var timeBeforeClockEl = document.getElementById('timeBeforeClock');
-    var stopTimeBeforeEl = document.getElementById('stopTimeBefore');
-
-    var moment = new Moment();    
-    
-    function showTimeBefore(dt) {
-        var now = Date.now();
-        
-        var str = moment.subtractDates(dt, now);
-
-        timeBeforeClockEl.innerHTML = str;
-    }
-    
-    function toggleState(run) {
-        if (run) {
-            stopTimeBeforeEl.style.visibility = 'visible';
-        }
-        else {
-            stopTimeBeforeEl.style.visibility = 'hidden';
-        }
-    }
-    
-    stopTimeBeforeEl.addEventListener('click', function() {
-        clearInterval(intervalId);
-        timeBeforeClockEl.innerHTML = '';
-        toggleState(false);
-    });
-    
-    timeBeforeEl.addEventListener('keydown', function(event) {
-        if (event.code == 'Enter' || event.code == 'NumpadEnter') {
-            try {
-                var t = moment.parseTime(timeBeforeEl.value);
-                
-                clearInterval(intervalId);
-                
-                timeBeforeClockEl.innerHTML = '00:00:00';
-                
-                intervalId = setInterval(function() {
-                    showTimeBefore(t);
-                }, 1000);
-                
-                toggleState(true);
-            }
-            catch (e) {
-                console.log('Wrong input: ' + e);
-            }
-        }
-    });
-})();

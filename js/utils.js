@@ -666,6 +666,22 @@ function unique() {
     }
 }
 
+function uniqueList() {
+    var input = document.getElementById('data');
+    var rows = input.value.split('\n');
+    clearEmptyStrings(rows);
+
+    var stat = getStatistic(rows);
+
+    var result = '';
+    for (var p in stat) {
+        //console.log(p);
+        result += p + '\n'
+    }
+    
+    input.value = result;
+}
+
 function showHelp(obj) {
     var helpElement = document.getElementById('help');
 
@@ -737,4 +753,12 @@ function pad(num, size) {
     var s = num+"";
     while (s.length < size) s = "0" + s;
     return s;
+}
+
+function info() {
+    var input = document.getElementById('data');
+    var message = 'Length: ' + input.value.length
+                + ', rows: ' + input.value.lineCount();
+    
+    alert(message);
 }

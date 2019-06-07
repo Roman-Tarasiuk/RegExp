@@ -1,3 +1,6 @@
+String.prototype.lines = function() { return this.split(/\r*\n/); }
+String.prototype.lineCount = function() { return this.lines().length; }
+
 //
 // ** Encoding functions
 //

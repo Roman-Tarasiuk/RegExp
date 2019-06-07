@@ -27,9 +27,6 @@ var showSettings = false;
 
 // Main functionality.
 
-String.prototype.lines = function() { return this.split(/\r*\n/); }
-String.prototype.lineCount = function() { return this.lines().length; }
-
 window.onload = function() {
     inputElement.focus();
     widthOffset = $(inputElement).width() - $(regexpElement).width();

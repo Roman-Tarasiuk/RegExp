@@ -6,6 +6,7 @@
 
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
+    <script src="scripts.library.js"></script>
     <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/utils.css">
     <link rel="stylesheet" type="text/css" href="css/tabs.css">
@@ -85,7 +86,9 @@
         <textarea id="data"></textarea>
         <br>
         <button onclick="clearInput('data')">Clear</button>
-        <button onclick="unique()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Checks whether rows are unique">Unique</button>
+        <button onclick="info()">Info</button>
+        <button onclick="unique()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Checks whether rows are unique">Are unique</button>
+        <button onclick="uniqueList()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Selects all unique records">Unique list</button>
         <button onclick="statistic()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Each row's occurrence number">Statistic</button>
         <button onclick="statisticCumulative()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Row X/Y">Cumulative</button>
         <button onclick="statisticCategoryCount()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Split your categories and values using tabulation">Categories counts</button>

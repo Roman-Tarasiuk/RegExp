@@ -23,6 +23,7 @@
       <button class="tablinks" onclick="openTab(this, 'tabCSharp')">C#</button>
       <button class="tablinks" onclick="openTab(this, 'tabQuotes')">Quotes</button>
       <button class="tablinks" onclick="openTab(this, 'tabStatistics')">Statistics</button>
+      <button class="tablinks" onclick="openTab(this, 'tabCounter')">Counter</button>
       <button class="tablinks" onclick="openTab(this, 'tabNumbers')">Number conversions</button>
       <button class="tablinks" onclick="openTab(this, 'tabOther')">Other</button>
     </div>
@@ -97,6 +98,18 @@
         <div style="margin-top: 12px;">
             <input id="help" style="width: 60%" readonly disabled></input>
         </div>
+    </div>
+    
+    <div id="tabCounter" class="tabcontent">
+        <p id="counter" class="counter">0</p>
+        <button id="counterUp" class="counter">▲</button>
+        <br>
+        <button id="counterDown" class="counter">▼</button>
+        <br>
+        <br>
+        <input type="text" id="counterInitialValue" value="0">
+        <button id="counterInit">Init</button>
+        <button id="counterClear">Clear</button>
     </div>
     
     <div id="tabNumbers" class="tabcontent">

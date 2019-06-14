@@ -762,3 +762,36 @@ function info() {
     
     alert(message);
 }
+
+(function(){
+    var counter = 0;
+    
+    var counterEl = document.getElementById('counter');
+    var counterUpEl = document.getElementById('counterUp');
+    var counterDownEl = document.getElementById('counterDown');
+    var counterClearEl = document.getElementById('counterClear');
+    var counterInitialValueEl = document.getElementById('counterInitialValue');
+    var counterInitEl = document.getElementById('counterInit');
+    
+    counterUpEl.addEventListener('click', function() {
+        counter++;
+        counterEl.innerText = counter;
+    });
+    
+    counterDownEl.addEventListener('click', function() {
+        counter--;
+        counterEl.innerText = counter;
+    });
+    
+    counterClearEl.addEventListener('click', function() {
+        counter = 0;
+        counterEl.innerText = counter;
+        
+        counterUpEl.focus();
+    });
+    
+    counterInitEl.addEventListener('click', function() {
+        counter = parseInt(counterInitialValueEl.value);
+        counterEl.innerText = counter;
+    });
+})();

@@ -31,3 +31,13 @@ p {
     padding-right: 4px;
     margin: 0px;
 }
+
+.counter {
+    font-size: 48pt;
+    padding: 10px 40px;
+    margin: 12px 0px;
+}
+
+#counterInitialValue {
+    width: 40px;
+}

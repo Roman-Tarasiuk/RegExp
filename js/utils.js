@@ -678,8 +678,86 @@ function uniqueList() {
         //console.log(p);
         result += p + '\n'
     }
-    
+
     input.value = result;
+}
+
+function searchInParentheses() {
+    var input = document.getElementById('textInParenthesesInput').value;
+    var prefix = document.getElementById('inParenthesesPrefix').value;
+    var openP = document.getElementById('inParenthesisOpen').value;
+    var closeP = document.getElementById('inParenthesisClose').value;
+    var splitter = document.getElementById('inParenthesisSplitter').value.replace(/\\n/g, '\n');
+    var resultEl = document.getElementById('textInParenthesesResults');
+
+    if (openP.length != 1 || closeP.length != 1) {
+        resultEl.value = 'Parentheses must be of length 1.';
+        return;
+    }
+    else {
+        resultEl.value = '';
+    }
+
+    var currentPos = 0;
+    var result = '';
+
+    do {
+        var foundIndex = 0;
+        var endOfString = false;
+
+        if (prefix.length != 0) {
+            foundIndex = input.indexOf(prefix, currentPos);
+        }
+
+        console.log(foundIndex);
+        if (foundIndex == -1) {
+            break;
+        }
+
+        currentPos = prefix.length != 0 ? foundIndex + prefix.length : currentPos;
+
+        var start = -1;
+        var end = -1;
+        var openCount = 0;
+
+        while (true) {
+            if (input[currentPos] == openP) {
+                if (openCount == 0) {
+                    start = currentPos + 1;
+                }
+                openCount++;
+            }
+            else if (input[currentPos] == closeP) {
+                openCount--;
+                if (openCount == 0) {
+                    end = currentPos;
+                }
+            }
+
+            if (start != -1 && end != -1) {
+                result += input.substring(start, end) + splitter;
+                currentPos = end + 1;
+                break;
+            }
+
+            currentPos++;
+
+            if (currentPos == input.length) {
+                endOfString = true;
+                break;
+            }
+        }
+
+        if (currentPos == input.length) {
+            endOfString = true;
+        }
+
+        if (endOfString) {
+            break;
+        }
+    } while (true);
+
+    resultEl.value = result;
 }
 
 function showHelp(obj) {
@@ -759,37 +837,37 @@ function info() {
     var input = document.getElementById('data');
     var message = 'Length: ' + input.value.length
                 + ', rows: ' + input.value.lineCount();
-    
+
     alert(message);
 }
 
 (function(){
     var counter = 0;
-    
+
     var counterEl = document.getElementById('counter');
     var counterUpEl = document.getElementById('counterUp');
     var counterDownEl = document.getElementById('counterDown');
     var counterClearEl = document.getElementById('counterClear');
     var counterInitialValueEl = document.getElementById('counterInitialValue');
     var counterInitEl = document.getElementById('counterInit');
-    
+
     counterUpEl.addEventListener('click', function() {
         counter++;
         counterEl.innerText = counter;
     });
-    
+
     counterDownEl.addEventListener('click', function() {
         counter--;
         counterEl.innerText = counter;
     });
-    
+
     counterClearEl.addEventListener('click', function() {
         counter = 0;
         counterEl.innerText = counter;
-        
+
         counterUpEl.focus();
     });
-    
+
     counterInitEl.addEventListener('click', function() {
         counter = parseInt(counterInitialValueEl.value);
         counterEl.innerText = counter;

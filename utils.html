@@ -6,6 +6,7 @@
 
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
+    <script src="js/xml-js/dist/xml-js.min.js"></script>
     <script src="scripts.library.js"></script>
     <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/utils.css">
@@ -23,6 +24,7 @@
       <button class="tablinks" onclick="openTab(this, 'tabCSharp')">C#</button>
       <button class="tablinks" onclick="openTab(this, 'tabQuotes')">Quotes</button>
       <button class="tablinks" onclick="openTab(this, 'tabTextInParentheses')">Text in parentheses</button>
+      <button class="tablinks" onclick="openTab(this, 'tabXMLtoJSON')">XML to JSON</button>
       <button class="tablinks" onclick="openTab(this, 'tabStatistics')">Statistics</button>
       <button class="tablinks" onclick="openTab(this, 'tabCounter')">Counter</button>
       <button class="tablinks" onclick="openTab(this, 'tabNumbers')">Number conversions</button>
@@ -104,6 +106,20 @@
         <br>
         <p>Results:</p>
         <textarea id="textInParenthesesResults"></textarea>
+    </div>
+
+    <div id="tabXMLtoJSON" class="tabcontent">
+        <p>XML:</p>
+        <textarea id="textXML"></textarea>
+        <br>
+        <label>
+            <input type="checkbox" id="inParenthesisResultWithParenheses">
+            ...
+        </label>
+        <button onclick="convertXMLtoJSON()">Convert</button>
+        <br>
+        <p>JSON:</p>
+        <textarea id="textJSON"></textarea>
     </div>
 
     <div id="tabStatistics" class="tabcontent">

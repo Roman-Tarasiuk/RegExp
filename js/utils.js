@@ -765,6 +765,19 @@ function searchInParentheses() {
     resultEl.value = result;
 }
 
+function convertXMLtoJSON() {
+    var xmlEl = document.getElementById('textXML');
+    var jsonEl = document.getElementById('textJSON');
+    var xml = xmlEl.value;
+    var json = jsonEl.value;
+
+    var convert = window;
+
+    // console.log(xml, json);
+    var result1 = convert.xml2json(xml, {compact: true, spaces: 2});
+    jsonEl.value = result1;
+}
+
 function showHelp(obj) {
     var helpElement = document.getElementById('help');
 

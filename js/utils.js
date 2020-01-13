@@ -689,6 +689,7 @@ function searchInParentheses() {
     var closeP = document.getElementById('inParenthesisClose').value;
     var splitter = document.getElementById('inParenthesisSplitter').value.replace(/\\n/g, '\n');
     var resultEl = document.getElementById('textInParenthesesResults');
+    var withParentheses = document.getElementById('inParenthesisResultWithParenheses').checked;
 
     if (openP.length != 1 || closeP.length != 1) {
         resultEl.value = 'Parentheses must be of length 1.';
@@ -735,7 +736,11 @@ function searchInParentheses() {
             }
 
             if (start != -1 && end != -1) {
-                result += input.substring(start, end) + splitter;
+                result += (withParentheses ? openP : '')
+                    + input.substring(start, end)
+                    + (withParentheses ? closeP : '')
+                    + splitter
+                    ;
                 currentPos = end + 1;
                 break;
             }

@@ -778,6 +778,56 @@ function convertXMLtoJSON() {
     jsonEl.value = result1;
 }
 
+function convertJSONtoTable() {
+    var jsonEl = document.getElementById('textJSON2');
+    var tableEl = document.getElementById('textTable');
+
+    var json = JSON.parse(jsonEl.value); // Array.
+    var headers = [];
+    var body = [];
+
+    var empty = document.getElementById('tabJSONtoTableEmpty').value;
+
+    for (var i in json) {
+        var tmp = json[i];
+        for (var j = 0; j < headers.length; j++) {
+            if (tmp[headers[j]] == undefined) {
+                tmp[headers[j]] = empty;
+            }
+        }
+
+        body.push(tmp);
+
+        for (var j in json[i]) {
+            if (headers.indexOf(j) == -1) {
+                headers.push(j);
+
+                for (var k = 0; k < body.length - 1; k++) {
+                    body[k][j] = empty;
+                }
+            }
+        }
+    }
+
+    var result = '';
+
+    // Headers.
+    for (var i = 0; i < headers.length; i++) {
+        result += headers[i] + '\t';
+    }
+    result += '\n';
+
+    // Body.
+    for (var i = 0; i < body.length; i++) {
+        for (var j = 0; j < headers.length; j++) {
+            result += body[i][headers[j]] + '\t';
+        }
+        result += '\n';
+    }
+
+    tableEl.value = result;
+}
+
 function showHelp(obj) {
     var helpElement = document.getElementById('help');
 

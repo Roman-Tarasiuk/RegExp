@@ -12,6 +12,7 @@
     cursor: pointer;
     padding: 14px 10px;
     transition: 0.3s;
+    border-left: 1px solid #ddd;
 }
 
 .tab button:hover {

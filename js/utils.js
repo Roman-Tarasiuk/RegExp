@@ -828,6 +828,50 @@ function convertJSONtoTable() {
     tableEl.value = result;
 }
 
+//
+// The directory in JSON format:
+// { "dir/": {"subdir/": {...}}, files: [...]}
+//
+function getPathsFromJSON() {
+    var jsonEl = document.getElementById('textJSON3');
+    var resultEl = document.getElementById('textJSONResult3');
+
+    function processObj(json, parent) {
+        var tmp = [];
+        // Adding directories.
+        for (var p in json) {
+            if (p != 'files') {
+                var subPaths = processObj(json[p], p);
+                if (subPaths.length == 0) {
+                    tmp.push(p)
+                }
+                else {
+                    for (var s in subPaths) {
+                        tmp.push(subPaths[s]);
+                    }
+                }
+            }
+        }
+        // Adding files after directories.
+        var files = json['files'];
+        for (var f in files) {
+            tmp.push(files[f]);
+        }
+
+        var result = [];
+        for (var r in tmp) {
+            result.push(parent + tmp[r]);
+        }
+
+        return result;
+    }
+
+    var jsonObj = JSON.parse(jsonEl.value);
+
+    var result = processObj(jsonObj, '/');
+    resultEl.value = result.join('\n');
+}
+
 function showHelp(obj) {
     var helpElement = document.getElementById('help');
 

@@ -41,3 +41,8 @@ p {
 #counterInitialValue {
     width: 40px;
 }
+
+.clr-btn {
+	font-weight: bold;
+	color: red;
+}

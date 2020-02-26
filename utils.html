@@ -37,7 +37,7 @@
         <div id="request" style="width:1200px">
             <p id="comment">%-like address <span class="comment">(e.g. Google search link)</span>:</p>
             <textarea id="txtInput"></textarea>
-            <button onclick="clearInput('txtInput')">Clear</button>
+            <button onclick="clearInput('txtInput')"><span class="clr-btn">×</span> Clear</button>
             <button onclick="decode()" id="btnClean" title="Including extracting an url from Google search results">Decode</button>
             <button onclick="simpleDecode()">Simple decode</button>
             <button onclick="simpleEncode()">Simple encode</button>
@@ -150,7 +150,7 @@
         <p>Statistics:</p>
         <textarea id="data"></textarea>
         <br>
-        <button onclick="clearInput('data')">Clear</button>
+        <button onclick="clearInput('data')"><span class="clr-btn">×</span> Clear</button>
         <button onclick="info()">Info</button>
         <button onclick="unique()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Checks whether rows are unique">Are unique</button>
         <button onclick="uniqueList()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Selects all unique records">Unique list</button>

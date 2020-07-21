@@ -651,15 +651,17 @@ function unique() {
     var stat = getStatistic(rows);
 
     var areUnique = true;
+    var count = 0;
     for (var p in stat) {
         if (stat[p] > 1) {
             areUnique = false;
             break;
         }
+        count++;
     }
 
     if (areUnique) {
-        alert('Rows are unique.');
+        alert(count + ' rows are unique.');
     }
     else {
         alert('Rows are NOT unique.');

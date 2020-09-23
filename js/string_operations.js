@@ -60,7 +60,7 @@ function compare() {
     }
 
     document.getElementById('result').value = compareResult.compareStr;
-    document.getElementById('count').innerHTML = 
+    document.getElementById('count').innerHTML =
         compareResult.placesCount == 0 ? 'Strings are equal.' : 'Differences found: ' + compareResult.placesCount + '.';
 
     function cmp(str1, str2, ignoreCase) { // str1.length >= str2.length
@@ -211,26 +211,38 @@ function scrollHomeEnd(event) {
 
 function uniqueChars() {
     var txt = document.getElementById('txt');
-    
+
     var s = txt.value;
-    
+
     var unique = [];
-    
+
     for (var i = 0; i < s.length; i++) {
         if (unique.indexOf(s[i]) == -1) {
             unique.push(s[i]);
         }
     }
-    
+
     unique.sort();
-    
+
     var resultStr = '';
-    
+
     for (var i = 0; i < unique.length; i++) {
         resultStr += unique[i];
     }
-    
+
     txt.value = resultStr;
+}
+
+function sortChars() {
+    var txt = document.getElementById('txt');
+
+    var s = txt.value;
+
+    var splitted = s.split('');
+    splitted.sort();
+
+    txt.value = splitted.join('');
+    txt.select();
 }
 
 $('#str1').keydown(scrollHomeEnd);

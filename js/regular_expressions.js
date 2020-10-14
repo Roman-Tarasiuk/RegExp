@@ -9,7 +9,6 @@ var inputElement = document.getElementById('input');
 var regexpElement = document.getElementById('regexp');
 var resetPatternButton = document.getElementById('resetPattern');
 var resultsPatternElement = document.getElementById('resultsPattern');
-var settingsElement = document.getElementById('settings');
 var replaceCookiesOrigin = ';';
 var replaceCookiesRE = new RegExp(replaceCookiesOrigin, 'g');
 var replaceCookiesStr = '###';
@@ -46,7 +45,7 @@ function process() {
     var resultsPattern = resultsPatternElement.value;
 
     var RE = new RegExp(rePattern, reFlags);
-    
+
     console.log('RE:');
     console.log(RE);
 
@@ -54,7 +53,7 @@ function process() {
         input = inputElement.value;
         userInputChanged = false;
     }
-    
+
     mapRows(input);
 
     var resultsCtrl = document.getElementById('results');
@@ -84,11 +83,11 @@ function process() {
 
 function mapRows(input) {
     console.log('** mapRows():')
-    
+
     var rows = input.split('\n');
     rowsMap = {};
     var totalLength = 0;
-    
+
     for (var i = 0; i < rows.length; i++) {
         rowsMap[i] = (totalLength = totalLength + rows[i].length + 1);
     }
@@ -101,7 +100,7 @@ function getRow(index) {
     if (index > input.length) {
         return -1;
     }
-    
+
     for (var r in rowsMap) {
         if (rowsMap[r] >= index) {
             return parseInt(r) + 1;
@@ -198,7 +197,7 @@ function onChange(event) {
   var file = event.target.files[0];
   fileName = file.name;
   var encoding = document.getElementById('encoding').value;
-  
+
   var reader = new FileReader();
   reader.onload = function(event) {
     //inputElement.value = event.target.result;
@@ -208,11 +207,11 @@ function onChange(event) {
     inputElement.value = '\'' + fileName + '\' is successfully loaded.';
     showInfo('info1', input.length + ' characters / '
         + input.lineCount() + ' row(s)');
-    
+
     if (showAutoEl.checked) {
         inputElement.value = input;
     }
-    
+
     fileNameEl.innerText = fileName;
     // input.length
   };
@@ -264,12 +263,12 @@ function optionWidth() {
     var optionChkbox = document.getElementById('optionWidth');
     if (optionChkbox.checked) {
         var newWidth = inputElement.clientWidth - widthOffset - 4;
-        
+
         $(regexpElement).width(newWidth);
         $('#resultsPattern').width(newWidth);
         $('#results').width(inputElement.clientWidth - 4);
     }
-    
+
     $(inputElement).toggleClass('resize-vertical');
     $(regexpElement).toggleClass('resize-vertical');
     $('#resultsPattern').toggleClass('resize-vertical');
@@ -301,14 +300,17 @@ $(document).bind("mousedown", function(e) {
   }
 });
 
-function toggleSettings() {
-    if (!showSettings) {
-        settingsElement.style.display = "block";
+function toggleDiv(id) {
+    var targetEl = document.getElementById(id);
+    if (targetEl.style == undefined
+        || targetEl.style.display == undefined
+        || targetEl.style.display == ''
+        || targetEl.style.display == 'none') {
+        targetEl.style.display = "block";
     }
     else {
-        settingsElement.style.display = "none";
+        targetEl.style.display = "none";
     }
-    showSettings = !showSettings;
 }
 
 function handleClick(cb) {

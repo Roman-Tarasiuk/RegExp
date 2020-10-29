@@ -19,7 +19,6 @@
 <body style="background-color: #f0f0ff;">
     <div class="tab">
       <button class="tablinks" onclick="openTab(this, 'tabAddresses')" id="item1">%-like addresses</button>
-      <button class="tablinks" onclick="openTab(this, 'tabNowIs')">Now is</button>
       <button class="tablinks" onclick="openTab(this, 'tabStatistics')">Statistics</button>
       <button class="tablinks" onclick="openTab(this, 'tabXMLtoJSON')">XML to JSON</button>
       <button class="tablinks" onclick="openTab(this, 'tabJSONtoTable')">JSON to Table</button>
@@ -30,6 +29,7 @@
       <button class="tablinks" onclick="openTab(this, 'tabQuotes')">Quotes</button>
       <button class="tablinks" onclick="openTab(this, 'tabSQL')">SQL</button>
       <button class="tablinks" onclick="openTab(this, 'tabCSharp')">C#</button>
+      <button class="tablinks" onclick="openTab(this, 'tabNowIs')">Now is</button>
       <button class="tablinks" onclick="openTab(this, 'tabOther')" style="border-right: 1px solid #ddd;">Other</button>
     </div>
 
@@ -115,13 +115,20 @@
         <textarea id="textXML"></textarea>
         <br>
         <label>
-            <input type="checkbox" id="...">
-            ...
+            <input type="checkbox" id="compact" checked>
+            Compact
         </label>
         <button onclick="convertXMLtoJSON()">Convert</button>
         <br>
         <p>JSON:</p>
         <textarea id="textJSON"></textarea>
+        <br>
+        <button onclick="sortProps()">Sort properties</button>
+        <button onclick="convertJSONtoXML()">To XML</button>
+        <label>
+            <input type="checkbox" id="fullTag" checked>
+            Full tag
+        </label>
     </div>
 
     <div id="tabJSONtoTable" class="tabcontent">

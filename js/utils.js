@@ -771,13 +771,67 @@ function convertXMLtoJSON() {
     var xmlEl = document.getElementById('textXML');
     var jsonEl = document.getElementById('textJSON');
     var xml = xmlEl.value;
+
+    var convert = window;
+
+    var result = convert.xml2json(xml, {
+        compact: document.getElementById('compact').checked,
+        fullTagEmptyElement: document.getElementById('fullTag').checked,
+        spaces: 2
+    });
+
+    jsonEl.value = result;
+}
+
+function convertJSONtoXML() {
+    var jsonEl = document.getElementById('textJSON');
     var json = jsonEl.value;
 
     var convert = window;
 
-    // console.log(xml, json);
-    var result1 = convert.xml2json(xml, {compact: true, spaces: 2});
-    jsonEl.value = result1;
+    var xml = convert.json2xml(json, {
+        compact: document.getElementById('compact').checked,
+        fullTagEmptyElement: document.getElementById('fullTag').checked,
+        spaces: 2
+    });
+
+    jsonEl.value = xml;
+}
+
+function obj2array(obj) {
+    var result = [];
+
+    for (var p in obj) {
+        result.push(obj[p]);
+    }
+
+    return result;
+}
+
+function sortObject(obj) {
+    return obj = Object.keys(obj).sort().reduce(function (result, key) {
+        if (typeof(obj[key]) == 'object') {
+            if (Array.isArray(obj[key])) {
+                result[key] = obj2array(sortObject(obj[key]));
+            }
+            else {
+                result[key] = sortObject(obj[key]);
+            }
+        }
+        else {
+            result[key] = obj[key];
+        }
+        return result;
+    }, {});
+}
+
+function sortProps() {
+    var jsonEl = document.getElementById('textJSON');
+    var o = JSON.parse(jsonEl.value);
+    o = sortObject(o);
+    var json = JSON.stringify(o, null, '  ');
+
+    jsonEl.value = json;
 }
 
 function convertJSONtoTable() {

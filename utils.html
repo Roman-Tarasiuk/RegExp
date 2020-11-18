@@ -30,6 +30,7 @@
       <button class="tablinks" onclick="openTab(this, 'tabSQL')">SQL</button>
       <button class="tablinks" onclick="openTab(this, 'tabCSharp')">C#</button>
       <button class="tablinks" onclick="openTab(this, 'tabNowIs')">Now is</button>
+      <button class="tablinks" onclick="openTab(this, 'tabColors')">Colors</button>
       <button class="tablinks" onclick="openTab(this, 'tabOther')" style="border-right: 1px solid #ddd;">Other</button>
     </div>
 
@@ -202,6 +203,40 @@
         <br>
         <span>Padding:</span>
         <input id="padding" value="20"></input>
+    </div>
+
+    <div id="tabColors" class="tabcontent">
+        <div>
+            <div id="background" class="colored-div" style="display: table; text-align: center;">
+                <div id="sample" style="display: table-cell; vertical-align: middle; font-size: 20pt;">
+                    Text sample
+                </div>
+            </div>
+
+            <p>Background: <span id="bacValue"></span></p>
+            <div><input type="range" min="0" max="255" value="50" class="color-ruler" id="bacR" oninput="colorChange()"></div>
+            <div><input type="range" min="0" max="255" value="50" class="color-ruler" id="bacG" oninput="colorChange()"></div>
+            <div><input type="range" min="0" max="255" value="50" class="color-ruler" id="bacB" oninput="colorChange()"></div>
+
+            <p>Color: <span id="colValue"></span></p>
+            <div><input type="range" min="0" max="255" value="150" class="color-ruler" id="colR" oninput="colorChange()"></div>
+            <div><input type="range" min="0" max="255" value="150" class="color-ruler" id="colG" oninput="colorChange()"></div>
+            <div><input type="range" min="0" max="255" value="150" class="color-ruler" id="colB" oninput="colorChange()"></div>
+        </div>
+        <br>
+
+        <div>
+            <textarea id="colorList" style="width: 600px; height: 100px; margin-bottom: 2px;">
+                #323232 #969696 #cceeff #99ddff
+                #ffe066 #ffff99 #e6ccff #ccb3ff
+                #ff99cc #057c48 #a3c2c2 #ffd1b3
+                #ffb380 #ccffcc #ff9999
+            </textarea>
+            <br>
+            <button onclick="colorList()">Color list</button>
+            <button onclick="clearcolorList()">Clear</button>
+            <div id="coloredContainer"></div>
+        </div>
     </div>
 
     <div id="tabOther" class="tabcontent">

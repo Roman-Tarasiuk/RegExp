@@ -46,3 +46,17 @@ p {
 	font-weight: bold;
 	color: red;
 }
+
+.colored-div {
+    height: 50px;
+    width: 200px;
+    margin: 4px;
+}
+
+.color-ruler {
+    width: 280px;
+}
+
+#colorList {
+    width: 800px;
+}

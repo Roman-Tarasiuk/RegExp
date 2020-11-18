@@ -1,6 +1,10 @@
 window.onload = function() {
     var item1 = document.getElementById('item1');
     openTab(item1, 'tabAddresses');
+
+    colorChange();
+    document.getElementById('colorList').value =
+        document.getElementById('colorList').value.trim().split(/\n+/gm).reduce((a, c) => a + '\n' + c.trim());
 }
 
 String.prototype.replaceAll = function(search, replacement) {
@@ -1041,3 +1045,45 @@ function info() {
         counterEl.innerText = counter;
     });
 })();
+
+function colorList() {
+    var colors = document.getElementById('colorList').value.trim().split(/\s+/gm);
+
+    for (var i = 0; i < colors.length; i++) {
+        var el = document.createElement('div');
+        el.setAttribute('class', 'colored-div');
+        el.style.backgroundColor = colors[i];
+
+        document.getElementById('coloredContainer').appendChild(el);
+    }
+}
+
+function clearcolorList() {
+    document.getElementById('coloredContainer').innerHTML = '';
+}
+
+function rgb(r, g, b){
+    return 'rgb(' + r + ',' + g + ',' + b + ')';
+}
+
+function rgbHex(r, g, b){
+    return '#' + r.toString(16) + g.toString(16) + b.toString(16);
+}
+
+function colorChange() {
+    var rB = parseInt(document.getElementById('bacR').value);
+    var gB = parseInt(document.getElementById('bacG').value);
+    var bB = parseInt(document.getElementById('bacB').value);
+
+    var r = parseInt(document.getElementById('colR').value);
+    var g = parseInt(document.getElementById('colG').value);
+    var b = parseInt(document.getElementById('colB').value);
+
+    var bakEl = document.getElementById('background');
+    bakEl.style.backgroundColor = rgb(rB, gB, bB);
+    document.getElementById('bacValue').innerHTML = rgb(rB, gB, bB) + ' ' + rgbHex(rB, gB, bB);
+
+    var sampleEl = document.getElementById('sample');
+    sampleEl.style.color = rgb(r, g, b);
+    document.getElementById('colValue').innerHTML = rgb(r, g, b) + ' ' + rgbHex(r, g, b);
+}

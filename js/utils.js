@@ -79,42 +79,6 @@ function encodeSpaces() {
     resultElement.value = originElement.value.replace(re, '%20');
 }
 
-function nowIs() {
-    var d = new Date(Date.now());
-
-    var month = d.getMonth() + 1;
-    if (month.toString().length == 1) {
-        month = '0' + month;
-    }
-
-    var date = d.getDate();
-    if (date.toString().length == 1) {
-        date = '0' + date;
-    }
-
-    var hours = d.getHours();
-    if (hours.toString().length == 1) {
-        hours = '0' + hours;
-    }
-
-    var minutes = d.getMinutes();
-    if (minutes.toString().length == 1) {
-        minutes = '0' + minutes;
-    }
-
-    var seconds = d.getSeconds();
-    if (seconds.toString().length == 1) {
-        seconds = '0' + seconds;
-    }
-
-    var s = '';
-    s += d.getFullYear() + '-' + month + '-' + date + '--' + hours + '-' + minutes + '-' + seconds;
-
-    document.getElementById('dateTimeNow').innerHTML = s;
-};
-
-nowIs();
-
 
 function Moment() {
     var second = 1000;
@@ -180,24 +144,25 @@ function Moment() {
     return this;
 }
 
-(function() {
+(function() { // Time functions.
     var h = 0;
     var m = 0;
     var s = 0;
 
-    var intervalId = -1;
+    var now = null;
+    var userInput = '';
 
     var timeBeforeEl = document.getElementById('timeBefore');
     var timeBeforeClockEl = document.getElementById('timeBeforeClock');
     var stopTimeBeforeEl = document.getElementById('stopTimeBefore');
     var toShowTimeBefore = false;
 
-    var moment = new Moment();
+    var momentObj = new Moment();
 
     function showTimeBefore(dt) {
         var now = Date.now();
 
-        var str = moment.subtractDates(dt, now);
+        var str = momentObj.subtractDates(dt, now);
 
         timeBeforeClockEl.innerHTML = str;
     }
@@ -239,7 +204,7 @@ function Moment() {
         document.getElementById('clock').innerHTML = timeStr;
 
         if (toShowTimeBefore) {
-            var t = moment.parseTime(timeBeforeEl.value);
+            var t = momentObj.parseTime(timeBeforeEl.value);
 
             showTimeBefore(t);
         }
@@ -250,7 +215,7 @@ function Moment() {
             try {
                 toShowTimeBefore = true;
 
-                var t = moment.parseTime(timeBeforeEl.value);
+                var t = momentObj.parseTime(timeBeforeEl.value);
                 showTimeBefore(t);
 
                 toggleState(true);
@@ -261,8 +226,90 @@ function Moment() {
         }
     });
 
+    function customDateTimeFormat(d) {
+        return moment(d).format($('#customDTFormat').val());
+    }
+
+    function showDateTime(d) {
+        var dateTimeStr = '';
+
+        var radioButtons = document.querySelector('[name="dateTimeFormat"]:checked').value;
+
+        switch (radioButtons) {
+            case 'userInput':
+                dateTimeStr = userInput;
+                break;
+            case 'default':
+                dateTimeStr = d.toString();
+                break;
+            case 'utc':
+                dateTimeStr = d.toUTCString();
+                break;
+            case 'locale':
+                dateTimeStr = d.toLocaleString();
+                break;
+            case 'localeUA':
+                dateTimeStr = d.toLocaleString('uk-UA');
+                break;
+            case 'custom':
+                dateTimeStr = customDateTimeFormat(d);
+                break;
+        }
+
+        document.getElementById('dateTime').value = dateTimeStr;
+    }
+
+    function nowIs() {
+        now = new Date(Date.now());
+
+        var userInputEl = document.getElementById('userInput');
+        if (userInputEl.checked) {
+            document.getElementById('default').checked = true;
+        }
+        userInputEl.disabled = true;
+
+        showDateTime(now);
+    };
+
+    function parseDate() {
+        var dtEl = document.getElementById('dateTime');
+
+        var d = null;
+
+        if ($('#custom').prop('checked')) {
+            var momentDate = moment(dtEl.value, $('#customDTFormat').val());
+            d = momentDate.toDate();
+        }
+        else {
+            var d = new Date(Date.parse(dtEl.value));
+        }
+
+        if (d == null || d == 'Invalid Date') {
+            dtEl.value += ' ** Invalid Date';
+        }
+        else {
+            userInput = dtEl.value;
+            document.getElementById('userInput').disabled = false;
+            now = d;
+            showDateTime(now);
+        }
+    }
+
     // Run.
     window.setInterval(showTime, 100);
+    nowIs();
+
+    document.getElementById('dateTimeNow').addEventListener('click', nowIs);
+    document.getElementById('dateTimeParse').addEventListener('click', parseDate);
+    $('input[name="dateTimeFormat"]').on('change', () => {
+        showDateTime(now);
+        if ($('#custom').prop('checked')) {
+            $('#customDTFormat').prop('disabled', false);
+        }
+        else {
+            $('#customDTFormat').prop('disabled', true);
+        }
+    });
 })();
 
 //

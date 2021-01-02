@@ -5,6 +5,7 @@
     <!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
 
     <script src="js/jquery.min.js"></script>
+    <script src="js/moment.js"></script>
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/xml-js/dist/xml-js.min.js"></script>
     <script src="scripts.library.js"></script>
@@ -29,7 +30,7 @@
       <button class="tablinks" onclick="openTab(this, 'tabQuotes')">Quotes</button>
       <button class="tablinks" onclick="openTab(this, 'tabSQL')">SQL</button>
       <button class="tablinks" onclick="openTab(this, 'tabCSharp')">C#</button>
-      <button class="tablinks" onclick="openTab(this, 'tabNowIs')">Now is</button>
+      <button class="tablinks" onclick="openTab(this, 'tabTime')">Time</button>
       <button class="tablinks" onclick="openTab(this, 'tabColors')">Colors</button>
       <button class="tablinks" onclick="openTab(this, 'tabOther')" style="border-right: 1px solid #ddd;">Other</button>
     </div>
@@ -49,12 +50,35 @@
         </div>
     </div>
 
-    <div id="tabNowIs" class="tabcontent">
-        <p>Now is:
-            <span id="dateTimeNow" style="font-weight: normal" onclick="nowIs()" title="Click to refresh"></span>
-        </p>
-        <p id="clock" class="clock">00:00:00</p>
-        <div style="margin-top: 12px;">
+    <div id="tabTime" class="tabcontent">
+        <div>
+            <input id="dateTime" type="text" style="width: 450px;">
+            <button id="dateTimeNow">Now</button>
+            <button id="dateTimeParse">Parse</button>
+
+            <br>
+            <input type="radio" id="userInput" name="dateTimeFormat" value="userInput" disabled>
+            <label for="userInput">User input</label>
+
+            <input type="radio" id="default" name="dateTimeFormat" value="default" checked>
+            <label for="default">Default</label>
+
+            <input type="radio" id="utc" name="dateTimeFormat" value="utc">
+            <label for="utc">UTC</label>
+
+            <input type="radio" id="locale" name="dateTimeFormat" value="locale">
+            <label for="locale">Locale</label>
+
+            <input type="radio" id="localeUA" name="dateTimeFormat" value="localeUA">
+            <label for="localeUA">Locale UA</label>
+
+            <input type="radio" id="custom" name="dateTimeFormat" value="custom">
+            <label for="custom">Custom</label>
+
+            <input type="text" id="customDTFormat" value="DD.MM.YYYY hh:mm:ss" disabled>
+        </div>
+        <p id="clock" class="clock" style="margin-top: 12px;">00:00:00</p>
+        <div style="margin-top: 20px;">
             <span>Time before </span>
             <input id="timeBefore" type="text" placeholder="hh:mm[:ss][ DD.MM[.YYYY]]" style="width: 180px;" title="Input a time and press <Enter>">
             <span id="stopTimeBefore" style="visibility: hidden">

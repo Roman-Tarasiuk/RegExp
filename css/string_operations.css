@@ -1,5 +1,5 @@
-input[type=text] {
-    width: calc(100% - 29px);
+.comparison {
+    width: calc(100% - 31px);
     vertical-align: middle;
     position: relative;
     margin-top: -3px;

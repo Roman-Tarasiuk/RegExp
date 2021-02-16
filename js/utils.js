@@ -920,14 +920,14 @@ function convertJSONtoTable() {
 
     // Headers.
     for (var i = 0; i < headers.length; i++) {
-        result += headers[i] + '\t';
+        result += headers[i] + (i < (headers.length - 1) ? '\t' : '');
     }
     result += '\n';
 
     // Body.
     for (var i = 0; i < body.length; i++) {
         for (var j = 0; j < headers.length; j++) {
-            result += body[i][headers[j]] + '\t';
+            result += body[i][headers[j]] + (j < (headers.length - 1) ? '\t' : '');
         }
         result += '\n';
     }

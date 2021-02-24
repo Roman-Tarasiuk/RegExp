@@ -240,19 +240,19 @@ function Moment() {
                 dateTimeStr = userInput;
                 break;
             case 'default':
-                dateTimeStr = d.toString();
+                dateTimeStr = (d == null) ? userInput + ' ** Invalid Date' : d.toString();
                 break;
             case 'utc':
-                dateTimeStr = d.toUTCString();
+                dateTimeStr = (d == null) ? userInput + ' ** Invalid Date' : d.toUTCString();
                 break;
             case 'locale':
-                dateTimeStr = d.toLocaleString();
+                dateTimeStr = (d == null) ? userInput + ' ** Invalid Date' : d.toLocaleString();
                 break;
             case 'localeUA':
-                dateTimeStr = d.toLocaleString('uk-UA');
+                dateTimeStr = (d == null) ? userInput + ' ** Invalid Date' : d.toLocaleString('uk-UA');
                 break;
             case 'custom':
-                dateTimeStr = customDateTimeFormat(d);
+                dateTimeStr = (d == null) ? userInput + ' ** Invalid Date' : customDateTimeFormat(d);
                 break;
         }
 
@@ -263,16 +263,18 @@ function Moment() {
         now = new Date(Date.now());
 
         var userInputEl = document.getElementById('userInput');
+        userInputEl.disabled = true;
         if (userInputEl.checked) {
             document.getElementById('default').checked = true;
         }
-        userInputEl.disabled = true;
 
         showDateTime(now);
     };
 
     function parseDate() {
+        document.getElementById('userInput').disabled = false;
         var dtEl = document.getElementById('dateTime');
+        userInput = dtEl.value;
 
         var d = null;
 
@@ -285,14 +287,13 @@ function Moment() {
         }
 
         if (d == null || d == 'Invalid Date') {
-            dtEl.value += ' ** Invalid Date';
+            now = null;
         }
         else {
-            userInput = dtEl.value;
-            document.getElementById('userInput').disabled = false;
             now = d;
-            showDateTime(now);
         }
+        
+        showDateTime(now);
     }
 
     // Run.
@@ -301,6 +302,7 @@ function Moment() {
 
     document.getElementById('dateTimeNow').addEventListener('click', nowIs);
     document.getElementById('dateTimeParse').addEventListener('click', parseDate);
+
     $('input[name="dateTimeFormat"]').on('change', () => {
         showDateTime(now);
         if ($('#custom').prop('checked')) {

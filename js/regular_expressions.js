@@ -20,7 +20,7 @@ var rowsMap = {};
 var showAutoEl = document.getElementById('showAuto');
 var widthOffset;
 var fileNameEl = document.getElementById('fileName');
-var defaultPattern = "match[0] + '\\t' + getRow(match.index) + '\\t' + fileName + '\\n'";
+var defaultPattern = "m[0] + '\\t' + row() + '\\t' + fileName + '\\n'";
 var showSettings = false;
 
 
@@ -42,7 +42,7 @@ function clearData(inp) {
 function process() {
     var rePattern = regexpElement.value;
     var reFlags = document.getElementById('flags').value;
-    var resultsPattern = resultsPatternElement.value;
+    var resultsPattern = resultsPatternElement.value.replace('row()', 'getRow(m.index)');
 
     var RE = new RegExp(rePattern, reFlags);
 
@@ -63,9 +63,9 @@ function process() {
     var count = 0;
     var resultsStr = '';
 
-    var match;
-    while ((match = RE.exec(input)) != null
-      && (match.index < input.length)
+    var m;
+    while ((m = RE.exec(input)) != null
+      && (m.index < input.length)
       && (resultsStr.length <= input.length * 10)) {
         resultsStr += eval(resultsPattern);
         count++;

@@ -58,7 +58,7 @@
                       title="Clear"
                       onclick="clearData('resultsPattern'); showInfo('info2', '...')">
             <textarea id="resultsPattern" class="w2" style="height: 22px;"
-                placeholder="match[0] + '\t' + getRow(match.index) + '\t' + fileName + '\n'"></textarea>
+                placeholder="m[0] + '\t' + row() + '\t' + fileName + '\n'"></textarea>
 
             <div id="regularExpressionsPluginSets" style="margin-bottom: 6px; margin-top: -1px;">
                 <button onclick="saveSet(false)" class="btn btn-outline-success btn-sm" disabled>Save set</button>

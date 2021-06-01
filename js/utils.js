@@ -107,6 +107,8 @@ function Moment() {
                 + (minutes < 10 ? '0' : '') + minutes + ':'
                 + (seconds < 10 ? '0' : '') + seconds;
 
+        result += ' (' + (days * 24 * 60 + hours * 60 + minutes + (seconds > 0 ? 1 : 0)) + ' minutes)';
+
         return result;
     };
 
@@ -157,6 +159,8 @@ function Moment() {
     var stopTimeBeforeEl = document.getElementById('stopTimeBefore');
     var toShowTimeBefore = false;
 
+    var before = null;
+
     var momentObj = new Moment();
 
     function showTimeBefore(dt) {
@@ -203,10 +207,8 @@ function Moment() {
 
         document.getElementById('clock').innerHTML = timeStr;
 
-        if (toShowTimeBefore) {
-            var t = momentObj.parseTime(timeBeforeEl.value);
-
-            showTimeBefore(t);
+        if (toShowTimeBefore && before != null) {
+            showTimeBefore(before);
         }
     }
 
@@ -215,8 +217,8 @@ function Moment() {
             try {
                 toShowTimeBefore = true;
 
-                var t = momentObj.parseTime(timeBeforeEl.value);
-                showTimeBefore(t);
+                before = momentObj.parseTime(timeBeforeEl.value);
+                showTimeBefore(before);
 
                 toggleState(true);
             }

@@ -245,6 +245,4 @@ function sortChars() {
     txt.select();
 }
 
-$('#str1').keydown(scrollHomeEnd);
-$('#str2').keydown(scrollHomeEnd);
-$('#result').keydown(scrollHomeEnd);
+$(document.body).keydown(scrollHomeEnd);

@@ -120,7 +120,7 @@ function removeSpaces() {
 function removeAllSpaces() {
     var txt = document.getElementById('txt');
 
-    var re = /\s/g;
+    var re = /\s|\u200A/gm;
     var replaceTo = '';
 
     txt.value = txt.value.replace(re, replaceTo);

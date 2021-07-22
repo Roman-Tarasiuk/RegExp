@@ -79,6 +79,37 @@ function encodeSpaces() {
     resultElement.value = originElement.value.replace(re, '%20');
 }
 
+function toHex() {
+    var origin = document.getElementById('txtInput');
+    var result = document.getElementById('txtResult');
+
+    function text2hex(str) {
+        var result = '';
+        for (var i = 0; i < str.length; i++) {
+            result += ('000' + str.charCodeAt(i).toString(16)).slice(-4)
+                        + (i < str.length - 1 ? ' ' : '');
+        }
+        return result.toUpperCase();
+    }
+
+    result.value = text2hex(origin.value);
+}
+
+function fromHex() {
+    var origin = document.getElementById('txtInput');
+    var result = document.getElementById('txtResult');
+
+    var str = origin.value;
+    var res = '';
+    var splitted = str.split(' ');
+
+    for (var i = 0; i < splitted.length; i++) {
+        res += String.fromCharCode('0x' + splitted[i]);
+    }
+
+    result.value = res;
+}
+
 
 function Moment() {
     var second = 1000;

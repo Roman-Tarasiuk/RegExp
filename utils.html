@@ -19,7 +19,7 @@
 
 <body style="background-color: #f0f0ff;">
     <div class="tab">
-      <button class="tablinks" onclick="openTab(this, 'tabAddresses')" id="item1">%-like addresses</button>
+      <button class="tablinks" onclick="openTab(this, 'tabAddresses')" id="item1">Encode/Decode</button>
       <button class="tablinks" onclick="openTab(this, 'tabStatistics')">Statistics</button>
       <button class="tablinks" onclick="openTab(this, 'tabXMLtoJSON')">XML to JSON</button>
       <button class="tablinks" onclick="openTab(this, 'tabJSONtoTable')">JSON to Table</button>
@@ -37,13 +37,15 @@
 
     <div id="tabAddresses" class="tabcontent">
         <div id="request" style="width:1200px">
-            <p id="comment">%-like address <span class="comment">(e.g. Google search link)</span>:</p>
+            <p id="comment">%-like address <span class="comment">(e.g. Google search link)</span> or any text:</p>
             <textarea id="txtInput"></textarea>
             <button onclick="clearInput('txtInput')"class="clr-btn">Χ Clear</button>
             <button onclick="decode()" id="btnClean" title="Including extracting an url from Google search results">Decode</button>
             <button onclick="simpleDecode()">Simple decode</button>
             <button onclick="simpleEncode()">Simple encode</button>
             <button onclick="encodeSpaces()">Encode spaces</button>
+            <button onclick="toHex()">To hex</button>
+            <button onclick="fromHex()">From hex</button>
         </div>
         <div id="result">
             <textarea id="txtResult"></textarea>

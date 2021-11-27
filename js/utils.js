@@ -287,6 +287,9 @@ function Moment() {
             case 'custom':
                 dateTimeStr = (d == null) ? userInput + ' ** Invalid Date' : customDateTimeFormat(d);
                 break;
+            case 'milliseconds':
+                dateTimeStr = (d == null) ? userInput + ' ** Invalid Date' : d.getTime();
+                break;
         }
 
         document.getElementById('dateTime').value = dateTimeStr;
@@ -315,8 +318,11 @@ function Moment() {
             var momentDate = moment(dtEl.value, $('#customDTFormat').val());
             d = momentDate.toDate();
         }
+        else if ($('#milliseconds').prop('checked')) {
+            d = new Date(Number.parseInt(dtEl.value));
+        }
         else {
-            var d = new Date(Date.parse(dtEl.value));
+            d = new Date(Date.parse(dtEl.value));
         }
 
         if (d == null || d == 'Invalid Date') {

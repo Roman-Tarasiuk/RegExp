@@ -21,6 +21,7 @@
     <div class="tab">
       <button class="tablinks" onclick="openTab(this, 'tabAddresses')" id="item1">Encode/Decode</button>
       <button class="tablinks" onclick="openTab(this, 'tabStatistics')">Statistics</button>
+      <button class="tablinks" onclick="openTab(this, 'tabTime')">Time</button>
       <button class="tablinks" onclick="openTab(this, 'tabXMLtoJSON')">XML to JSON</button>
       <button class="tablinks" onclick="openTab(this, 'tabJSONtoTable')">JSON to Table</button>
       <button class="tablinks" onclick="openTab(this, 'tabJSONPaths')">JSON Paths</button>
@@ -30,7 +31,6 @@
       <button class="tablinks" onclick="openTab(this, 'tabQuotes')">Quotes</button>
       <button class="tablinks" onclick="openTab(this, 'tabSQL')">SQL</button>
       <button class="tablinks" onclick="openTab(this, 'tabCSharp')">C#</button>
-      <button class="tablinks" onclick="openTab(this, 'tabTime')">Time</button>
       <button class="tablinks" onclick="openTab(this, 'tabColors')">Colors</button>
       <button class="tablinks" onclick="openTab(this, 'tabOther')" style="border-right: 1px solid #ddd;">Other</button>
     </div>
@@ -76,8 +76,10 @@
 
             <input type="radio" id="custom" name="dateTimeFormat" value="custom">
             <label for="custom">Custom</label>
-
             <input type="text" id="customDTFormat" value="DD.MM.YYYY hh:mm:ss" disabled>
+
+            <input type="radio" id="milliseconds" name="dateTimeFormat" value="milliseconds">
+            <label for="milliseconds">Milliseconds since 1970</label>
         </div>
         <p id="clock" class="clock" style="margin-top: 12px;">00:00:00</p>
         <div style="margin-top: 20px;">

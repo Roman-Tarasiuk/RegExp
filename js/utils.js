@@ -50,7 +50,7 @@ function decode() {
     }
 
     if(tmp.indexOf('%') > 0) {
-        tmp = '%%%' + tmp;
+        tmp = '%%% ' + tmp;
     }
 
     document.getElementById('txtResult').value = tmp;

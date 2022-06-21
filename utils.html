@@ -22,6 +22,7 @@
       <button class="tablinks" onclick="openTab(this, 'tabAddresses')" id="item1">Encode/Decode</button>
       <button class="tablinks" onclick="openTab(this, 'tabStatistics')">Statistics</button>
       <button class="tablinks" onclick="openTab(this, 'tabTime')">Time</button>
+      <button class="tablinks" onclick="openTab(this, 'tabXMLObject')">XML Object</button>
       <button class="tablinks" onclick="openTab(this, 'tabXMLtoJSON')">XML to JSON</button>
       <button class="tablinks" onclick="openTab(this, 'tabJSONtoTable')">JSON to Table</button>
       <button class="tablinks" onclick="openTab(this, 'tabJSONPaths')">JSON Paths</button>
@@ -137,6 +138,28 @@
         <br>
         <p>Results:</p>
         <textarea id="textInParenthesesResults"></textarea>
+    </div>
+
+    <div id="tabXMLObject" class="tabcontent">
+        <p>XML:</p>
+        <textarea id="textXMLText"></textarea>
+        <br>
+        <p>Predicate:</p>
+        <textarea id="textXMLPredicate">(obj) => {
+    var res = '';
+    for (var i = 0; i < obj.length; i++) {
+        res += obj[i].learning_element + '\t' + obj[i].definition_element + '\t'
+                    + obj[i].screens["1"].audio.value[0].normal + '\n';
+    }
+
+    return res;
+}</textarea>
+        <br>
+        <button onclick="getXMLAsString()">As String</button>
+        <button onclick="getXMLAsObject()">As Object</button>
+        <br>
+        <p>Result:</p>
+        <textarea id="textObj"></textarea>
     </div>
 
     <div id="tabXMLtoJSON" class="tabcontent">

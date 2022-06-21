@@ -859,6 +859,40 @@ function searchInParentheses() {
     resultEl.value = result;
 }
 
+function getXMLObject() {
+    try {
+        var xmlEl = document.getElementById('textXMLText');
+        var predicateEl = document.getElementById('textXMLPredicate');
+
+        var objVal = JSON.parse(xmlEl.value);
+
+        function getProperties(f) {
+            return f(objVal);
+        }
+
+        var predicateFunction = predicateEl.value;
+
+        var result = getProperties(eval(predicateFunction));
+
+        return result;
+    }
+    catch (exception) {
+        return exception;
+    }
+}
+
+function getXMLAsObject() {
+    var objEl = document.getElementById('textObj');
+    var obj = getXMLObject();
+    objEl.value = JSON.stringify(obj);
+}
+
+function getXMLAsString() {
+    var objEl = document.getElementById('textObj');
+    var str = getXMLObject();
+    objEl.value = str;
+}
+
 function convertXMLtoJSON() {
     var xmlEl = document.getElementById('textXML');
     var jsonEl = document.getElementById('textJSON');

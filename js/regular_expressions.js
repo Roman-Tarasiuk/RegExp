@@ -198,6 +198,8 @@ function onChange(event) {
   fileName = file.name;
   var encoding = document.getElementById('encoding').value;
 
+  inputElement.value = 'Loading...';
+
   var reader = new FileReader();
   reader.onload = function(event) {
     //inputElement.value = event.target.result;

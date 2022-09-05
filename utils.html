@@ -25,6 +25,7 @@
       <button class="tablinks" onclick="openTab(this, 'tabXMLObject')">XML Object</button>
       <button class="tablinks" onclick="openTab(this, 'tabXMLtoJSON')">XML to JSON</button>
       <button class="tablinks" onclick="openTab(this, 'tabJSONtoTable')">JSON to Table</button>
+      <button class="tablinks" onclick="openTab(this, 'tabJSONtoTable2')">JSON to Table 2</button>
       <button class="tablinks" onclick="openTab(this, 'tabJSONPaths')">JSON Paths</button>
       <button class="tablinks" onclick="openTab(this, 'tabCounter')">Counter</button>
       <button class="tablinks" onclick="openTab(this, 'tabNumbers')">Number conversions</button>
@@ -195,6 +196,17 @@
         <textarea id="textTable"></textarea>
     </div>
 
+    <div id="tabJSONtoTable2" class="tabcontent">
+        <p>JSON Array:</p>
+        <textarea id="textJSON22"></textarea>
+        <br>
+        <label>Skipped properties:</label>
+        <button onclick="convertJSONtoTable2()">Convert</button>
+        <br>
+        <p>Table:</p>
+        <textarea id="textTable2"></textarea>
+    </div>
+
     <div id="tabJSONPaths" class="tabcontent">
         <p>JSON:</p>
         <textarea id="textJSON3"></textarea>
@@ -217,9 +229,11 @@
         <button onclick="statisticCumulative()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Row X/Y">Cumulative</button>
         <button onclick="statisticCategoryCount()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Split your categories and values using tabulation">Categories counts</button>
         <button onclick="statisticCategoriesList()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Grouping values by categories. Split your categories and values using tabulation">Categories list</button>
+        <button onclick="statisticMultipleCategoriesList()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Grouping values by categories. Split your categories and values using tabulation, and categories by comma">Multiple categories list</button>
+        <button onclick="statisticMultipleCategoriesList2()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Grouping values by categories. Split your categories and values using tabulation, and categories by comma. Shows through categories">Multiple categories list 2</button>
 
         <div style="margin-top: 12px;">
-            <input id="help" style="width: 60%" readonly disabled></input>
+            <input id="help" style="width: 80%" readonly disabled></input>
         </div>
     </div>
 

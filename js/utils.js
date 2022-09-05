@@ -162,7 +162,7 @@ function Moment() {
             var dateParts = parts[1].split('.');
             DD = parseInt(dateParts[0]);
             MM = parseInt(dateParts[1]) - 1;
-            YYYY = dateParts.length == 3 ? parseInt(dateParts[2]) - 1 : new Date().getFullYear();
+            YYYY = dateParts.length == 3 ? parseInt(dateParts[2]) : new Date().getFullYear();
         }
         else {
             var d = new Date();
@@ -695,7 +695,6 @@ function statisticCategoriesList() {
     clearEmptyStrings(rows);
 
     var stat = {};
-    var tmp = [];
 
     for (var i = 0; i < rows.length; i++) {
         var rowSplitted = rows[i].split('\t');
@@ -712,9 +711,6 @@ function statisticCategoriesList() {
         else {
             stat[subj] = {[cat]: null, count: 1};
         }
-
-        tmp.push(subj);
-        tmp.push(cat);
     }
 
     var resultStr = '';
@@ -724,6 +720,114 @@ function statisticCategoriesList() {
             if (c != 'count') {
                 tmpStr += c + ', ';
             }
+        }
+        if (tmpStr.endsWith(', ')) {
+            tmpStr = tmpStr.substring(0, tmpStr.length - 2);
+        }
+
+        resultStr += tmpStr + '\n';
+    }
+
+    input.value = resultStr;
+}
+
+function statisticMultipleCategoriesList() {
+// rows' format: subject \t category
+    var input = document.getElementById('data');
+    var rows = input.value.split('\n');
+    clearEmptyStrings(rows);
+
+    var stat = {};
+
+    for (var i = 0; i < rows.length; i++) {
+        var rowSplitted = rows[i].split('\t');
+        var subj = rowSplitted[0];
+        var cat = rowSplitted[1].split(',');
+        for (var j = 0; j < cat.length; j++) {
+            var c = cat[j];
+            if (subj in stat) {
+                if (!(c in stat[subj])) {
+                    stat[subj][c] = null;
+                    // The next two forms are equal.
+                    //stat[subj].count++;
+                    stat[subj]["count"]++;
+                }
+            }
+            else {
+                stat[subj] = {[c]: null, count: 1};
+            }
+        }
+    }
+
+    var resultStr = '';
+    for (var s in stat) {
+        var tmpStr = s + '\t';
+        for (var c in stat[s]) {
+            if (c != 'count') {
+                tmpStr += c + ', ';
+            }
+        }
+        if (tmpStr.endsWith(', ')) {
+            tmpStr = tmpStr.substring(0, tmpStr.length - 2);
+        }
+
+        resultStr += tmpStr + '\n';
+    }
+
+    input.value = resultStr;
+}
+
+function statisticMultipleCategoriesList2() {
+// rows' format: subject \t category
+    var input = document.getElementById('data');
+    var rows = input.value.split('\n');
+    clearEmptyStrings(rows);
+
+    var stat = {};
+
+    for (var i = 0; i < rows.length; i++) {
+        var rowSplitted = rows[i].split('\t');
+        var subj = rowSplitted[0];
+        var cat = rowSplitted[1].split(',');
+        for (var j = 0; j < cat.length; j++) {
+            var s = cat[j];
+            if (subj in stat) {
+                if (!(s in stat[subj])) {
+                    stat[subj][s] = null;
+                    // The next two forms are equal.
+                    //stat[subj].count++;
+                    stat[subj]["count"]++;
+                }
+            }
+            else {
+                stat[subj] = {[s]: null, count: 1};
+            }
+        }
+    }
+
+    var stat2 = {};
+    for (var c in stat) {
+        for (var s in stat[c]) {
+            if(s == 'count') {
+                continue
+            }
+
+            if (! (s in stat2)) {
+                stat2[s] = [c];
+            }
+            else {
+                if (stat2[s].indexOf(c) == -1) {
+                    stat2[s].push(c);
+                }
+            }
+        }
+    }
+
+    var resultStr = '';
+    for (var c in stat2) {
+        var tmpStr = c + '\t';
+        for (var s in stat2[c]) {
+            tmpStr += stat2[c][s] + ', ';
         }
         if (tmpStr.endsWith(', ')) {
             tmpStr = tmpStr.substring(0, tmpStr.length - 2);
@@ -1005,6 +1109,36 @@ function convertJSONtoTable() {
             result += body[i][headers[j]] + (j < (headers.length - 1) ? '\t' : '');
         }
         result += '\n';
+    }
+
+    tableEl.value = result;
+}
+
+function convertJSONtoTable2() {
+    var jsonEl = document.getElementById('textJSON22');
+    var tableEl = document.getElementById('textTable2');
+
+    var json = JSON.parse(jsonEl.value); // Array.
+
+    console.log(json);
+
+    var result = '';
+    for (var i = 0; i < json.length; i++) {
+        var isCategory = true;
+        var category;
+        var valueArray;
+        for (var c in json[i]) {
+            if (isCategory) {
+                category = json[i][c];
+                isCategory = false;
+            }
+            else {
+                valueArray = json[i][c];
+                for (var j = 0; j < valueArray.length; j++) {
+                    result += category + '\t' + valueArray[j] + '\n';
+                }
+            }
+        }
     }
 
     tableEl.value = result;

@@ -61,27 +61,42 @@
             <button id="dateTimeParse">Parse</button>
 
             <br>
-            <input type="radio" id="userInput" name="dateTimeFormat" value="userInput" disabled>
-            <label for="userInput">User input</label>
+            
+            <label for="userInput">
+                <input type="radio" id="userInput" name="dateTimeFormat" value="userInput" disabled>
+                User input
+            </label>
 
-            <input type="radio" id="default" name="dateTimeFormat" value="default" checked>
-            <label for="default">Default</label>
+            <label for="default">
+                <input type="radio" id="default" name="dateTimeFormat" value="default" checked>
+                Default
+            </label>
 
-            <input type="radio" id="utc" name="dateTimeFormat" value="utc">
-            <label for="utc">UTC</label>
+            <label for="utc">
+                <input type="radio" id="utc" name="dateTimeFormat" value="utc">
+                UTC
+            </label>
 
-            <input type="radio" id="locale" name="dateTimeFormat" value="locale">
-            <label for="locale">Locale</label>
+            <label for="locale">
+                <input type="radio" id="locale" name="dateTimeFormat" value="locale">
+                Locale
+            </label>
 
-            <input type="radio" id="localeUA" name="dateTimeFormat" value="localeUA">
-            <label for="localeUA">Locale UA</label>
+            <label for="localeUA">
+                <input type="radio" id="localeUA" name="dateTimeFormat" value="localeUA">
+                Locale UA
+            </label>
 
-            <input type="radio" id="custom" name="dateTimeFormat" value="custom">
-            <label for="custom">Custom</label>
-            <input type="text" id="customDTFormat" value="DD.MM.YYYY hh:mm:ss" disabled>
+            <label for="custom">
+                <input type="radio" id="custom" name="dateTimeFormat" value="custom">
+                Custom
+                <input type="text" id="customDTFormat" value="DD.MM.YYYY hh:mm:ss" disabled>
+            </label>
 
-            <input type="radio" id="milliseconds" name="dateTimeFormat" value="milliseconds">
-            <label for="milliseconds">Milliseconds since 1970</label>
+            <label for="milliseconds">
+                <input type="radio" id="milliseconds" name="dateTimeFormat" value="milliseconds">
+                Milliseconds since 1970
+            </label>
         </div>
         <p id="clock" class="clock" style="margin-top: 12px;">00:00:00</p>
         <div style="margin-top: 20px;">

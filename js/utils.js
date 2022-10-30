@@ -880,6 +880,36 @@ function uniqueList() {
     input.value = result;
 }
 
+function sort() {
+    var input = document.getElementById('data');
+    var rows = input.value.split('\n');
+    clearEmptyStrings(rows);
+
+    rows.sort();
+
+    var result = '';
+    for (var r in rows) {
+        result += rows[r] + '\n'
+    }
+
+    input.value = result;
+}
+
+function reverse() {
+    var input = document.getElementById('data');
+    var rows = input.value.split('\n');
+    clearEmptyStrings(rows);
+
+    rows.reverse();
+
+    var result = '';
+    for (var r in rows) {
+        result += rows[r] + '\n'
+    }
+
+    input.value = result;
+}
+
 function searchInParentheses() {
     var input = document.getElementById('textInParenthesesInput').value;
     var prefix = document.getElementById('inParenthesesPrefix').value;

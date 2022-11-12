@@ -248,7 +248,10 @@
         <button onclick="statisticMultipleCategoriesList2()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Grouping values by categories. Split your categories and values using tabulation, and categories by comma. Shows through categories">Multiple categories list 2</button>
         <button onclick="sort()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Sort">Sort</button>
         <button onclick="reverse()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Reverse">Reverse</button>
-
+        <div style="line-height: 4px;">&nbsp;</div>
+        <label> Split / Join <input type="text" id="splitSymbol"> </label>
+        <button onclick="split()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Split">Split</button>
+        <button onclick="join()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Join">Join</button>
         <div style="margin-top: 12px;">
             <input id="help" style="width: 80%" readonly disabled></input>
         </div>
@@ -323,10 +326,24 @@
 
     <div id="tabOther" class="tabcontent">
         <a href="split_by_parenthesis.html">Split by parenthesis</a>
+        <p>Other:</p>
+        <textarea id="dataOther"></textarea>
+        <br>
+        Preprocess:
+        <input id="preprocess" value="Is set in window.onload()."
+            style="width: 70%;">
+            <br>
+        Postprocess:
+        <input id="postprocess" value="Is set in window.onload()."
+            style="width: 70%;">
+        <br>
+        <button onclick="clearInput('dataOther'); document.getElementById('compareRows').innerText='...'" class="clr-btn">Χ Clear</button>
+        <button onclick="compareRows()">Compare rows</button>
+        <div id='compareRows' style="margin-top: 6px;">...</div>
     </div>
 
     <script src="js/tabs.js"></script>
-
+    <script src="js/scripts.js"></script>
     <script src="js/utils.js"></script>
 </body>
 </html>

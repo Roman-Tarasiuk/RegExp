@@ -5,6 +5,9 @@ window.onload = function() {
     colorChange();
     document.getElementById('colorList').value =
         document.getElementById('colorList').value.trim().split(/\n+/gm).reduce((a, c) => a + '\n' + c.trim());
+    
+    document.getElementById('preprocess').value = ".replace(/></g, '> <').replace(/</g, ' &lt;').replace(/>/g, '&gt; ')";
+    document.getElementById('postprocess').value = ".replace(/&amp;/g, '<span>&</span>amp;').replace(/ &lt;/g, '&lt;').replace(/&gt; /g, '&gt;')";
 }
 
 String.prototype.replaceAll = function(search, replacement) {
@@ -908,6 +911,50 @@ function reverse() {
     }
 
     input.value = result;
+}
+
+function split() {
+    var input = document.getElementById('data');
+    var split = document.getElementById('splitSymbol');
+
+    var splitted = input.value.split(split.value); 
+    input.value = splitted.join('\n');
+}
+
+function join() {
+    var input = document.getElementById('data');
+    var split = document.getElementById('splitSymbol');
+
+    var splitted = input.value.split('\n'); 
+    input.value = splitted.join(split.value);
+}
+
+function compareRows() {
+    var input = document.getElementById('dataOther');
+    var inputString = input.value;
+    // var rows = input.value
+    //             //.replace(/></g, '> <')
+    //             .replace(/</g, '&lt;')
+    //             .replace(/>/g, '&gt;')
+    //             .split('\n');
+    var preprocessStr = document.getElementById('preprocess').value;
+    var postprocessStr = document.getElementById('postprocess').value;
+    
+    var rows = preprocessStr == '' ? inputString.split('\n') : eval('inputString' + preprocessStr).split('\n');
+
+    var result = '';
+
+    for (var i = 0; i < (rows.length - 1); i++) {
+        var cmp = compareByWords(rows[i], rows[i + 1]);
+        if (i == 0) {
+            result += '<p>' + cmp.resultStr1 + '</p>\n<br>\n';
+        }
+        result += '<p class="cmp-count">[' + cmp.diffCount + ']</p>' + '<p>' + cmp.resultStr2 + '</p>\n<br>\n';
+    }
+
+    // document.getElementById('compareRows').innerHTML = result;
+    // document.getElementById('compareRows').innerHTML = result.replace(/&amp;/g, '<span>&</span><span>amp;</span>');
+    document.getElementById('compareRows').innerHTML = postprocessStr == '' ? result : eval('result' + postprocessStr);
 }
 
 function searchInParentheses() {

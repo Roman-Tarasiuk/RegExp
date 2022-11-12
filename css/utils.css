@@ -60,3 +60,11 @@ p {
 #colorList {
     width: 800px;
 }
+
+.cmp {
+    background-color: #ffb3b3;
+}
+
+.cmp-count {
+    color: red;
+}

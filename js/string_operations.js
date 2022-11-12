@@ -61,7 +61,7 @@ function compare() {
 
     document.getElementById('result').value = compareResult.compareStr;
     document.getElementById('count').innerHTML =
-        compareResult.placesCount == 0 ? 'Strings are equal.' : 'Differences found: ' + compareResult.placesCount + '.';
+        compareResult.diffCount == 0 ? 'Strings are equal.' : 'Differences found: ' + compareResult.diffCount + '.';
 
     function cmp(str1, str2, ignoreCase) { // str1.length >= str2.length
         if (ignoreCase) {
@@ -69,23 +69,47 @@ function compare() {
             str2 = str2.toUpperCase();
         }
 
+        if (str1 == str2) {
+            return {
+                compareStr: '',
+                diffCount: 0
+            };
+        }
+
         var resultStr = new Array(str1.length).fill(' ');
-        var placesCount = 0;
+        var diffCount = 0;
 
         for (var i = 0; i < str1.length; i++) {
             if (i >= str2.length || str2[i] != str1[i]) {
                 resultStr[i] = 'x';
                 if (i == 0 || resultStr[i - 1] == ' ') {
-                    placesCount++;
+                    diffCount++;
                 }
             }
         }
 
         return {
             compareStr: resultStr.join(''),
-            placesCount: placesCount
+            diffCount: diffCount
         };
     }
+}
+
+function compare2() {
+    var str1 = document.getElementById('str1').value;
+    var str2 = document.getElementById('str2').value;
+
+    var cmp = compareByWords(str1, str2)
+
+    document.getElementById('cmp2_1').innerHTML = cmp.resultStr1;
+    document.getElementById('cmp2_2').innerHTML = cmp.resultStr2;
+    document.getElementById('count2').innerHTML = 'Differences: ' + cmp.diffCount;
+}
+
+function clear2() {
+    document.getElementById('cmp2_1').innerHTML = '...';
+    document.getElementById('cmp2_2').innerHTML = '...';
+    document.getElementById('count2').innerHTML = 'Differences: ...';
 }
 
 function removeLineBreaks() {

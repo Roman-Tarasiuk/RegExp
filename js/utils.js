@@ -1040,12 +1040,12 @@ function searchInParentheses() {
     resultEl.value = result;
 }
 
-function getXMLObject() {
+function getJSONObject() {
     try {
-        var xmlEl = document.getElementById('textXMLText');
-        var predicateEl = document.getElementById('textXMLPredicate');
+        var jsonEl = document.getElementById('textJSONText');
+        var predicateEl = document.getElementById('textJSONPredicate');
 
-        var objVal = JSON.parse(xmlEl.value);
+        var objVal = JSON.parse(jsonEl.value);
 
         function getProperties(f) {
             return f(objVal);
@@ -1062,15 +1062,15 @@ function getXMLObject() {
     }
 }
 
-function getXMLAsObject() {
+function getJSONAsObject() {
     var objEl = document.getElementById('textObj');
-    var obj = getXMLObject();
+    var obj = getJSONObject();
     objEl.value = JSON.stringify(obj);
 }
 
-function getXMLAsString() {
+function getJSONAsString() {
     var objEl = document.getElementById('textObj');
-    var str = getXMLObject();
+    var str = getJSONObject();
     objEl.value = str;
 }
 

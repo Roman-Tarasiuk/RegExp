@@ -1053,7 +1053,16 @@ function getJSONObject() {
 
         var predicateFunction = predicateEl.value;
 
-        var result = getProperties(eval(predicateFunction));
+        var result = null;
+        try {
+            result = getProperties(eval(predicateFunction));
+        }
+        catch (exception) {
+            console.log('Something was wrong while evaluating...');
+            throw 'Something was wrong while evaluating...';
+        }
+
+        console.log('Successfully evaluated.');
 
         return result;
     }
@@ -1103,6 +1112,134 @@ function convertJSONtoXML() {
     });
 
     jsonEl.value = xml;
+}
+
+function compareJSONs() {
+    var  jsonEl1 = document.getElementById('textJSONCmp1');
+    var  jsonEl2 = document.getElementById('textJSONCmp2');
+    var  jsonPredEl1 = document.getElementById('textJSON1Predicate');
+    var  jsonPredEl2 = document.getElementById('textJSON2Predicate');
+    var  jsonCmpEl = document.getElementById('textJSONCmpResult');
+
+    function getObject(f, objVal) {
+        return f(objVal);
+    }
+
+    var o1 = null, o2 = null;
+
+    var predicate1 = jsonPredEl1.value;
+    var predicate2 = jsonPredEl2.value;
+
+    if (predicate1 != '') {
+        o1 = getObject(eval(predicate1), JSON.parse(jsonEl1.value));
+    }
+    else {
+        o1 = JSON.parse(jsonEl1.value);
+    }
+
+    if (predicate2 != '') {
+        o2 = getObject(eval(predicate2), JSON.parse(jsonEl2.value));
+    }
+    else {
+        o2 = JSON.parse(jsonEl2.value);
+    }
+
+    if (o1 == null || o2 == null) {
+        jsonCmpEl.value = 'Cannot compare: empty JSON(s) or wrong predicate(s).'
+        return;
+    }
+
+    var result = compareObjects(o1, o2);
+
+    jsonCmpEl.value = JSON.stringify(result);
+
+    function compareObjects(o1, o2) {
+        // if (o1 == null || o2 == null) {
+        //     console.log('Comparable object is null');
+        //     throw new exception('Comparable object is null');
+        // }
+
+        var result = {
+            json1: null,
+            json2: null,
+            diff: null
+        }
+
+        for (var p in o1) {
+            if (((typeof o1[p] == 'number' || typeof o1[p] == 'string' || typeof o1[p] == 'boolean')
+                    && (o1[p] == o2[p]))
+                || (o1[p] == null && o2[p] == null)) {
+                continue;
+            }
+
+            if (o2[p] == undefined || o2[p] == null) {
+                if (result.json1 == null) {
+                    result.json1 = {};
+                }
+                result.json1[p] = o1[p];
+            }
+            else if (typeof o1[p] != typeof o2[p] || (
+                (typeof o1[p] == 'number' || typeof o1[p] == 'string' || typeof o1[p] == 'boolean') && (o1[p] != o2[p])
+            )) {
+                if (result.diff == null) {
+                    result.diff = {};
+                }
+                
+                // result.diff[p] = [];
+                // result.diff[p].push(o1[p]);
+                // result.diff[p].push(o2[p]);
+                
+                // result.diff[p] = {
+                //     o1: o1[p],
+                //     o2: o2[p]
+                // };
+
+                // result.diff[p] = {};
+                // result.diff[p][">> o1"] = o1[p];
+                // result.diff[p][">> o2"] = o2[p];
+
+                result.diff[p] = {};
+                result.diff[p]["<o1>"] = o1[p];
+                result.diff[p]["<o2>"] = o2[p];
+            }
+            else {
+                var cmp = compareObjects(o1[p], o2[p]);
+                if (cmp.json1 != null || cmp.json2 != null || cmp.diff != null) {
+                    if (result.diff == null) {
+                        result.diff = {};
+                    }
+                    
+                    if (cmp.json1 == null && cmp.json2 == null) {
+                        result.diff[p] = cmp.diff;
+                    }
+                    else {
+                        result.diff[p] = cmp;
+                    }
+                }
+            }
+        }
+
+        for (var p in o2) {
+            if ((o1[p] == undefined || o1[p] == null) && (o2[p] != null)) {
+                if (result.json2 == null) {
+                    result.json2 = {};
+                }
+                result.json2[p] = o2[p];
+            }
+        }
+
+        if (result.json1 == null) {
+            delete result.json1;
+        }
+        if (result.json2 == null) {
+            delete result.json2;
+        }
+        if (result.diff == null) {
+            delete result.diff;
+        }
+
+        return result;
+    }
 }
 
 function obj2array(obj) {
@@ -1221,10 +1358,6 @@ function convertJSONtoTable2() {
     tableEl.value = result;
 }
 
-//
-// The directory in JSON format:
-// { "dir/": {"subdir/": {...}}, files: [...]}
-//
 function getPathsFromJSON() {
     var jsonEl = document.getElementById('textJSON3');
     var resultEl = document.getElementById('textJSONResult3');

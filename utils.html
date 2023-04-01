@@ -26,6 +26,7 @@
       <button class="tablinks" onclick="openTab(this, 'tabJSONObject')">JSON Object Projection</button>
       <button class="tablinks" onclick="openTab(this, 'tabJSONtoTable')">JSON to Table</button>
       <button class="tablinks" onclick="openTab(this, 'tabJSONtoTable2')">JSON to Table 2</button>
+      <button class="tablinks" onclick="openTab(this, 'tabCompareJSONs')">Compare JSONs</button>
       <button class="tablinks" onclick="openTab(this, 'tabJSONPaths')">JSON Paths</button>
       <button class="tablinks" onclick="openTab(this, 'tabCounter')">Counter</button>
       <button class="tablinks" onclick="openTab(this, 'tabNumbers')">Number conversions</button>
@@ -161,16 +162,15 @@
         <textarea id="textJSONText"></textarea>
         <br>
         <p>Predicate:</p>
-        <textarea id="textJSONPredicate">// Setup res = []; and use res.push(); to get result as object (array in this case)
+        <textarea id="textJSONPredicate">// Setup result = []; and use result.push(); to get result as object (array in this case)
 // or describe more sophisticated logic.
 (obj) => {
-    var res = '';
+    var result = '';
     for (var i = 0; i < obj.length; i++) {
-        res += obj[i].learning_element + '\t' + obj[i].definition_element + '\t'
+        result += obj[i].learning_element + '\t' + obj[i].definition_element + '\t'
                     + obj[i].screens["1"].audio.value[0].normal + '\n';
     }
-
-    return res;
+    return result;
 }</textarea>
         <br>
         <button onclick="getJSONAsString()">As String</button>
@@ -215,18 +215,57 @@
 
     <div id="tabJSONtoTable2" class="tabcontent">
         <p>JSON Array:</p>
-        <textarea id="textJSON22"></textarea>
+        <textarea id="textJSON22">For structures like this: [["a","b","c"],["d","e","f"]].
+In small arrays, the first elemen is category and others are values.
+        </textarea>
         <br>
-        <label>Skipped properties:</label>
         <button onclick="convertJSONtoTable2()">Convert</button>
         <br>
         <p>Table:</p>
         <textarea id="textTable2"></textarea>
     </div>
 
+    <div id="tabCompareJSONs" class="tabcontent">
+        <p>JSON1:</p>
+        <textarea id="textJSONCmp1"></textarea>
+        <p>Predicate1:</p>
+        <textarea id="textJSON1Predicate" style="height: 60px;">// Leave empty to use original JSON object.
+(obj) => {
+    var result = null;
+    var list = obj.items.list;
+    for (var i = 0; i < list.length; i++) {
+        if (list[i].uuid == '123-456-7890') {
+            return list[i];
+        }
+    }
+    return result;
+}</textarea>
+        <p>JSON2:</p>
+        <textarea id="textJSONCmp2"></textarea>
+        <p>Predicate2:</p>
+        <textarea id="textJSON2Predicate" style="height: 60px;">// Leave empty to use original JSON object.
+(obj) => {
+    var result = null;
+    var list = obj.items.list;
+    for (var i = 0; i < list.length; i++) {
+        if (list[i].uuid == '123-456-7890') {
+            return list[i];
+        }
+    }
+    return result;
+}</textarea>
+        <br>
+        <button onclick="compareJSONs()">Compare</button>
+        <br>
+        <p>Result:</p>
+        <textarea id="textJSONCmpResult"></textarea>
+    </div>
+
     <div id="tabJSONPaths" class="tabcontent">
         <p>JSON:</p>
-        <textarea id="textJSON3"></textarea>
+        <textarea id="textJSON3">The directory in JSON format:
+{ "dir/": {"subdir/": {...}}, files: [...]}
+        </textarea>
         <br>
         <button onclick="getPathsFromJSON()">Get paths</button>
         <br>

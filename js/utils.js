@@ -1040,22 +1040,12 @@ function searchInParentheses() {
     resultEl.value = result;
 }
 
-function getJSONObject() {
+function getJSONObject(json, predicateFunction) {
     try {
-        var jsonEl = document.getElementById('textJSONText');
-        var predicateEl = document.getElementById('textJSONPredicate');
-
-        var objVal = JSON.parse(jsonEl.value);
-
-        function getProperties(f) {
-            return f(objVal);
-        }
-
-        var predicateFunction = predicateEl.value;
-
         var result = null;
+
         try {
-            result = getProperties(eval(predicateFunction));
+            result = (eval(predicateFunction))(json);
         }
         catch (exception) {
             console.log('Something was wrong while evaluating...');
@@ -1073,13 +1063,21 @@ function getJSONObject() {
 
 function getJSONAsObject() {
     var objEl = document.getElementById('textObj');
-    var obj = getJSONObject();
+    var jsonEl = document.getElementById('textJSONText');
+    var predicateEl = document.getElementById('textJSONPredicate');
+    
+    var obj = getJSONObject(JSON.parse(jsonEl.value), predicateEl.value);
+    
     objEl.value = JSON.stringify(obj);
 }
 
 function getJSONAsString() {
     var objEl = document.getElementById('textObj');
-    var str = getJSONObject();
+    var jsonEl = document.getElementById('textJSONText');
+    var predicateEl = document.getElementById('textJSONPredicate');
+    
+    var str = getJSONObject(JSON.parse(jsonEl.value), predicateEl.value);
+    
     objEl.value = str;
 }
 

@@ -17,6 +17,11 @@
         .ip-calc-btn-hidden {
             visibility: hidden;
         }
+
+        .bit {
+            font-family: monospace;
+            width: 20px;
+        }
     </style>
     
     <script src="ipcalc.js"></script>
@@ -49,7 +54,7 @@
         	var tmp = 0;
         	for (var j = 7; j >= 0; j--) {
         	    var bitEl = document.getElementById('chIP' + i + j);
-                if (bitEl.checked) {
+                if (bitEl.value == '1') {
                 	tmp += Math.pow(2, j);
                 }
         	}
@@ -67,7 +72,7 @@
 
             for (var j = 7; j >=0; j--) {
                 var bitEl = document.getElementById('chIP' + (i + 1) + (7 - j));
-                bitEl.checked = byteStr[j] == '1';
+                bitEl.value = byteStr[j] == '1' ? '1' : '0';
             }
         }
     }
@@ -76,7 +81,7 @@
         for (var i = 1; i <= 4; i++) {
         	for (var j = 7; j >= 0; j--) {
         	    var bitEl = document.getElementById('chIP' + i + j);
-                bitEl.checked = false;
+                bitEl.value = '0';
         	}
         }
         
@@ -111,14 +116,12 @@
         var ipBytes = getUserIP('theIP', 10);
         setBits(ipBytes);
         document.getElementById('theIPHex').value = IPtoHex(ipBytes);
-        // console.log(ipBytes);
     }
 
     function calculateHex() {
         var ipBytes = getUserIP('theIPHex', 16);
         setBits(ipBytes);
         document.getElementById('theIP').value = IPtoDec(ipBytes);
-        // console.log(ipBytes);
     }
     
     window.onload = function() {
@@ -127,9 +130,21 @@
         for (var i = 1; i <= 4; i++) {
         	for (var j = 7; j >= 0; j--) {
         	    var ch = document.createElement('input');
-                ch.setAttribute('type', 'checkbox');
+                ch.setAttribute('type', 'text');
                 ch.setAttribute('id', 'chIP' + i + j);
-                ch.setAttribute('onclick', 'bitSwitch()');
+                ch.setAttribute('readonly', 'readonly');
+                ch.setAttribute('class', 'bit');
+                ch.addEventListener('click', function (e) {
+                    if (this.value == '0') {
+                        this.value = '1';
+                    }
+                    else {
+                        this.value = '0';
+                    }
+
+                    bitSwitch();
+                });
+                ch.value = '0';
                 t.appendChild(ch);
         	}
             if (i != 4) {

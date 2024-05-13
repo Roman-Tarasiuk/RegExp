@@ -24,7 +24,6 @@
         }
     </style>
     
-    <script src="ipcalc.js"></script>
     <script>
     function q() {
         var t = document.getElementById('test');
@@ -66,15 +65,20 @@
     }
 
     function setBits(bytes) {
+        var  byteStr = '';
         for (var i = 0; i < bytes.length; i++) {
-            var byteStr = bytes[i].toString(2);
-            byteStr = '00000000'.substr(0, 8 - byteStr.length) + byteStr;
+            var byteTmp = bytes[i].toString(2);
+            byteTmp = '00000000'.substr(0, 8 - byteTmp.length) + byteTmp;
 
             for (var j = 7; j >=0; j--) {
                 var bitEl = document.getElementById('chIP' + (i + 1) + (7 - j));
-                bitEl.value = byteStr[j] == '1' ? '1' : '0';
+                bitEl.value = byteTmp[j] == '1' ? '1' : '0';
             }
+
+            byteStr += byteTmp + (i < bytes.length - 1 ? '.' : '');
         }
+
+        document.getElementById('bits').innerText = byteStr;
     }
     
     function clearAll() {
@@ -173,6 +177,9 @@
             <div id="theCalc">
             </div>
             <div>
+                <code id="bits">00000000.00000000.00000000.00000000</code>
+            </div>
+            <div>
                 <input type="text" id="theIP" class="ip" value="0.0.0.0"
                     onfocus="focusInput('calcDec')" onblur="blurInput('calcDec')"></input>
                 <button type="button" id="calcDec" class="btn btn-secondary ip-calc-btn-hidden"
@@ -195,11 +202,13 @@
         
         <div>
         	<h3>Links:</h3>
-            <a href="https://en.wikipedia.org/wiki/IP_address">IP address (Wikipedia, en)</a>
+            <a href="https://en.wikipedia.org/wiki/IP_address">IP address (Wikipedia)</a>
             <br>
-            <a href="https://en.wikipedia.org/wiki/Internet_protocol_suite">Internet protocol suite (Wikipedia, en)</a>
+            <a href="https://en.wikipedia.org/wiki/OSI_model">OSI Model (Wikipedia)</a>
             <br>
-            <a href="https://www.imperva.com/learn/application-security/osi-model/">The OSI Model (Imperva)</a>
+            <a href="https://en.wikipedia.org/wiki/Internet_protocol_suite">Internet protocol suite (Wikipedia)</a>
+            <br>
+            <a href="https://www.imperva.com/learn/application-security/osi-model/">OSI Model (Imperva)</a>
             <br>
         </div>
     </div> 

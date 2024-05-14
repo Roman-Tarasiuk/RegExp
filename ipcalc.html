@@ -21,6 +21,10 @@
         .bit {
             font-family: monospace;
             width: 20px;
+            margin-top: 2px;
+        }
+
+        .wrap {
         }
     </style>
     
@@ -46,9 +50,21 @@
 
         return resultStrHex;
     }
+
+    function IPtoStr(bytes) {
+        var result = '';
+        for (var i = 0; i < bytes.length; i++) {
+            var byteTmp = bytes[i].toString(2);
+            byteTmp = '00000000'.substr(0, 8 - byteTmp.length) + byteTmp;
+            result += byteTmp + (i < bytes.length - 1 ? '.' : '');
+        }
+        
+        return result;
+    }
     
     function bitSwitch() {
     	var bytes = [];
+
         for (var i = 1; i <= 4; i++) {
         	var tmp = 0;
         	for (var j = 7; j >= 0; j--) {
@@ -62,10 +78,10 @@
         
         document.getElementById('theIP').value = IPtoDec(bytes);
         document.getElementById('theIPHex').value = IPtoHex(bytes);
+        document.getElementById('bits').innerText = IPtoStr(bytes);
     }
 
     function setBits(bytes) {
-        var  byteStr = '';
         for (var i = 0; i < bytes.length; i++) {
             var byteTmp = bytes[i].toString(2);
             byteTmp = '00000000'.substr(0, 8 - byteTmp.length) + byteTmp;
@@ -74,11 +90,7 @@
                 var bitEl = document.getElementById('chIP' + (i + 1) + (7 - j));
                 bitEl.value = byteTmp[j] == '1' ? '1' : '0';
             }
-
-            byteStr += byteTmp + (i < bytes.length - 1 ? '.' : '');
         }
-
-        document.getElementById('bits').innerText = byteStr;
     }
     
     function clearAll() {
@@ -91,6 +103,8 @@
         
         document.getElementById('theIP').value = '0.0.0.0';
         document.getElementById('theIPHex').value = '00.00.00.00';
+        document.getElementById('bits').innerText
+            = '00000000.00000000.00000000.00000000';
     }
 
     function focusInput(id) {
@@ -120,12 +134,27 @@
         var ipBytes = getUserIP('theIP', 10);
         setBits(ipBytes);
         document.getElementById('theIPHex').value = IPtoHex(ipBytes);
+        document.getElementById('bits').innerText = IPtoStr(ipBytes);
     }
 
     function calculateHex() {
         var ipBytes = getUserIP('theIPHex', 16);
         setBits(ipBytes);
         document.getElementById('theIP').value = IPtoDec(ipBytes);
+        document.getElementById('bits').innerText = IPtoStr(ipBytes);
+    }
+
+    function wrapBytes() {
+        var brs = document.querySelectorAll('.wrap');
+        var wrap = document.getElementById('wrapBytes').checked;
+        for (var i = 0; i < brs.length; i++) {
+            if (!wrap) {
+                brs[i].style.display = 'none';
+            }
+            else {
+                brs[i].style.display = '';
+            }
+        }
     }
     
     window.onload = function() {
@@ -153,6 +182,7 @@
         	}
             if (i != 4) {
             	var br = document.createElement('br');
+                br.setAttribute('class', 'wrap');
                 var dot = document.createElement('span');
                 dot.innerText = ' .';
                 
@@ -160,6 +190,8 @@
                 t.appendChild(br);
         	}
         }
+
+        wrapBytes();
     }
     </script>
 </head>
@@ -176,6 +208,9 @@
         <div>
             <div id="theCalc">
             </div>
+            <label style="margin-top: 5px; margin-bottom: 5px; color: grey;">
+                <input type="checkbox" id="wrapBytes" onchange="wrapBytes()"> Wrap
+            </label>
             <div>
                 <code id="bits">00000000.00000000.00000000.00000000</code>
             </div>

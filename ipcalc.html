@@ -222,6 +222,13 @@
     window.onload = function() {
         ipcalc.initCalc('ip1');
     }
+
+    function changePadding(value) {
+        var ip = document.getElementsByClassName('one-ip');
+        for (var i = 0; i < ip.length; i++) {
+            ip[i].style.paddingRight = value + 'px';
+        }
+    }
     </script>
 </head>
 
@@ -260,17 +267,21 @@
                 <button onclick="ipcalc.clearAll('ip1')">Clear</button>
             </div>
         </div>
-        
-        <label style="margin-top: 5px; margin-bottom: 5px; color: grey;">
-            <input type="checkbox" id="wrapBytes" onchange="ipcalc.wrapBytes()"> Wrap
-        </label>
-        
+
         <br>
         
         <button onclick="ipcalc.addIP()">+</button>
 
         <br>
 
+        <label style="margin-top: 5px; margin-bottom: 5px; color: grey;">
+            <input type="checkbox" id="wrapBytes" onchange="ipcalc.wrapBytes()"> Wrap
+        </label>
+        <span>Padding right:</span>
+        <input type="number" value="4" onchange="changePadding(this.value)" style="width: 40px;"></input>
+        
+        <br>
+        
         <h3>Notes</h3>
         <textarea style="width: 100%; white-space: nowrap; overflow: auto; resize: both;" rows="4"></textarea>
         

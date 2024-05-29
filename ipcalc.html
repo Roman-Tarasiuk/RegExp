@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
 
     <style>
-        .ip {
+        .ip-input {
             font-family: monospace;
             width: 156px;
         }
@@ -26,6 +26,12 @@
 
         .wrap {
         }
+
+        .one-ip {
+            border: 1px solid #ccc;
+            padding: 4px;
+            margin-top: 2px;
+        }
     </style>
     
     <script>
@@ -36,6 +42,8 @@
     }
 
     ipcalc = {
+        ipCounter: 1,
+
         IPtoDec: function(bytes) {
             return bytes.join('.');
         },
@@ -63,13 +71,13 @@
             return result;
         },
         
-        bitSwitch: function() {
+        bitSwitch: function(id) {
             var bytes = [];
 
             for (var i = 1; i <= 4; i++) {
                 var tmp = 0;
                 for (var j = 7; j >= 0; j--) {
-                    var bitEl = document.getElementById('chIP' + i + j);
+                    var bitEl = document.getElementById(id + 'chIP' + i + j);
                     if (bitEl.value == '1') {
                         tmp += Math.pow(2, j);
                     }
@@ -77,24 +85,24 @@
                 bytes.push(tmp);
             }
             
-            document.getElementById('theIP').value = this.IPtoDec(bytes);
-            document.getElementById('theIPHex').value = this.IPtoHex(bytes);
-            document.getElementById('bits').innerText = this.IPtoStr(bytes);
+            document.getElementById(id + 'theIPDec').value = this.IPtoDec(bytes);
+            document.getElementById(id + 'theIPHex').value = this.IPtoHex(bytes);
+            document.getElementById(id + 'theIPBits').innerText = this.IPtoStr(bytes);
         },
 
-        setBits: function(bytes) {
+        setBits: function(id, bytes) {
             for (var i = 0; i < bytes.length; i++) {
                 var byteTmp = bytes[i].toString(2);
                 byteTmp = '00000000'.substr(0, 8 - byteTmp.length) + byteTmp;
 
                 for (var j = 7; j >=0; j--) {
-                    var bitEl = document.getElementById('chIP' + (i + 1) + (7 - j));
+                    var bitEl = document.getElementById(id + 'chIP' + (i + 1) + (7 - j));
                     bitEl.value = byteTmp[j] == '1' ? '1' : '0';
                 }
             }
         },
         
-        clearAll: function() {
+        clearAll: function(id) {
             for (var i = 1; i <= 4; i++) {
                 for (var j = 7; j >= 0; j--) {
                     var bitEl = document.getElementById('chIP' + i + j);
@@ -102,9 +110,9 @@
                 }
             }
             
-            document.getElementById('theIP').value = '0.0.0.0';
-            document.getElementById('theIPHex').value = '00.00.00.00';
-            document.getElementById('bits').innerText
+            document.getElementById(id + 'theIPDec').value = '0.0.0.0';
+            document.getElementById(id + 'theIPHex').value = '00.00.00.00';
+            document.getElementById(id + 'theIPBits').innerText
                 = '00000000.00000000.00000000.00000000';
         },
 
@@ -131,18 +139,18 @@
             return ipBytes;
         },
 
-        calculateDec: function() {
-            var ipBytes = this.getUserIP('theIP', 10);
-            this.setBits(ipBytes);
-            document.getElementById('theIPHex').value = this.IPtoHex(ipBytes);
-            document.getElementById('bits').innerText = this.IPtoStr(ipBytes);
+        calculateDec: function(id) {
+            var ipBytes = this.getUserIP(id + 'theIPDec', 10);
+            this.setBits(id, ipBytes);
+            document.getElementById(id + 'theIPHex').value = this.IPtoHex(ipBytes);
+            document.getElementById(id + 'theIPBits').innerText = this.IPtoStr(ipBytes);
         },
 
-        calculateHex: function() {
-            var ipBytes = this.getUserIP('theIPHex', 16);
-            this.setBits(ipBytes);
-            document.getElementById('theIP').value = this.IPtoDec(ipBytes);
-            document.getElementById('bits').innerText = this.IPtoStr(ipBytes);
+        calculateHex: function(id) {
+            var ipBytes = this.getUserIP(id + 'theIPHex', 16);
+            this.setBits(id, ipBytes);
+            document.getElementById(id + 'theIPDec').value = this.IPtoDec(ipBytes);
+            document.getElementById(id + 'theIPBits').innerText = this.IPtoStr(ipBytes);
         },
 
         wrapBytes: function() {
@@ -156,44 +164,63 @@
                     brs[i].style.display = '';
                 }
             }
+        },
+
+        initCalc: function(id) {
+            var t = document.getElementById(id);
+        
+            for (var i = 1; i <= 4; i++) {
+                for (var j = 7; j >= 0; j--) {
+                    var ch = document.createElement('input');
+                    ch.setAttribute('type', 'text');
+                    ch.setAttribute('id', id + 'chIP' + i + j);
+                    ch.setAttribute('readonly', 'readonly');
+                    ch.setAttribute('class', 'bit');
+                    ch.addEventListener('click', function (e) {
+                        if (this.value == '0') {
+                            this.value = '1';
+                        }
+                        else {
+                            this.value = '0';
+                        }
+
+                        ipcalc.bitSwitch(id);
+                    });
+                    ch.value = '0';
+                    t.appendChild(ch);
+                }
+                if (i != 4) {
+                    var br = document.createElement('br');
+                    br.setAttribute('class', 'wrap');
+                    var dot = document.createElement('span');
+                    dot.innerText = ' .';
+                    
+                    t.appendChild(dot);
+                    t.appendChild(br);
+                }
+            }
+
+            ipcalc.wrapBytes();
+        },
+
+        addIP: function() {
+            var container = document.getElementById('ipContainer');
+            var first = container.children[0];
+            var newId = 'ip' + ++this.ipCounter;
+            
+            var newIPEl = document.createElement('div');
+            newIPEl.setAttribute('class', 'one-ip');
+            newIPEl.innerHTML = first.innerHTML.replace(/ip1/g, newId);
+            // Remove bit inputs from the copy.
+            newIPEl.children[0].innerHTML = '';
+            
+            container.appendChild(newIPEl);
+            this.initCalc(newId);
         }
     }
     
     window.onload = function() {
-        var t = document.getElementById('theCalc');
-        
-        for (var i = 1; i <= 4; i++) {
-        	for (var j = 7; j >= 0; j--) {
-        	    var ch = document.createElement('input');
-                ch.setAttribute('type', 'text');
-                ch.setAttribute('id', 'chIP' + i + j);
-                ch.setAttribute('readonly', 'readonly');
-                ch.setAttribute('class', 'bit');
-                ch.addEventListener('click', function (e) {
-                    if (this.value == '0') {
-                        this.value = '1';
-                    }
-                    else {
-                        this.value = '0';
-                    }
-
-                    ipcalc.bitSwitch();
-                });
-                ch.value = '0';
-                t.appendChild(ch);
-        	}
-            if (i != 4) {
-            	var br = document.createElement('br');
-                br.setAttribute('class', 'wrap');
-                var dot = document.createElement('span');
-                dot.innerText = ' .';
-                
-                t.appendChild(dot);
-                t.appendChild(br);
-        	}
-        }
-
-        ipcalc.wrapBytes();
+        ipcalc.initCalc('ip1');
     }
     </script>
 </head>
@@ -207,34 +234,41 @@
         <br>
         <button onclick="q()">Q</button-->
         
-        <div>
-            <div id="theCalc">
+        <div id="ipContainer">
+            <div class="one-ip">
+                <div id="ip1">
+                </div>
+                <div>
+                    <code id="ip1theIPBits">00000000.00000000.00000000.00000000</code>
+                </div>
+                <div>
+                    <input type="text" id="ip1theIPDec" class="ip-input" value="0.0.0.0"
+                        onfocus="ipcalc.focusInput('ip1calcDec')" onblur="ipcalc.blurInput('ip1calcDec')"></input>
+                    <button type="button" id="ip1calcDec" class="btn btn-secondary ip-calc-btn-hidden"
+                        onclick="ipcalc.calculateDec('ip1')">
+                        <i class="bi bi-calculator"></i>
+                    </button>
+                </div>
+                <div>
+                    <input type="text" id="ip1theIPHex" class="ip-input" value="00.00.00.00"
+                        onfocus="ipcalc.focusInput('ip1calcHex')" onblur="ipcalc.blurInput('ip1calcHex')"></input>
+                        <button type="button" id="ip1calcHex" class="btn btn-secondary ip-calc-btn-hidden"
+                        onclick="ipcalc.calculateHex('ip1')">
+                        <i class="bi bi-calculator"></i>
+                    </button>
+                </div>
+                <button onclick="ipcalc.clearAll('ip1')">Clear</button>
             </div>
-            <label style="margin-top: 5px; margin-bottom: 5px; color: grey;">
-                <input type="checkbox" id="wrapBytes" onchange="ipcalc.wrapBytes()"> Wrap
-            </label>
-            <div>
-                <code id="bits">00000000.00000000.00000000.00000000</code>
-            </div>
-            <div>
-                <input type="text" id="theIP" class="ip" value="0.0.0.0"
-                    onfocus="ipcalc.focusInput('calcDec')" onblur="ipcalc.blurInput('calcDec')"></input>
-                <button type="button" id="calcDec" class="btn btn-secondary ip-calc-btn-hidden"
-                    onclick="ipcalc.calculateDec()">
-                    <i class="bi bi-calculator"></i>
-                </button>
-            </div>
-            <div>
-                <input type="text" id="theIPHex" class="ip" value="00.00.00.00"
-                    onfocus="ipcalc.focusInput('calcHex')" onblur="ipcalc.blurInput('calcHex')"></input>
-                    <button type="button" id="calcHex" class="btn btn-secondary ip-calc-btn-hidden"
-                    onclick="ipcalc.calculateHex()">
-                    <i class="bi bi-calculator"></i>
-                </button>
-            </div>
-            <button onclick="ipcalc.clearAll()">Clear</button>
         </div>
         
+        <label style="margin-top: 5px; margin-bottom: 5px; color: grey;">
+            <input type="checkbox" id="wrapBytes" onchange="ipcalc.wrapBytes()"> Wrap
+        </label>
+        
+        <br>
+        
+        <button onclick="ipcalc.addIP()">+</button>
+
         <br>
 
         <h3>Notes</h3>

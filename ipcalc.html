@@ -29,7 +29,7 @@
 
         .one-ip {
             border: 1px solid #ccc;
-            padding: 4px;
+            padding: 4px 8px 4px 4px;
             margin-top: 2px;
         }
     </style>
@@ -105,7 +105,7 @@
         clearAll: function(id) {
             for (var i = 1; i <= 4; i++) {
                 for (var j = 7; j >= 0; j--) {
-                    var bitEl = document.getElementById('chIP' + i + j);
+                    var bitEl = document.getElementById(id + 'chIP' + i + j);
                     bitEl.value = '0';
                 }
             }
@@ -216,6 +216,7 @@
             
             container.appendChild(newIPEl);
             this.initCalc(newId);
+            this.clearAll(newId);
         }
     }
     
@@ -277,8 +278,8 @@
         <label style="margin-top: 5px; margin-bottom: 5px; color: grey;">
             <input type="checkbox" id="wrapBytes" onchange="ipcalc.wrapBytes()"> Wrap
         </label>
-        <span>Padding right:</span>
-        <input type="number" value="4" onchange="changePadding(this.value)" style="width: 40px;"></input>
+        <span style="margin-left: 12px; color: grey;">Padding right:</span>
+        <input type="number" value="8" onchange="changePadding(this.value)" style="width: 40px; color: grey;"></input>
         
         <br>
         

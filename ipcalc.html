@@ -14,7 +14,7 @@
             width: 156px;
         }
 
-        .ip-calc-btn-hidden {
+        .hidden {
             visibility: hidden;
         }
 
@@ -31,6 +31,11 @@
             border: 1px solid #ccc;
             padding: 4px 8px 4px 4px;
             margin-top: 2px;
+        }
+
+        .qq {
+            position: relative;
+            float: right;
         }
     </style>
     
@@ -118,13 +123,13 @@
 
         focusInput: function(id) {
             setTimeout(() => {
-                document.getElementById(id).classList.remove('ip-calc-btn-hidden');
+                document.getElementById(id).classList.remove('hidden');
             }, 200);
         },
 
         blurInput: function(id) {
             setTimeout(() => {
-                document.getElementById(id).classList.add('ip-calc-btn-hidden');
+                document.getElementById(id).classList.add('hidden');
             }, 200);
         },
 
@@ -206,11 +211,12 @@
         addIP: function() {
             var container = document.getElementById('ipContainer');
             var first = container.children[0];
+            var firstId = first.children[0].id;
             var newId = 'ip' + ++this.ipCounter;
             
             var newIPEl = document.createElement('div');
             newIPEl.setAttribute('class', 'one-ip');
-            newIPEl.innerHTML = first.innerHTML.replace(/ip1/g, newId);
+            newIPEl.innerHTML = first.innerHTML.replace(new RegExp(firstId, 'g'), newId);
             // Remove bit inputs from the copy.
             newIPEl.children[0].innerHTML = '';
             
@@ -229,6 +235,12 @@
         for (var i = 0; i < ip.length; i++) {
             ip[i].style.paddingRight = value + 'px';
         }
+    }
+
+    function removeCalc(el) {
+        var container = document.getElementById('ipContainer');
+        var div = el.parentNode;
+        container.removeChild(div);
     }
     </script>
 </head>
@@ -252,7 +264,7 @@
                 <div>
                     <input type="text" id="ip1theIPDec" class="ip-input" value="0.0.0.0"
                         onfocus="ipcalc.focusInput('ip1calcDec')" onblur="ipcalc.blurInput('ip1calcDec')"></input>
-                    <button type="button" id="ip1calcDec" class="btn btn-secondary ip-calc-btn-hidden"
+                    <button type="button" id="ip1calcDec" class="btn btn-secondary hidden"
                         onclick="ipcalc.calculateDec('ip1')">
                         <i class="bi bi-calculator"></i>
                     </button>
@@ -260,12 +272,13 @@
                 <div>
                     <input type="text" id="ip1theIPHex" class="ip-input" value="00.00.00.00"
                         onfocus="ipcalc.focusInput('ip1calcHex')" onblur="ipcalc.blurInput('ip1calcHex')"></input>
-                        <button type="button" id="ip1calcHex" class="btn btn-secondary ip-calc-btn-hidden"
+                        <button type="button" id="ip1calcHex" class="btn btn-secondary hidden"
                         onclick="ipcalc.calculateHex('ip1')">
                         <i class="bi bi-calculator"></i>
                     </button>
                 </div>
                 <button onclick="ipcalc.clearAll('ip1')">Clear</button>
+                <button onclick="removeCalc(this)" class="qq">×</button>
             </div>
         </div>
 

@@ -38,6 +38,25 @@
             position: relative;
             float: right;
         }
+
+        th, td {
+            border: 1px solid grey;
+            text-align: right;
+        }
+
+        code {
+            font-size: 1.2em;
+        }
+
+        .hex {
+            color: #aaaaaa;
+            font-family: monospace;
+            font-weight: normal;
+        }
+
+        .settings {
+            display: none;
+        }
     </style>
     
     <script>
@@ -224,6 +243,43 @@
             container.appendChild(newIPEl);
             this.initCalc(newId);
             this.clearAll(newId);
+        },
+
+        bitMaskTableInnerHTML: function() {
+            var tableEl = document.getElementById('bitMaskTable');
+            if (tableEl.innerHTML == '') {
+                var header =
+                    `<tr style="position: sticky; top: 0; background-color: #ffffff; box-shadow: 0 0 1px 0 #000000;">
+                        <th> Mask ˃ <br> Octet ˅ </th>
+                        <th><code>10000000</code> <br> <span class="hex">128 - 0x80</span></th>
+                        <th><code>11000000</code> <br> <span class="hex">192 - 0xc0</span></th>
+                        <th><code>11100000</code> <br> <span class="hex">224 - 0xe0</span></th>
+                        <th><code>11110000</code> <br> <span class="hex">240 - 0xf0</span></th>
+                        <th><code>11111000</code> <br> <span class="hex">248 - 0xf8</span></th>
+                        <th><code>11111100</code> <br> <span class="hex">252 - 0xfc</span></th>
+                        <th><code>11111110</code> <br> <span class="hex">254 - 0xfe</span></th>
+                        <th><code>11111111</code> <br> <span class="hex">255 - 0xff</span></th>
+                    </tr>`;
+                
+                var masks = [128, 192, 224, 240, 248, 252, 254, 255];
+ 
+                var rows = '';
+                var row = '';
+                
+                for (var i = 0; i <= 255; i++) {
+                    row = '<tr>';
+                    row += '<td><strong><code>' + i + '</code></strong></td>';
+                    for (var j = 0; j < masks.length; j++) {
+                        var tmp = i & masks[j];
+                        row += '<td>' + tmp + (j < masks.length - 1 ? '-' + (tmp + (masks[j]^255)) : '') + '</td>';
+                    }
+                    rows += row + '</tr>\n';
+                }
+
+                tableEl.innerHTML = header + rows;
+            }
+
+            document.getElementById('bitMask').classList.toggle('settings');
         }
     }
     
@@ -283,20 +339,8 @@
             </div>
         </div>
 
-        <br>
-        
-        <button onclick="ipcalc.addIP()">+</button>
+        <button style="margin-top: 12px;" onclick="ipcalc.addIP()">+</button>
 
-        <br>
-
-        <label style="margin-top: 5px; margin-bottom: 5px; color: grey;">
-            <input type="checkbox" id="wrapBytes" onchange="ipcalc.wrapBytes()"> Wrap
-        </label>
-        <span style="margin-left: 12px; color: grey;">Padding right:</span>
-        <input type="number" value="8" onchange="changePadding(this.value)" style="width: 40px; color: grey;"></input>
-        
-        <br>
-        
         <h3>Notes</h3>
         <textarea style="width: 100%; white-space: nowrap; overflow: auto; resize: both;" rows="4"></textarea>
         
@@ -310,6 +354,28 @@
             <br>
             <a href="https://www.imperva.com/learn/application-security/osi-model/">OSI Model (Imperva)</a>
             <br>
+        </div>
+        
+        <br>
+
+        <div>
+            <button style="margin-bottom: 2px;"
+                onclick="ipcalc.bitMaskTableInnerHTML()">Bit masks</button>
+            <div id="bitMask" class="settings">
+                <table id="bitMaskTable" style="border: 1px solid grey;"></table>
+            </div>
+        </div>
+
+        <div>
+            <button style="margin-top: 2px;"
+                onclick="document.getElementById('settings').classList.toggle('settings')">⚙</button>
+            <div id="settings" class="settings">
+                <label style="margin-top: 5px; margin-bottom: 5px; color: grey;">
+                    <input type="checkbox" id="wrapBytes" onchange="ipcalc.wrapBytes()"> Wrap
+                </label>
+                <span style="margin-left: 12px; color: grey;">Padding right:</span>
+                <input type="number" value="8" onchange="changePadding(this.value)" style="width: 40px; color: grey;"></input>        
+            </div>
         </div>
     </div> 
 </body>

@@ -6,6 +6,7 @@
 
     <script src="js/jquery.min.js"></script>
     <script src="js/moment.js"></script>
+    <script src="js/jquery.csv.js"></script>
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/xml-js/dist/xml-js.min.js"></script>
     <script src="scripts.library.js"></script>
@@ -22,8 +23,8 @@
       <button class="tablinks" onclick="openTab(this, 'tabAddresses')" id="item1">Encode/Decode</button>
       <button class="tablinks" onclick="openTab(this, 'tabStatistics')">Statistics</button>
       <button class="tablinks" onclick="openTab(this, 'tabTime')">Time</button>
+      <button class="tablinks" onclick="openTab(this, 'tabTextProcessor')">Text processor</button>
       <button class="tablinks" onclick="openTab(this, 'tabXMLtoJSON')">XML to JSON</button>
-      <button class="tablinks" onclick="openTab(this, 'tabJSONObject')">JSON Object Projection</button>
       <button class="tablinks" onclick="openTab(this, 'tabJSONtoTable')">JSON to Table</button>
       <button class="tablinks" onclick="openTab(this, 'tabJSONtoTable2')">JSON to Table 2</button>
       <button class="tablinks" onclick="openTab(this, 'tabCompareJSONs')">Compare JSONs</button>
@@ -157,14 +158,14 @@
         <textarea id="textInParenthesesResults"></textarea>
     </div>
 
-    <div id="tabJSONObject" class="tabcontent">
-        <p>JSON:</p>
-        <textarea id="textJSONText"></textarea>
+    <div id="tabTextProcessor" class="tabcontent">
+        <p>Text:</p>
+        <textarea id="textText"></textarea>
         <br>
         <p>Predicate:</p>
-        <textarea id="textJSONPredicate">// Setup result = []; and use result.push(); to get result as object (array in this case),
-// or describe other result type and logic for your needs.
-(obj) => {
+        <textarea id="textPredicate">// Any custom text manipulations.
+(input) => {
+    var obj = JSON.parse(input);
     var result = '';
     for (var i = 0; i < obj.length; i++) {
         result += obj[i].learning_element + '\t' + obj[i].definition_element + '\t'
@@ -173,11 +174,10 @@
     return result;
 }</textarea>
         <br>
-        <button onclick="getJSONAsString()">As String</button>
-        <button onclick="getJSONAsObject()">As Object</button>
+        <button onclick="processText()">Process</button>
         <br>
         <p>Result:</p>
-        <textarea id="textObj"></textarea>
+        <textarea id="textResult"></textarea>
     </div>
 
     <div id="tabXMLtoJSON" class="tabcontent">
@@ -283,10 +283,10 @@ In small arrays, the first elemen is category and others are values.
         <button onclick="uniqueList()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Selects all unique records">Unique list</button>
         <button onclick="statistic()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Each row's occurrence number">Statistic</button>
         <button onclick="statisticCumulative()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Row X/Y">Cumulative</button>
-        <button onclick="statisticCategoryCount()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Split your categories and values using tabulation">Categories counts</button>
+        <button onclick="statisticCategoryCount()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Split your categories and values using tabulation in format: subject \t category">Categories counts</button>
         <button onclick="statisticCategoriesList()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Grouping values by categories. Split your categories and values using tabulation">Categories list</button>
-        <button onclick="statisticMultipleCategoriesList()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Grouping values by categories. Split your categories and values using tabulation, and categories by comma">Multiple categories list</button>
-        <button onclick="statisticMultipleCategoriesList2()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Grouping values by categories. Split your categories and values using tabulation, and categories by comma. Shows through categories">Multiple categories list 2</button>
+        <button onclick="statisticMultipleCategoriesList()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Grouping values by categories. Split your categories and values using tabulation, and categories by comma in format: subject \t category">Multiple categories list</button>
+        <button onclick="statisticMultipleCategoriesList2()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Grouping values by categories. Split your categories and values using tabulation, and categories by comma format: subject \t categories. Shows through categories">Multiple categories list 2</button>
         <button onclick="sort()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Sort">Sort</button>
         <button onclick="reverse()" onmouseover="showHelp(this)" onmouseleave="hideHelp()" data-title="Reverse">Reverse</button>
         <div style="line-height: 4px;">&nbsp;</div>
@@ -380,7 +380,11 @@ In small arrays, the first elemen is category and others are values.
         <br>
         <button onclick="clearInput('dataOther'); document.getElementById('compareRows').innerText='...'" class="clr-btn">Χ Clear</button>
         <button onclick="compareRows()">Compare rows</button>
+        <button onclick="bytesToASCII()">Bytes to ASCII</button>
+        <button onclick="base64Decode()">Decode Base64</button>
+        <button onclick="csvToArray()">CSV to Array</button>
         <div id='compareRows' style="margin-top: 6px;">...</div>
+        <textarea id="outputOther"></textarea>
     </div>
 
     <script src="js/tabs.js"></script>

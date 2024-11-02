@@ -957,6 +957,42 @@ function compareRows() {
     document.getElementById('compareRows').innerHTML = postprocessStr == '' ? result : eval('result' + postprocessStr);
 }
 
+function bytesToASCII()
+{
+    const hexToDecimal = hex => parseInt(hex, 16);
+
+    var inputStr = document.getElementById('dataOther').value;
+    var inputStrings = inputStr.split('\n');;
+    var resultStr = '';
+    for (var i = 0; i < inputStrings.length; i++) {
+        for (var j = 0; j < inputStrings[i].length; j += 2)
+        {
+            resultStr += String.fromCharCode(hexToDecimal(inputStrings[i].substr(j, 2)));
+        }
+        resultStr += '\n';
+    }
+    document.getElementById('outputOther').value = resultStr;
+}
+
+function base64Decode()
+{
+    var inputStr = document.getElementById('dataOther').value;
+    var inputStrings = inputStr.split('\n');
+    var resultStr = '';
+    for (var i = 0; i < inputStrings.length; i++) {
+        resultStr += atob(inputStrings[i]) + '\n';
+    }
+    document.getElementById('outputOther').value = resultStr;
+}
+
+function csvToArray() {
+    var inputStr = document.getElementById('dataOther').value;
+
+    var resultStr = $.csv.toObjects(inputStr);
+
+    document.getElementById('outputOther').value = JSON.stringify(resultStr);
+}
+
 function searchInParentheses() {
     var input = document.getElementById('textInParenthesesInput').value;
     var prefix = document.getElementById('inParenthesesPrefix').value;
@@ -1038,47 +1074,6 @@ function searchInParentheses() {
     } while (true);
 
     resultEl.value = result;
-}
-
-function getJSONObject(json, predicateFunction) {
-    try {
-        var result = null;
-
-        try {
-            result = (eval(predicateFunction))(json);
-        }
-        catch (exception) {
-            console.log('Something was wrong while evaluating...');
-            throw 'Something was wrong while evaluating...';
-        }
-
-        console.log('Successfully evaluated.');
-
-        return result;
-    }
-    catch (exception) {
-        return exception;
-    }
-}
-
-function getJSONAsObject() {
-    var objEl = document.getElementById('textObj');
-    var jsonEl = document.getElementById('textJSONText');
-    var predicateEl = document.getElementById('textJSONPredicate');
-    
-    var obj = getJSONObject(JSON.parse(jsonEl.value), predicateEl.value);
-    
-    objEl.value = JSON.stringify(obj);
-}
-
-function getJSONAsString() {
-    var objEl = document.getElementById('textObj');
-    var jsonEl = document.getElementById('textJSONText');
-    var predicateEl = document.getElementById('textJSONPredicate');
-    
-    var str = getJSONObject(JSON.parse(jsonEl.value), predicateEl.value);
-    
-    objEl.value = str;
 }
 
 function convertXMLtoJSON() {
@@ -1550,4 +1545,17 @@ function colorChange() {
     var sampleEl = document.getElementById('sample');
     sampleEl.style.color = rgb(r, g, b);
     document.getElementById('colValue').innerHTML = rgb(r, g, b) + ' ' + rgbHex(r, g, b);
+}
+
+function processText() {
+    var inputEl = document.getElementById('textText');
+    var predicateEl = document.getElementById('textPredicate');
+    var resultEl = document.getElementById('textResult');
+
+    function getObject(f, objVal) {
+        return f(objVal);
+    }
+
+    var tmp = getObject(eval(predicateEl.value), inputEl.value);
+    resultEl.value = tmp;
 }

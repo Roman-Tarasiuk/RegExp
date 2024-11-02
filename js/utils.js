@@ -1548,14 +1548,14 @@ function colorChange() {
 }
 
 function processText() {
-    var inputEl = document.getElementById('textText');
-    var predicateEl = document.getElementById('textPredicate');
+    var input = document.getElementById('textText').value;
+    var predicate = document.getElementById('textPredicate').value;
     var resultEl = document.getElementById('textResult');
 
     function getObject(f, objVal) {
         return f(objVal);
     }
 
-    var tmp = getObject(eval(predicateEl.value), inputEl.value);
-    resultEl.value = tmp;
+    var result = getObject(eval(predicate), input);
+    resultEl.value = result;
 }

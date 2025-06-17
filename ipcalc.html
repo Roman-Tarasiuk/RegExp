@@ -251,6 +251,7 @@
                 var header =
                     `<tr style="position: sticky; top: 0; background-color: #ffffff; box-shadow: 0 0 1px 0 #000000;">
                         <th> Mask ˃ <br> Octet ˅ </th>
+                        <th><code>00000000</code> <br> <span class="hex">0 - 0x00</span></th>
                         <th><code>10000000</code> <br> <span class="hex">128 - 0x80</span></th>
                         <th><code>11000000</code> <br> <span class="hex">192 - 0xc0</span></th>
                         <th><code>11100000</code> <br> <span class="hex">224 - 0xe0</span></th>
@@ -261,7 +262,7 @@
                         <th><code>11111111</code> <br> <span class="hex">255 - 0xff</span></th>
                     </tr>`;
                 
-                var masks = [128, 192, 224, 240, 248, 252, 254, 255];
+                var masks = [0, 128, 192, 224, 240, 248, 252, 254, 255];
  
                 var rows = '';
                 var row = '';

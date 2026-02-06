@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .custom-file-upload {
+            border: 1px solid #ccc;
+            display: inline-block;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Life</h2>
+
+    <canvas id="myCanvas" width="400" height="400"
+        style="border:1px solid black;" >
+      Sorry, your browser does not support canvas.
+    </canvas>
+    <br>
+
+    <button onclick="nextGeneration()">Next Generation</button>
+    <br>
+    <br>
+
+    <button onclick="toggleSettings()">⚙</button>
+
+    <div id="settings" class="hidden" style="margin-top: 5px;">
+        <label for="fileInput" class="custom-file-upload">
+            Load
+        </label>
+        <input id="fileInput" type="file" />
+
+        <button class="custom-file-upload" onclick="saveToFile()">Save</button>
+        
+        <br>
+        <br>
+        <label>Widht:</label>
+        <input id="fieldWidth" type="text" style="width: 40px">
+        <label>Height:</label>
+        <input id="fieldHeight" type="text" style="width: 40px">
+    </div>
+
+    <br>
+    <span id="coordinates"></span>
+
+<script>
+    const cellWidth = 10;
+
+    const game = {
+
+        field: null,
+
+        init: function(width, height) {
+            console.log('Initializing game...');
+
+            this.field = new Array(height);
+            for (var i = 0; i < height; i++) {
+                this.field[i] = new Array(width).fill(0);
+            }
+
+            console.log('OK.');
+        },
+
+        setup: function(...lifeCells) {
+        //              [x1, y1], [x2, y2], [x3, y3] ...
+            console.log('Setting up...');
+
+            if (this.field == null) {
+                throw new Error('\'field\' not initialized. Use the init() function before setup.');
+            }
+
+            for (var i = 0; i < this.field.length; i++) {
+                for (var j = 0; j < this.field[i].length; j++) {
+                    this.field[i][j] = 0;
+                }
+            }
+
+            for (const cell of lifeCells) {
+                const x = cell[0];
+                const y = cell[1];
+                if (x < 0 || y < 0 || y >= this.field.length || x >= this.field[y].length) {
+                    throw new Error('Argument exception. Cannot setup the field['
+                                    + this.field[0].length + ',' + this.field.length + '] with the ['
+                                    + x + ',' + y + '] cell.');
+                }
+                this.field[y][x] = 1;
+            }
+
+            console.log('OK.');
+        },
+
+        nextGeneration: function() {
+            var width = this.field[0].length;
+            var height = this.field.length;
+            var tmp = new Array(height);
+            for (var i = 0; i < height; i++) {
+                tmp[i] = new Array(width).fill(0);
+            }
+
+            for (var i = 0; i < height; i++) {
+                for (var j = 0; j < width; j++) {
+                    var neighbourCount = 0;
+                    if (i > 0) {
+                        neighbourCount += this.field[i - 1][j];
+                        if (j > 0) {
+                            neighbourCount += this.field[i - 1][j - 1];
+                        }
+                        if (j < width - 1) {
+                            neighbourCount += this.field[i - 1][j + 1];
+                        }
+                    }
+                    if (i < height - 1) {
+                        neighbourCount += this.field[i + 1][j];
+                        if (j > 0) {
+                            neighbourCount += this.field[i + 1][j - 1];
+                        }
+                        if (j < width - 1) {
+                            neighbourCount += this.field[i + 1][j + 1];
+                        }
+                    }
+                    if (j > 0) {
+                        neighbourCount += this.field[i][j - 1];
+                    }
+                    if (j < width - 1) {
+                        neighbourCount += this.field[i][j + 1];
+                    }
+
+                    //
+
+                    if (neighbourCount == 2) {
+                        tmp[i][j] = this.field[i][j];
+                    }
+                    else if (neighbourCount == 3) {
+                        tmp[i][j] = 1;
+                    }
+                }
+            }
+
+            for (var i = 0; i < height; i++) {
+                for (var j = 0; j < width; j++) {
+                    this.field[i][j] = tmp[i][j];
+                }
+            }
+        }
+
+    }; // game
+
+    const canvas = document.getElementById("myCanvas");
+
+    canvas.addEventListener('click', function(event) {
+        const x = event.offsetX;
+        const y = event.offsetY;
+        // console.log(`Clicked at X: ${x}, Y: ${y}`);
+
+        var gameX = Math.floor(x / cellWidth);
+        var gameY = Math.floor(y / cellWidth);
+
+        // console.log(`Field X: ${gameX}, Y: ${gameY}`);
+        document.getElementById('coordinates').innerText = `${gameX}, ${gameY}`;
+
+        if (game.field[gameY][gameX] == 0) {
+            game.field[gameY][gameX] = 1;
+        }
+        else {
+            game.field[gameY][gameX] = 0;
+        }
+
+        drawGame(game, cellWidth, canvas);
+    });
+
+    function drawGame(game, cellWidth, canvas) {
+        const width = game.field[0].length;
+        const height = game.field.length;
+        const canvasWidth = width * cellWidth;
+        const canvasHeigth = height * cellWidth;
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeigth;
+
+        const ctx = canvas.getContext("2d");
+
+        ctx.beginPath();
+
+        for (var i = 0; i < height; i++) {
+            ctx.moveTo(0, (i + 1) * cellWidth + 0.5);
+            ctx.lineTo(canvasWidth, (i + 1) * cellWidth + 0.5);
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#cccccc";
+        }
+
+        for (var j = 0; j < width; j++) {
+            ctx.moveTo((j + 1) * cellWidth + 0.5, 0);
+            ctx.lineTo((j + 1) * cellWidth + 0.5, canvasHeigth);
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#cccccc";
+        }
+
+        for (var i = 0; i < height; i++) {
+            for (var j = 0; j < width; j++) {
+                if (game.field[i][j] == 1) {
+                    ctx.fillStyle = "#000000";
+                    ctx.fillRect(j * cellWidth, i * cellWidth, cellWidth, cellWidth);
+                }
+                else {
+                    ctx.fillStyle = "#ffffff";
+                    ctx.fillRect(j * cellWidth, i * cellWidth, cellWidth, cellWidth);
+                }
+            }
+        }
+
+        ctx.stroke();
+        
+        document.getElementById('fieldWidth').value = width;
+        document.getElementById('fieldHeight').value = height;
+    }
+
+    function nextGeneration() {
+        game.nextGeneration();
+        drawGame(game, cellWidth, canvas);
+        document.getElementById('coordinates').innerText = '';
+    }
+
+    //
+
+    game.init(51, 51);
+    game.setup([24, 25], [25, 25], [26, 25]);
+
+    drawGame(game, cellWidth, canvas);
+
+    //
+    //
+    //
+
+    function toggleSettings() {
+        document.getElementById('settings').classList.toggle('hidden');
+    }
+
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result;
+                // console.log('File content:', content);
+                game.field = JSON.parse(content);
+                drawGame(game, cellWidth, canvas);
+                document.getElementById('fileInput').value = '';
+            };
+            // Read the file as text
+            reader.readAsText(file); 
+        }
+    });
+
+    const JSONToFile = (obj, filename) => {
+        // const blob = new Blob([JSON.stringify(obj, null, 2)], { type: 'application/json' });
+        const blob = new Blob([JSON.stringify(obj)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${filename}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+    };
+
+    function saveToFile() {
+        JSONToFile(game.field, 'life');
+    }
+
+</script>
+</body>
+</html>
